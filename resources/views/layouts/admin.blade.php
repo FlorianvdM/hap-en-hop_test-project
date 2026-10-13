@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title', 'Beheer | Hap &amp; Hop')</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+    <x-admin.header />
+
+    <div class="admin-body">
+        @unless ($__env->hasSection('zonder_zijbalk'))
+            <x-admin.sidebar />
+        @endunless
+
+        <main class="admin-inhoud">
+            @if (session('succes'))
+                <div class="melding succes">{{ session('succes') }}</div>
+            @endif
+
+            @yield('content')
+        </main>
+    </div>
+
+    <x-footer />
+</body>
+</html>

@@ -54,6 +54,11 @@ class AuthController extends Controller
         return redirect()->route('pakketten.index');
     }
 
+    public function showLogout()
+    {
+        return view('auth.uitloggen');
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();

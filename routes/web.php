@@ -32,9 +32,11 @@ Route::middleware('guest')->group(function () {
     Route::post('/registreren', [AuthController::class, 'register']);
 });
 
-Route::post('/uitloggen', [AuthController::class, 'logout'])
-    ->middleware('auth')
-    ->name('logout');
+// Uitloggen met bevestigingspagina
+Route::middleware('auth')->group(function () {
+    Route::get('/uitloggen', [AuthController::class, 'showLogout'])->name('logout.confirm');
+    Route::post('/uitloggen', [AuthController::class, 'logout'])->name('logout');
+});
 
 // Alleen voor admins
 Route::middleware(['auth', IsAdmin::class])
@@ -42,6 +44,16 @@ Route::middleware(['auth', IsAdmin::class])
     ->name('admin.')
     ->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('/bestellingen', [AdminController::class, 'bestellingen'])->name('bestellingen');
         Route::patch('/bestellingen/{bestelling}', [AdminController::class, 'bestellingStatus'])->name('bestellingen.status');
+
+        Route::get('/berichten', [AdminController::class, 'berichten'])->name('berichten');
         Route::patch('/berichten/{bericht}', [AdminController::class, 'berichtGelezen'])->name('berichten.gelezen');
+
+        Route::get('/instellingen', [AdminController::class, 'instellingen'])->name('instellingen');
+
+        Route::get('/{pagina}', [AdminController::class, 'binnenkort'])
+            ->where('pagina', 'pakketten|producten|gebruikers')
+            ->name('binnenkort');
     });

@@ -3,18 +3,13 @@
 @section('title', 'Pakketten | Hap &amp; Hop')
 
 @section('content')
-    <h1>Onze pakketten</h1>
-    <p>Kies een pakket en plaats direct je bestelling.</p>
+    <x-pagina-kop titel="Onze pakketten">
+        Kies het pakket dat bij jou past. Al onze pakketten zijn vers bereid en met zorg samengesteld.
+    </x-pagina-kop>
 
-    <div class="raster">
+    <div class="pakket-lijst">
         @forelse ($pakketten as $pakket)
-            <div class="kaart">
-                <h2>{{ $pakket->naam }}</h2>
-                <p>{{ $pakket->beschrijving }}</p>
-                <p>Voor {{ $pakket->aantal_personen }} persoon/personen</p>
-                <p class="prijs">&euro; {{ number_format($pakket->prijs, 2, ',', '.') }}</p>
-                <a class="knop" href="{{ route('bestellen.create', $pakket) }}">Bestellen</a>
-            </div>
+            <x-pakket-kaart :pakket="$pakket" />
         @empty
             <p>Er zijn nog geen pakketten.</p>
         @endforelse
