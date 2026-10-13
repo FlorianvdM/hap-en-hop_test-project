@@ -10,11 +10,15 @@ class BestellingController extends Controller
 {
     public function create(Pakket $pakket)
     {
+        abort_unless($pakket->actief, 404);
+
         return view('bestellen.create', compact('pakket'));
     }
 
     public function store(Request $request, Pakket $pakket)
     {
+        abort_unless($pakket->actief, 404);
+
         $data = $request->validate([
             'naam' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:150'],

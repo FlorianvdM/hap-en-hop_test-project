@@ -20,7 +20,7 @@ class AdminController extends Controller
 
         return view('admin.dashboard', [
             'totaalBestellingen' => Bestelling::count(),
-            'aantalPakketten' => Pakket::count(),
+            'aantalPakketten' => Pakket::where('actief', true)->count(),
             'aantalGebruikers' => User::count(),
             'omzet' => $omzet,
             'recenteBestellingen' => Bestelling::with('pakket')->latest()->take(5)->get(),
@@ -45,6 +45,13 @@ class AdminController extends Controller
         return back()->with('succes', 'Status bijgewerkt.');
     }
 
+    public function bestellingVerwijderen(Bestelling $bestelling)
+    {
+        $bestelling->delete();
+
+        return back()->with('succes', 'Bestelling verwijderd.');
+    }
+
     public function berichten()
     {
         $berichten = ContactBericht::latest()->get();
@@ -59,21 +66,19 @@ class AdminController extends Controller
         return back()->with('succes', 'Bericht gemarkeerd als gelezen.');
     }
 
+    public function berichtVerwijderen(ContactBericht $bericht)
+    {
+        if (! $bericht->gelezen) {
+            return back()->with('fout', 'Markeer het bericht eerst als gelezen voordat je het verwijdert.');
+        }
+
+        $bericht->delete();
+
+        return back()->with('succes', 'Bericht verwijderd.');
+    }
+
     public function instellingen()
     {
         return view('admin.instellingen');
-    }
-
-    public function binnenkort(string $pagina)
-    {
-        $titels = [
-            'pakketten' => 'Pakketten',
-            'producten' => 'Producten',
-            'gebruikers' => 'Gebruikers',
-        ];
-
-        abort_unless(isset($titels[$pagina]), 404);
-
-        return view('admin.binnenkort', ['titel' => $titels[$pagina]]);
     }
 }

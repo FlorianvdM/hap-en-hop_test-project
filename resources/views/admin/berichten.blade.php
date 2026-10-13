@@ -4,7 +4,9 @@
 
 @section('content')
     <h1>Berichten</h1>
-    <p class="muted">Berichten uit het contactformulier. Ongelezen berichten zijn geel gemarkeerd.</p>
+    <p class="muted">
+        Berichten uit het contactformulier. Ongelezen berichten zijn geel gemarkeerd. Verwijderen kan nadat je een bericht als gelezen hebt gemarkeerd.
+    </p>
 
     @if ($berichten->isEmpty())
         <p>Er zijn nog geen berichten.</p>
@@ -29,15 +31,23 @@
                             </td>
                             <td>{!! nl2br(e($bericht->bericht)) !!}</td>
                             <td>
-                                @if ($bericht->gelezen)
-                                    Gelezen
-                                @else
-                                    <form method="POST" action="{{ route('admin.berichten.gelezen', $bericht) }}">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit" class="knop">Gelezen</button>
-                                    </form>
-                                @endif
+                                <div class="acties">
+                                    @if ($bericht->gelezen)
+                                        <form method="POST"
+                                              action="{{ route('admin.berichten.verwijderen', $bericht) }}"
+                                              onsubmit="return confirm('Weet je zeker dat je dit bericht wilt verwijderen?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="knop knop-klein knop-gevaar">Verwijderen</button>
+                                        </form>
+                                    @else
+                                        <form method="POST" action="{{ route('admin.berichten.gelezen', $bericht) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="knop knop-klein">Gelezen</button>
+                                        </form>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach

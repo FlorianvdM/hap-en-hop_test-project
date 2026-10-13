@@ -4,7 +4,9 @@
 
 @section('content')
     <h1>Bestellingen</h1>
-    <p class="muted">Nieuwe bestellingen zijn geel gemarkeerd.</p>
+    <p class="muted">
+        Nieuwe bestellingen zijn geel gemarkeerd. Een verwijderde bestelling telt niet meer mee in het totaal en de omzet.
+    </p>
 
     @if ($bestellingen->isEmpty())
         <p>Er zijn nog geen bestellingen.</p>
@@ -20,6 +22,7 @@
                         <th>Gewenste datum</th>
                         <th>Opmerking</th>
                         <th>Status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,13 +44,24 @@
                                 <form method="POST" action="{{ route('admin.bestellingen.status', $bestelling) }}">
                                     @csrf
                                     @method('PATCH')
-                                    <select name="status" onchange="this.form.submit()">
+                                    <select name="status"
+                                            class="status-select status-{{ str_replace(' ', '-', $bestelling->status) }}"
+                                            onchange="this.form.submit()">
                                         @foreach (['nieuw', 'in behandeling', 'verzonden'] as $status)
                                             <option value="{{ $status }}" @selected($bestelling->status === $status)>
                                                 {{ ucfirst($status) }}
                                             </option>
                                         @endforeach
                                     </select>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="POST"
+                                      action="{{ route('admin.bestellingen.verwijderen', $bestelling) }}"
+                                      onsubmit="return confirm('Weet je zeker dat je deze bestelling wilt verwijderen? Hij telt dan ook niet meer mee in het totaal en de omzet.')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="knop knop-klein knop-gevaar">Verwijderen</button>
                                 </form>
                             </td>
                         </tr>

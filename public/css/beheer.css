@@ -1,0 +1,58 @@
+/* Kleuren per status */
+.status-nieuw { background: #fde68a; color: #78350f; }
+.status-in-behandeling { background: #bfdbfe; color: #1e3a8a; }
+.status-verzonden { background: #bbf7d0; color: #14532d; }
+
+.status-zichtbaar { background: #bbf7d0; color: #14532d; }
+.status-verborgen { background: #e5e7eb; color: #4b5563; }
+
+.rol-beheerder { background: #ddd6fe; color: #4c1d95; }
+.rol-klant { background: #e5e7eb; color: #374151; }
+
+/* Statusmenu in de bestellingentabel krijgt de kleur van de status */
+.status-select {
+    border: 0;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Titel met knop ernaast */
+.kop-met-knop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.kop-met-knop h1 { margin: 0; }
+
+/* Acties in tabellen */
+.acties { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.acties form { margin: 0; }
+
+.knop-klein { padding: 5px 12px; font-size: 0.85rem; }
+
+.knop-gevaar { background: #b00020; border-color: #b00020; }
+.knop-gevaar:hover { background: #8a0019; }
+
+/* Foutmelding bovenaan de pagina */
+.melding.mislukt {
+    background: #fde8e8;
+    border: 1px solid #f5b5b5;
+}
+
+/* Vinkje in formulieren */
+.formulier .vinkje {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400;
+}
+
+.formulier .vinkje input { width: auto; margin: 0; }

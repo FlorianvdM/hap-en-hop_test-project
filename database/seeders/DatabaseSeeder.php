@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PakketSeeder::class,
+            ProductSeeder::class,
         ]);
 
         $admin = User::firstOrNew(['email' => 'admin@hapenhop.nl']);

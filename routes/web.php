@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminGebruikerController;
+use App\Http\Controllers\AdminPakketController;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BestellingController;
 use App\Http\Controllers\ContactController;
@@ -47,13 +50,23 @@ Route::middleware(['auth', IsAdmin::class])
 
         Route::get('/bestellingen', [AdminController::class, 'bestellingen'])->name('bestellingen');
         Route::patch('/bestellingen/{bestelling}', [AdminController::class, 'bestellingStatus'])->name('bestellingen.status');
+        Route::delete('/bestellingen/{bestelling}', [AdminController::class, 'bestellingVerwijderen'])->name('bestellingen.verwijderen');
 
         Route::get('/berichten', [AdminController::class, 'berichten'])->name('berichten');
         Route::patch('/berichten/{bericht}', [AdminController::class, 'berichtGelezen'])->name('berichten.gelezen');
+        Route::delete('/berichten/{bericht}', [AdminController::class, 'berichtVerwijderen'])->name('berichten.verwijderen');
 
         Route::get('/instellingen', [AdminController::class, 'instellingen'])->name('instellingen');
 
-        Route::get('/{pagina}', [AdminController::class, 'binnenkort'])
-            ->where('pagina', 'pakketten|producten|gebruikers')
-            ->name('binnenkort');
+        Route::resource('pakketten', AdminPakketController::class)
+            ->except('show')
+            ->parameters(['pakketten' => 'pakket']);
+
+        Route::resource('producten', AdminProductController::class)
+            ->except('show')
+            ->parameters(['producten' => 'product']);
+
+        Route::resource('gebruikers', AdminGebruikerController::class)
+            ->only(['index', 'edit', 'update', 'destroy'])
+            ->parameters(['gebruikers' => 'gebruiker']);
     });

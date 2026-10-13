@@ -13,26 +13,20 @@
 @endsection
 
 @section('content')
-    @php
-        $favorieten = [
-            ['titel' => 'Luxe broodjes', 'tekst' => 'Diverse soorten, vers belegd', 'prijs' => '3,50'],
-            ['titel' => 'Lunchpakketten', 'tekst' => 'Compleet en smakelijk', 'prijs' => '8,50'],
-            ['titel' => 'Catering op maat', 'tekst' => 'Voor bedrijven en evenementen', 'prijs' => '12,50'],
-        ];
-    @endphp
+    @if ($producten->isNotEmpty())
+        <h2 style="margin-top: 0;">Onze favorieten</h2>
 
-    <h2 style="margin-top: 0;">Onze favorieten</h2>
-
-    <div class="favorieten">
-        @foreach ($favorieten as $favoriet)
-            <div class="kaart">
-                <div class="afbeelding"></div>
-                <h3>{{ $favoriet['titel'] }}</h3>
-                <p class="muted">{{ $favoriet['tekst'] }}</p>
-                <p class="prijs">Vanaf &euro; {{ $favoriet['prijs'] }}</p>
-            </div>
-        @endforeach
-    </div>
+        <div class="favorieten">
+            @foreach ($producten as $product)
+                <div class="kaart">
+                    <div class="afbeelding"></div>
+                    <h3>{{ $product->naam }}</h3>
+                    <p class="muted">{{ $product->beschrijving }}</p>
+                    <p class="prijs">Vanaf &euro; {{ number_format($product->prijs, 2, ',', '.') }}</p>
+                </div>
+            @endforeach
+        </div>
+    @endif
 
     <div class="banner">
         <x-icon name="calendar" :size="36" />

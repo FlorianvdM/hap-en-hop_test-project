@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Beheer | Hap &amp; Hop')</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/beheer.css') }}">
 </head>
 <body>
     <x-admin.header />
@@ -17,6 +18,10 @@
         <main class="admin-inhoud">
             @if (session('succes'))
                 <div class="melding succes">{{ session('succes') }}</div>
+            @endif
+
+            @if (session('fout'))
+                <div class="melding mislukt">{{ session('fout') }}</div>
             @endif
 
             @yield('content')

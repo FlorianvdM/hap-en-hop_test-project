@@ -23,11 +23,17 @@
             @endif
         </a>
 
-        @foreach ([['pakketten', 'package', 'Pakketten'], ['producten', 'tag', 'Producten'], ['gebruikers', 'users', 'Gebruikers']] as [$slug, $icoon, $label])
-            <a href="{{ route('admin.binnenkort', $slug) }}" class="{{ request()->is('admin/' . $slug) ? 'actief' : '' }}">
-                <x-icon :name="$icoon" :size="20" /> {{ $label }}
-            </a>
-        @endforeach
+        <a href="{{ route('admin.pakketten.index') }}" class="{{ request()->routeIs('admin.pakketten*') ? 'actief' : '' }}">
+            <x-icon name="package" :size="20" /> Pakketten
+        </a>
+
+        <a href="{{ route('admin.producten.index') }}" class="{{ request()->routeIs('admin.producten*') ? 'actief' : '' }}">
+            <x-icon name="tag" :size="20" /> Producten
+        </a>
+
+        <a href="{{ route('admin.gebruikers.index') }}" class="{{ request()->routeIs('admin.gebruikers*') ? 'actief' : '' }}">
+            <x-icon name="users" :size="20" /> Gebruikers
+        </a>
 
         <a href="{{ route('admin.instellingen') }}" class="{{ request()->routeIs('admin.instellingen') ? 'actief' : '' }}">
             <x-icon name="settings" :size="20" /> Instellingen

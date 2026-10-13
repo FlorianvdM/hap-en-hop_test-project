@@ -14,6 +14,11 @@ class Pakket extends Model
         'beschrijving',
         'prijs',
         'aantal_personen',
+        'actief',
+    ];
+
+    protected $casts = [
+        'actief' => 'boolean',
     ];
 
     public function bestellingen(): HasMany
