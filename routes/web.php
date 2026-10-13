@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminGebruikerController;
 use App\Http\Controllers\AdminPakketController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminReviewController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BestellingController;
 use App\Http\Controllers\ContactController;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 // Publiek
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/info', [PageController::class, 'info'])->name('info');
+Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/pakketten', [PakketController::class, 'index'])->name('pakketten.index');
 
 Route::get('/bestellen/{pakket}', [BestellingController::class, 'create'])->name('bestellen.create');
@@ -66,7 +68,15 @@ Route::middleware(['auth', IsAdmin::class])
             ->except('show')
             ->parameters(['producten' => 'product']);
 
+        Route::resource('reviews', AdminReviewController::class)
+            ->except('show');
+
         Route::resource('gebruikers', AdminGebruikerController::class)
             ->only(['index', 'edit', 'update', 'destroy'])
             ->parameters(['gebruikers' => 'gebruiker']);
     });
+
+// Altijd als laatste: onbekende pagina's tonen de eigen 404-pagina
+Route::fallback(function () {
+    abort(404);
+});

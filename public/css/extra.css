@@ -1,0 +1,66 @@
+/* Footer */
+.site-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.site-footer a { color: inherit; }
+
+.site-footer .social { display: flex; gap: 14px; }
+
+.site-footer .social a {
+    display: inline-flex;
+    padding: 8px;
+    border-radius: 50%;
+    background: var(--kleur-vlak-donker);
+    color: var(--kleur-tekst);
+}
+
+.site-footer .social a:hover {
+    background: var(--kleur-primair);
+    color: var(--kleur-accent);
+}
+
+/* Tekstpagina's, zoals de privacyverklaring */
+.tekstpagina { max-width: 720px; }
+.tekstpagina h2 { font-size: 1.2rem; margin: 28px 0 8px; }
+.tekstpagina p,
+.tekstpagina li { color: #374151; }
+.tekstpagina ul { padding-left: 20px; }
+
+/* 404-pagina */
+.foutpagina { text-align: center; padding: 56px 0; }
+
+.foutpagina .foutcode {
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin: 0;
+    color: var(--kleur-primair);
+}
+
+.foutpagina h1 { margin-top: 8px; }
+.foutpagina p { max-width: 460px; margin: 0 auto 24px; }
+
+.knoppen { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+/* Reviews op de homepage */
+.reviews {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.review {
+    margin: 0;
+    border: 1px solid var(--kleur-lijn);
+    border-radius: var(--radius);
+    padding: 16px;
+    background: var(--kleur-wit);
+}
+
+.review .sterren { color: #c28e1d; letter-spacing: 2px; font-size: 1.1rem; }
+.review blockquote { margin: 8px 0 12px; }
+.review .naam { font-weight: 700; }

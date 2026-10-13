@@ -28,6 +28,22 @@
         </div>
     @endif
 
+    @if ($reviews->isNotEmpty())
+        <h2>Wat klanten zeggen</h2>
+
+        <div class="reviews">
+            @foreach ($reviews as $review)
+                <figure class="review">
+                    <div class="sterren" aria-label="{{ $review->beoordeling }} van de 5 sterren">
+                        {{ str_repeat('★', $review->beoordeling) }}{{ str_repeat('☆', 5 - $review->beoordeling) }}
+                    </div>
+                    <blockquote>{{ $review->tekst }}</blockquote>
+                    <figcaption class="naam">{{ $review->naam }}</figcaption>
+                </figure>
+            @endforeach
+        </div>
+    @endif
+
     <div class="banner">
         <x-icon name="calendar" :size="36" />
         <div class="banner-tekst">
