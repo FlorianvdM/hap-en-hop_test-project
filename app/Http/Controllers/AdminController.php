@@ -12,14 +12,17 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $omzet = Bestelling::with('pakket')
+        // withTrashed(): ook verwijderde verzonden bestellingen tellen mee in de cijfers.
+        // Verwijderde bestellingen met een andere status bestaan niet meer in de database.
+        $omzet = Bestelling::withTrashed()
+            ->with('pakket')
             ->whereYear('created_at', now()->year)
             ->whereMonth('created_at', now()->month)
             ->get()
             ->sum(fn ($bestelling) => $bestelling->aantal * $bestelling->pakket->prijs);
 
         return view('admin.dashboard', [
-            'totaalBestellingen' => Bestelling::count(),
+            'totaalBestellingen' => Bestelling::withTrashed()->count(),
             'aantalPakketten' => Pakket::where('actief', true)->count(),
             'aantalGebruikers' => User::count(),
             'omzet' => $omzet,
@@ -47,7 +50,15 @@ class AdminController extends Controller
 
     public function bestellingVerwijderen(Bestelling $bestelling)
     {
-        $bestelling->delete();
+        if ($bestelling->status === 'verzonden') {
+            // Verdwijnt uit de lijst, maar blijft meetellen in totaal en omzet.
+            $bestelling->delete();
+
+            return back()->with('succes', 'Bestelling verwijderd. Deze blijft wel meetellen in het totaal en de omzet.');
+        }
+
+        // Nieuw of in behandeling: echt verwijderen, ook uit totaal en omzet.
+        $bestelling->forceDelete();
 
         return back()->with('succes', 'Bestelling verwijderd.');
     }

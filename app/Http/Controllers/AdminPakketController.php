@@ -9,7 +9,9 @@ class AdminPakketController extends Controller
 {
     public function index()
     {
-        $pakketten = Pakket::withCount('bestellingen')->orderBy('prijs')->get();
+        $pakketten = Pakket::withCount([
+            'bestellingen' => fn ($query) => $query->withTrashed(),
+        ])->orderBy('prijs')->get();
 
         return view('admin.pakketten.index', compact('pakketten'));
     }
@@ -46,7 +48,7 @@ class AdminPakketController extends Controller
 
     public function destroy(Pakket $pakket)
     {
-        if ($pakket->bestellingen()->exists()) {
+        if ($pakket->bestellingen()->withTrashed()->exists()) {
             return back()->with('fout', 'Dit pakket heeft bestellingen en kan niet worden verwijderd. Zet het op "Verborgen" om het van de website te halen.');
         }
 
