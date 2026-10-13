@@ -42,7 +42,8 @@
                                     <a class="knop knop-klein knop-licht" href="{{ route('admin.producten.edit', $product) }}">Wijzigen</a>
                                     <form method="POST"
                                           action="{{ route('admin.producten.destroy', $product) }}"
-                                          onsubmit="return confirm('Weet je zeker dat je dit product wilt verwijderen?')">
+                                          data-bevestig-titel="Product verwijderen?"
+                                          data-bevestig="Weet je zeker dat je dit product wilt verwijderen?">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="knop knop-klein knop-gevaar">Verwijderen</button>

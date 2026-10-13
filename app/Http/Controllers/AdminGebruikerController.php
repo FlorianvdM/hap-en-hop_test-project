@@ -53,6 +53,10 @@ class AdminGebruikerController extends Controller
             return back()->with('fout', 'Je kunt je eigen account niet verwijderen.');
         }
 
+        if ($gebruiker->is_admin) {
+            return back()->with('fout', 'Een beheerder kan niet worden verwijderd. Wijzig eerst de rol naar Klant en verwijder daarna het account.');
+        }
+
         $gebruiker->delete();
 
         return redirect()

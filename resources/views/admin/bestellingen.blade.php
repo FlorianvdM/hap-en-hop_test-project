@@ -5,9 +5,9 @@
 @section('content')
     <h1>Bestellingen</h1>
     <p class="muted">
-        Nieuwe bestellingen zijn geel gemarkeerd. Verwijder je een bestelling met status Nieuw of In behandeling,
-        dan telt hij niet meer mee in het totaal en de omzet. Een verzonden bestelling verdwijnt alleen uit deze lijst
-        en blijft meetellen.
+        Nieuwe bestellingen zijn geel gemarkeerd. Verwijder je een bestelling met status Verzonden, dan verdwijnt hij uit
+        de lijst en telt hij mee in de omzet. Bestellingen met een andere status worden definitief verwijderd en tellen
+        niet mee in de omzet.
     </p>
 
     @if ($bestellingen->isEmpty())
@@ -60,9 +60,10 @@
                             <td>
                                 <form method="POST"
                                       action="{{ route('admin.bestellingen.verwijderen', $bestelling) }}"
-                                      onsubmit="return confirm('{{ $bestelling->status === 'verzonden'
-                                          ? 'Weet je zeker dat je deze bestelling wilt verwijderen? Hij verdwijnt uit de lijst, maar blijft meetellen in het totaal en de omzet.'
-                                          : 'Weet je zeker dat je deze bestelling wilt verwijderen? Hij telt dan ook niet meer mee in het totaal en de omzet.' }}')">
+                                      @if ($bestelling->status !== 'verzonden')
+                                          data-bevestig-titel="Bestelling verwijderen?"
+                                          data-bevestig="Weet je zeker dat je deze bestelling wilt verwijderen? Hij wordt definitief verwijderd en telt niet meer mee in het totaal aantal bestellingen."
+                                      @endif>
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="knop knop-klein knop-gevaar">Verwijderen</button>

@@ -35,7 +35,8 @@
                                     @if ($bericht->gelezen)
                                         <form method="POST"
                                               action="{{ route('admin.berichten.verwijderen', $bericht) }}"
-                                              onsubmit="return confirm('Weet je zeker dat je dit bericht wilt verwijderen?')">
+                                              data-bevestig-titel="Bericht verwijderen?"
+                                              data-bevestig="Weet je zeker dat je dit bericht wilt verwijderen?">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="knop knop-klein knop-gevaar">Verwijderen</button>

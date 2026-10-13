@@ -12,16 +12,17 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        // withTrashed(): ook verwijderde verzonden bestellingen tellen mee in de cijfers.
-        // Verwijderde bestellingen met een andere status bestaan niet meer in de database.
-        $omzet = Bestelling::withTrashed()
+        // Omzet: een bestelling telt pas mee zodra hij is verwijderd (soft delete).
+        // Dat kan alleen bij status verzonden. We rekenen de maand van het verwijderen.
+        $omzet = Bestelling::onlyTrashed()
             ->with('pakket')
-            ->whereYear('created_at', now()->year)
-            ->whereMonth('created_at', now()->month)
+            ->whereYear('deleted_at', now()->year)
+            ->whereMonth('deleted_at', now()->month)
             ->get()
             ->sum(fn ($bestelling) => $bestelling->aantal * $bestelling->pakket->prijs);
 
         return view('admin.dashboard', [
+            // Alle bestellingen die nog in de database staan, ook de soft deleted bestellingen
             'totaalBestellingen' => Bestelling::withTrashed()->count(),
             'aantalPakketten' => Pakket::where('actief', true)->count(),
             'aantalGebruikers' => User::count(),
@@ -51,13 +52,13 @@ class AdminController extends Controller
     public function bestellingVerwijderen(Bestelling $bestelling)
     {
         if ($bestelling->status === 'verzonden') {
-            // Verdwijnt uit de lijst, maar blijft meetellen in totaal en omzet.
+            // Soft delete: uit de lijst gehaald en vanaf nu meegeteld in de omzet.
             $bestelling->delete();
 
-            return back()->with('succes', 'Bestelling verwijderd. Deze blijft wel meetellen in het totaal en de omzet.');
+            return back()->with('succes', 'Bestelling verwijderd en toegevoegd aan de omzet.');
         }
 
-        // Nieuw of in behandeling: echt verwijderen, ook uit totaal en omzet.
+        // Nieuw of in behandeling: definitief verwijderd, telt niet mee in totaal of omzet.
         $bestelling->forceDelete();
 
         return back()->with('succes', 'Bestelling verwijderd.');

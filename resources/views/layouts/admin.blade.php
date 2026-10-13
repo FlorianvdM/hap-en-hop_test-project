@@ -20,14 +20,12 @@
                 <div class="melding succes">{{ session('succes') }}</div>
             @endif
 
-            @if (session('fout'))
-                <div class="melding mislukt">{{ session('fout') }}</div>
-            @endif
-
             @yield('content')
         </main>
     </div>
 
     <x-footer />
+
+    <x-melding-dialoog />
 </body>
 </html>
