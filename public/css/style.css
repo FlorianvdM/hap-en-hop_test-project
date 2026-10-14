@@ -1,5 +1,5 @@
 :root {
-    --kleur-primair: #1f4d36;
+    --kleur-primair: #175432;
     --kleur-primair-donker: #163a29;
     --kleur-accent: #d9b45a;
     --kleur-tekst: #1c2b22;
@@ -36,8 +36,8 @@ h3 { margin: 0 0 4px; }
 
 /* ---------- Header ---------- */
 .site-header {
-    background: var(--kleur-wit);
-    border-bottom: 1px solid var(--kleur-lijn);
+    background: #175432;          /* exacte logo-kleur */
+    border-bottom: none;
 }
 
 .header-inner {
@@ -51,29 +51,42 @@ h3 { margin: 0 0 4px; }
 }
 
 .logo {
-    background: var(--kleur-primair);
-    color: var(--kleur-accent);
-    font-weight: 700;
-    padding: 10px 20px;
-    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
-    letter-spacing: 0.02em;
+    line-height: 0;
 }
 
-.hoofdmenu { display: flex; gap: 24px; flex-wrap: wrap; }
+.logo img {
+    display: block;
+    height: 56px;
+    width: auto;
+    max-width: 220px;
+}
+
+.hoofdmenu {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
 
 .hoofdmenu a {
-    color: var(--kleur-tekst);
+    color: #ffffff;
     text-decoration: none;
     padding: 4px 0;
     border-bottom: 2px solid transparent;
+    font-weight: 500;
 }
 
-.hoofdmenu a:hover { border-bottom-color: var(--kleur-vlak-donker); }
+.hoofdmenu a:hover {
+    border-bottom-color: var(--kleur-accent);
+    color: var(--kleur-accent);
+}
 
 .hoofdmenu a.actief {
     font-weight: 700;
-    border-bottom-color: var(--kleur-tekst);
+    border-bottom-color: var(--kleur-accent);
+    color: var(--kleur-accent);
 }
 
 .header-acties {
@@ -84,49 +97,15 @@ h3 { margin: 0 0 4px; }
 }
 
 .header-acties a {
-    color: var(--kleur-tekst);
+    color: #ffffff;
     text-decoration: none;
     display: inline-flex;
-}
-
-.header-acties a:hover { color: var(--kleur-primair); }
-
-/* Gebruikersmenu in de admin-header */
-.gebruikersmenu { margin-left: auto; position: relative; }
-
-.gebruikersmenu summary {
-    list-style: none;
-    cursor: pointer;
-    display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 4px;
 }
 
-.gebruikersmenu summary::-webkit-details-marker { display: none; }
-
-.gebruikersmenu .menu {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    min-width: 200px;
-    background: var(--kleur-wit);
-    border: 1px solid var(--kleur-lijn);
-    border-radius: 8px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    padding: 6px;
-    z-index: 10;
+.header-acties a:hover {
+    color: var(--kleur-accent);
 }
-
-.gebruikersmenu .menu a {
-    display: block;
-    padding: 8px 12px;
-    border-radius: 6px;
-    color: var(--kleur-tekst);
-    text-decoration: none;
-}
-
-.gebruikersmenu .menu a:hover { background: var(--kleur-vlak); }
 
 /* ---------- Pagina en footer ---------- */
 .container {
@@ -567,7 +546,7 @@ tr.nieuw td { background: #fffbea; }
     body { min-width: 320px; }
     h1 { font-size: 1.8rem; }
     .header-inner { padding: 14px 12px; }
-    .logo { padding: 9px 14px; }
+    .logo img { height: 46px; }
     .hoofdmenu { gap: 10px 14px; }
     .header-acties { gap: 8px; }
     .container { padding-left: 14px; padding-right: 14px; }

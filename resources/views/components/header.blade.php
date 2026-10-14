@@ -1,9 +1,8 @@
 <header class="site-header">
     <div class="header-inner">
-        <a href="{{ route('home') }}" class="logo">Hap &amp; Hop</a>
-        {{-- Heb je een logo-afbeelding? Zet die in public/images/logo.png en vervang de regel hierboven door:
-        <a href="{{ route('home') }}"><img src="{{ asset('images/logo.png') }}" alt="Hap &amp; Hop" height="44"></a>
-        --}}
+        <a href="{{ route('home') }}" class="logo">
+            <img src="{{ asset('images/logo.png') }}" alt="Hap &amp; Hop" height="56">
+        </a>
 
         <nav class="hoofdmenu">
             <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'actief' : '' }}">Home</a>

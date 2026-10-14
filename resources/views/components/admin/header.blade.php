@@ -1,6 +1,8 @@
 <header class="site-header">
     <div class="header-inner">
-        <a href="{{ route('admin.dashboard') }}" class="logo">Hap &amp; Hop</a>
+        <a href="{{ route('admin.dashboard') }}" class="logo">
+            <img src="{{ asset('images/logo.png') }}" alt="Hap &amp; Hop" height="50">
+        </a>
 
         <details class="gebruikersmenu">
             <summary>
