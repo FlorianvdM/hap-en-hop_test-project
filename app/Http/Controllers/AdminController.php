@@ -15,11 +15,11 @@ class AdminController extends Controller
         // Omzet: een bestelling telt pas mee zodra hij is verwijderd (soft delete).
         // Dat kan alleen bij status verzonden. We rekenen de maand van het verwijderen.
         $omzet = Bestelling::onlyTrashed()
-            ->with('pakket')
+            ->with('regels')
             ->whereYear('deleted_at', now()->year)
             ->whereMonth('deleted_at', now()->month)
             ->get()
-            ->sum(fn ($bestelling) => $bestelling->aantal * $bestelling->pakket->prijs);
+            ->sum(fn ($bestelling) => $bestelling->totaal);
 
         return view('admin.dashboard', [
             // Alle bestellingen die nog in de database staan, ook de soft deleted bestellingen
@@ -27,13 +27,13 @@ class AdminController extends Controller
             'aantalPakketten' => Pakket::where('actief', true)->count(),
             'aantalGebruikers' => User::count(),
             'omzet' => $omzet,
-            'recenteBestellingen' => Bestelling::with('pakket')->latest()->take(5)->get(),
+            'recenteBestellingen' => Bestelling::with('regels')->latest()->take(5)->get(),
         ]);
     }
 
     public function bestellingen()
     {
-        $bestellingen = Bestelling::with('pakket')->latest()->get();
+        $bestellingen = Bestelling::with('regels')->latest()->get();
 
         return view('admin.bestellingen', compact('bestellingen'));
     }

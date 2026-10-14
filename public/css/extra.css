@@ -64,3 +64,147 @@
 .review .sterren { color: #c28e1d; letter-spacing: 2px; font-size: 1.1rem; }
 .review blockquote { margin: 8px 0 12px; }
 .review .naam { font-weight: 700; }
+
+/* Algemeen */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.knop-klein { padding: 5px 12px; font-size: 0.85rem; }
+
+/* Winkelwagen-icoon met teller in de header */
+.header-acties .winkelwagen { position: relative; }
+
+.wagen-teller {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--kleur-accent);
+    color: var(--kleur-tekst);
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+}
+
+/* Winkelwagen */
+.wagen-lijst { display: flex; flex-direction: column; gap: 12px; }
+
+.wagen-regel {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    border: 1px solid var(--kleur-lijn);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    background: var(--kleur-wit);
+}
+
+.wagen-info { flex: 1; min-width: 180px; display: flex; flex-direction: column; }
+
+.wagen-aantal { display: flex; gap: 8px; align-items: center; }
+
+.wagen-aantal input {
+    width: 72px;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.wagen-prijs { font-weight: 700; min-width: 90px; text-align: right; }
+
+.link-verwijder {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: #b00020;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.wagen-totaal {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 16px 4px;
+}
+
+.wagen-acties {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Bestelpagina */
+.bestel-raster {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+.samenvatting {
+    background: var(--kleur-vlak);
+    border-radius: var(--radius);
+    padding: 20px;
+}
+
+.samenvatting h2 { margin: 0 0 12px; font-size: 1.1rem; }
+.samenvatting ul { list-style: none; padding: 0; margin: 0 0 12px; }
+
+.samenvatting li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--kleur-lijn);
+}
+
+.samenvatting .totaal { display: flex; justify-content: space-between; font-weight: 800; }
+
+/* Formulier: dieetwensen en vinkjes */
+.formulier fieldset {
+    margin: 16px 0 0;
+    padding: 8px 14px 14px;
+    border: 1px solid var(--kleur-lijn);
+    border-radius: 8px;
+}
+
+.formulier legend { font-weight: 700; padding: 0 6px; }
+
+.formulier .vinkje {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    font-weight: 400;
+}
+
+.formulier .vinkje input { width: auto; margin: 0; }
+
+/* Dieetwensen in het beheer */
+.dieet-label {
+    background: #fee2e2;
+    color: #7f1d1d;
+    margin: 0 4px 4px 0;
+}
+
+@media (max-width: 800px) {
+    .bestel-raster { grid-template-columns: 1fr; }
+    .wagen-prijs { text-align: left; }
+}

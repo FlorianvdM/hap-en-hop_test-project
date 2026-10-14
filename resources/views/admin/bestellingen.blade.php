@@ -19,9 +19,10 @@
                     <tr>
                         <th>Besteld op</th>
                         <th>Klant</th>
-                        <th>Pakket</th>
-                        <th>Aantal</th>
+                        <th>Bestelling</th>
+                        <th>Totaal</th>
                         <th>Gewenste datum</th>
+                        <th>Dieetwensen</th>
                         <th>Opmerking</th>
                         <th>Status</th>
                         <th></th>
@@ -38,9 +39,18 @@
                                     <br>{{ $bestelling->telefoon }}
                                 @endif
                             </td>
-                            <td>{{ $bestelling->pakket->naam }}</td>
-                            <td>{{ $bestelling->aantal }}</td>
+                            <td>
+                                @foreach ($bestelling->regels as $regel)
+                                    {{ $regel->aantal }}&times; {{ $regel->pakket_naam }}<br>
+                                @endforeach
+                            </td>
+                            <td>&euro; {{ number_format($bestelling->totaal, 2, ',', '.') }}</td>
                             <td>{{ $bestelling->gewenste_datum->format('d-m-Y') }}</td>
+                            <td>
+                                @foreach (($bestelling->dieetwensen ?? []) as $wens)
+                                    <span class="status dieet-label">{{ ucfirst($wens) }}</span>
+                                @endforeach
+                            </td>
                             <td>{{ $bestelling->opmerking }}</td>
                             <td>
                                 <form method="POST" action="{{ route('admin.bestellingen.status', $bestelling) }}">

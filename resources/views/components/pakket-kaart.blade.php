@@ -20,6 +20,9 @@
 
         <p class="prijs">&euro; {{ number_format($pakket->prijs, 2, ',', '.') }}</p>
 
-        <a class="knop" href="{{ route('bestellen.create', $pakket) }}">Bestellen</a>
+        <form method="POST" action="{{ route('winkelwagen.toevoegen', $pakket) }}">
+            @csrf
+            <button type="submit" class="knop">In winkelwagen</button>
+        </form>
     </div>
 </article>

@@ -21,8 +21,8 @@ class Pakket extends Model
         'actief' => 'boolean',
     ];
 
-    public function bestellingen(): HasMany
+    public function bestelregels(): HasMany
     {
-        return $this->hasMany(Bestelling::class);
+        return $this->hasMany(Bestelregel::class);
     }
 }

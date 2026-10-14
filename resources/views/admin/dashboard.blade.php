@@ -23,7 +23,8 @@
                     <tr>
                         <th>Datum</th>
                         <th>Klant</th>
-                        <th>Pakket</th>
+                        <th>Bestelling</th>
+                        <th>Totaal</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -32,7 +33,8 @@
                         <tr>
                             <td>{{ $bestelling->created_at->format('d-m-Y') }}</td>
                             <td>{{ $bestelling->naam }}</td>
-                            <td>{{ $bestelling->pakket->naam }}</td>
+                            <td>{{ $bestelling->regels->map(fn ($regel) => $regel->aantal . '× ' . $regel->pakket_naam)->implode(', ') }}</td>
+                            <td>&euro; {{ number_format($bestelling->totaal, 2, ',', '.') }}</td>
                             <td>
                                 <span class="status status-{{ str_replace(' ', '-', $bestelling->status) }}">
                                     {{ ucfirst($bestelling->status) }}

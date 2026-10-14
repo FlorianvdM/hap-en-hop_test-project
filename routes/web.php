@@ -10,6 +10,7 @@ use App\Http\Controllers\BestellingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PakketController;
+use App\Http\Controllers\WinkelwagenController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,14 @@ Route::get('/info', [PageController::class, 'info'])->name('info');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/pakketten', [PakketController::class, 'index'])->name('pakketten.index');
 
-Route::get('/bestellen/{pakket}', [BestellingController::class, 'create'])->name('bestellen.create');
-Route::post('/bestellen/{pakket}', [BestellingController::class, 'store'])
+// Winkelwagen en bestellen
+Route::get('/winkelwagen', [WinkelwagenController::class, 'index'])->name('winkelwagen.index');
+Route::post('/winkelwagen/{pakket}', [WinkelwagenController::class, 'toevoegen'])->name('winkelwagen.toevoegen');
+Route::patch('/winkelwagen/{pakket}', [WinkelwagenController::class, 'wijzigen'])->name('winkelwagen.wijzigen');
+Route::delete('/winkelwagen/{pakket}', [WinkelwagenController::class, 'verwijderen'])->name('winkelwagen.verwijderen');
+
+Route::get('/bestellen', [BestellingController::class, 'create'])->name('bestellen.create');
+Route::post('/bestellen', [BestellingController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('bestellen.store');
 
