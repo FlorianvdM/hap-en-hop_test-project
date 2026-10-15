@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BestellingBevestiging;
+use App\Mail\NieuweBestelling;
 use App\Models\Bestelling;
 use App\Support\Winkelwagen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
+use Throwable;
 
 class BestellingController extends Controller
 {
@@ -55,7 +59,7 @@ class BestellingController extends Controller
             'opmerking' => ['nullable', 'string', 'max:1000'],
         ]);
 
-        DB::transaction(function () use ($data, $regels, $request) {
+        $bestelling = DB::transaction(function () use ($data, $regels, $request) {
             $bestelling = Bestelling::create([
                 'user_id' => $request->user()?->id,
                 'naam' => $data['naam'],
@@ -75,12 +79,53 @@ class BestellingController extends Controller
                     'prijs' => $regel->pakket->prijs,
                 ]);
             }
+
+            return $bestelling;
         });
 
         Winkelwagen::leegmaken();
 
+        $bevestigingVerstuurd = $this->verstuurMails($bestelling->load('regels'));
+
+        $melding = $bevestigingVerstuurd
+            ? 'Bedankt voor je bestelling! Je ontvangt een bevestiging per e-mail en we nemen zo snel mogelijk contact met je op.'
+            : 'Bedankt voor je bestelling! We nemen zo snel mogelijk contact met je op.';
+
         return redirect()
             ->route('pakketten.index')
-            ->with('succes', 'Bedankt voor je bestelling! We nemen zo snel mogelijk contact met je op.');
+            ->with('succes', $melding);
+    }
+
+    /**
+     * Stuurt de bevestiging naar de klant en de melding naar Hap & Hop.
+     * Gaat het mailen mis, dan blijft de bestelling gewoon bestaan en komt de fout in het logboek.
+     * Geeft terug of de bevestiging aan de klant is verstuurd.
+     */
+    private function verstuurMails(Bestelling $bestelling): bool
+    {
+        $bevestigingVerstuurd = false;
+
+        try {
+            Mail::to($bestelling->email)->send(new BestellingBevestiging($bestelling));
+            $bevestigingVerstuurd = true;
+        } catch (Throwable $e) {
+            report($e);
+        }
+
+        // Testomgevingen zoals de gratis Mailtrap-sandbox weigeren twee mails vlak na elkaar.
+        // Met HAPHOP_MAIL_PAUZE in .env wachten we even voordat de tweede mail wordt verstuurd.
+        $pauze = (int) config('hapenhop.mail_pauze');
+
+        if ($pauze > 0) {
+            sleep($pauze);
+        }
+
+        try {
+            Mail::to(config('hapenhop.bestelmelding_naar'))->send(new NieuweBestelling($bestelling));
+        } catch (Throwable $e) {
+            report($e);
+        }
+
+        return $bevestigingVerstuurd;
     }
 }

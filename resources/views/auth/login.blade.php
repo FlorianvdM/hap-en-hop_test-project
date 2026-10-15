@@ -23,5 +23,7 @@
         <button type="submit" class="knop">Inloggen</button>
     </form>
 
+    <p style="margin-top: 16px;"><a href="{{ route('password.request') }}">Wachtwoord vergeten?</a></p>
+
     <p>Nog geen account? <a href="{{ route('register') }}">Registreer je hier</a>.</p>
 @endsection

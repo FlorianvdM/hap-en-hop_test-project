@@ -10,6 +10,7 @@ use App\Http\Controllers\BestellingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PakketController;
+use App\Http\Controllers\WachtwoordController;
 use App\Http\Controllers\WinkelwagenController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -36,12 +37,21 @@ Route::post('/contact', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
 
-// Inloggen en registreren (alleen voor niet-ingelogde bezoekers)
+// Inloggen, registreren en wachtwoord vergeten (alleen voor niet-ingelogde bezoekers)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
     Route::get('/registreren', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/registreren', [AuthController::class, 'register']);
+
+    Route::get('/wachtwoord-vergeten', [WachtwoordController::class, 'aanvragen'])->name('password.request');
+    Route::post('/wachtwoord-vergeten', [WachtwoordController::class, 'versturen'])
+        ->middleware('throttle:5,1')
+        ->name('password.email');
+    Route::get('/wachtwoord-resetten/{token}', [WachtwoordController::class, 'formulier'])->name('password.reset');
+    Route::post('/wachtwoord-resetten', [WachtwoordController::class, 'bijwerken'])
+        ->middleware('throttle:5,1')
+        ->name('password.update');
 });
 
 // Uitloggen met bevestigingspagina
