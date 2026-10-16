@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminReviewController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BestellingController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MijnBestellingenController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PakketController;
 use App\Http\Controllers\WachtwoordController;
@@ -54,8 +55,11 @@ Route::middleware('guest')->group(function () {
         ->name('password.update');
 });
 
-// Uitloggen met bevestigingspagina
+// Voor ingelogde gebruikers
 Route::middleware('auth')->group(function () {
+    Route::get('/mijn-bestellingen', [MijnBestellingenController::class, 'index'])->name('mijn-bestellingen');
+
+    // Uitloggen met bevestigingspagina
     Route::get('/uitloggen', [AuthController::class, 'showLogout'])->name('logout.confirm');
     Route::post('/uitloggen', [AuthController::class, 'logout'])->name('logout');
 });
@@ -68,6 +72,7 @@ Route::middleware(['auth', IsAdmin::class])
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
         Route::get('/bestellingen', [AdminController::class, 'bestellingen'])->name('bestellingen');
+        Route::get('/bestellingen/export', [AdminController::class, 'bestellingenExport'])->name('bestellingen.export');
         Route::patch('/bestellingen/{bestelling}', [AdminController::class, 'bestellingStatus'])->name('bestellingen.status');
         Route::delete('/bestellingen/{bestelling}', [AdminController::class, 'bestellingVerwijderen'])->name('bestellingen.verwijderen');
 

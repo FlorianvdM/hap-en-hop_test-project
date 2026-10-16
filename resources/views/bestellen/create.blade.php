@@ -73,6 +73,15 @@
             <p style="margin: 16px 0 0;">
                 <a href="{{ route('winkelwagen.index') }}">Winkelwagen aanpassen</a>
             </p>
+
+            @guest
+                <p class="muted" style="margin: 16px 0 0; font-size: 0.9rem;">
+                    Wil je je bestelling later terugzien onder "Mijn bestellingen"?
+                    <a href="{{ route('login') }}">Log in</a> of
+                    <a href="{{ route('register') }}">maak een account aan</a>
+                    voordat je bestelt. Je winkelwagen blijft bewaard.
+                </p>
+            @endguest
         </aside>
     </div>
 @endsection

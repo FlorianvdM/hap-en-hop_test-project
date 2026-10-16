@@ -55,6 +55,101 @@
 
 .formulier .vinkje input { width: auto; margin: 0; }
 
+/* Exporteren van bestellingen */
+.export-balk {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: var(--kleur-vlak);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 0 0 24px;
+}
+
+.export-balk label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.export-balk input[type="date"] {
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font: inherit;
+    font-weight: 400;
+    background: var(--kleur-wit);
+}
+
+.export-balk .knop { display: inline-flex; align-items: center; gap: 8px; }
+
+.export-uitleg { flex-basis: 100%; margin: 0; font-size: 0.9rem; }
+
+/* Omzetgrafiek op het dashboard */
+.grafiek-blok[hidden] { display: none; }
+
+.grafiek-blok {
+    background: var(--kleur-wit);
+    border: 1px solid var(--kleur-lijn);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+}
+
+.grafiek-blok > p { margin: 0; }
+
+.grafiek {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 8px;
+    align-items: end;
+    margin-top: 12px;
+}
+
+.grafiek-kolom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    text-align: center;
+}
+
+.grafiek-waarde {
+    font-size: 0.72rem;
+    color: var(--kleur-tekst-zacht);
+    height: 1.1em;
+    white-space: nowrap;
+}
+
+.grafiek-balk-vak {
+    width: 100%;
+    height: 160px;
+    display: flex;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--kleur-lijn);
+}
+
+.grafiek-balk {
+    width: 100%;
+    min-height: 2px;
+    background: var(--kleur-primair);
+    border-radius: 4px 4px 0 0;
+}
+
+.grafiek-kolom.huidig .grafiek-balk { background: var(--kleur-accent); }
+
+.grafiek-maand { font-size: 0.8rem; font-weight: 700; }
+.grafiek-jaar { font-size: 0.7rem; color: var(--kleur-tekst-zacht); }
+.grafiek-totaal { margin: 16px 0 0; }
+
+@media (max-width: 800px) {
+    .grafiek { gap: 4px; }
+    .grafiek-waarde { display: none; }
+}
+
 /* Pop-up voor alle waarschuwingen */
 .melding-dialoog {
     border: 0;

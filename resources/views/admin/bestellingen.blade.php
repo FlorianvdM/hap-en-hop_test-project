@@ -4,11 +4,35 @@
 
 @section('content')
     <h1>Bestellingen</h1>
-    <p class="muted">
+    <p class="muted" style="margin-bottom: 20px;">
         Nieuwe bestellingen zijn geel gemarkeerd. Verwijder je een bestelling met status Verzonden, dan verdwijnt hij uit
         de lijst en telt hij mee in de omzet. Bestellingen met een andere status worden definitief verwijderd en tellen
         niet mee in de omzet.
     </p>
+
+    <form class="export-balk" method="GET" action="{{ route('admin.bestellingen.export') }}">
+        <label>
+            Van (besteldatum)
+            <input type="date" name="van" value="{{ request('van') }}">
+        </label>
+
+        <label>
+            Tot en met
+            <input type="date" name="tot" value="{{ request('tot') }}">
+        </label>
+
+        <button type="submit" class="knop">
+            <x-icon name="download" :size="18" /> Exporteren (CSV)
+        </button>
+
+        <p class="export-uitleg muted">
+            Laat de data leeg om alle bestellingen te exporteren. Het bestand bevat ook verzonden bestellingen die uit de
+            lijst zijn gehaald en opent direct in Excel.
+        </p>
+
+        @error('van') <div class="fout" style="flex-basis: 100%;">{{ $message }}</div> @enderror
+        @error('tot') <div class="fout" style="flex-basis: 100%;">{{ $message }}</div> @enderror
+    </form>
 
     @if ($bestellingen->isEmpty())
         <p>Er zijn nog geen bestellingen.</p>
@@ -85,4 +109,4 @@
             </table>
         </div>
     @endif
-@endsection
+@endsection 

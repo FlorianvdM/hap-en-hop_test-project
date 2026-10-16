@@ -17,6 +17,7 @@
 
         <div class="header-acties">
             @auth
+                <a href="{{ route('mijn-bestellingen') }}">Mijn bestellingen</a>
                 @if (auth()->user()->is_admin)
                     <a href="{{ route('admin.dashboard') }}">Beheer</a>
                 @endif

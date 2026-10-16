@@ -77,6 +77,11 @@
 
 .knop-klein { padding: 5px 12px; font-size: 0.85rem; }
 
+/* Kleuren per bestelstatus (ook gebruikt op Mijn bestellingen) */
+.status-nieuw { background: #fde68a; color: #78350f; }
+.status-in-behandeling { background: #bfdbfe; color: #1e3a8a; }
+.status-verzonden { background: #bbf7d0; color: #14532d; }
+
 /* Winkelwagen-icoon met teller in de header */
 .header-acties .winkelwagen { position: relative; }
 
@@ -177,6 +182,42 @@
 
 .samenvatting .totaal { display: flex; justify-content: space-between; font-weight: 800; }
 
+/* Mijn bestellingen */
+.bestelling-kaart {
+    border: 1px solid var(--kleur-lijn);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    background: var(--kleur-wit);
+    margin-bottom: 14px;
+}
+
+.bestelling-kop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.bestelling-kop h2 { margin: 0; font-size: 1.1rem; }
+
+.bestelling-meta { color: var(--kleur-tekst-zacht); font-size: 0.92rem; margin: 0 0 10px; }
+
+.bestelling-regels { list-style: none; padding: 0; margin: 0 0 10px; }
+
+.bestelling-regels li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--kleur-lijn);
+}
+
+.bestelling-totaal { display: flex; justify-content: space-between; font-weight: 800; }
+
+.bestelling-extra { margin: 10px 0 0; }
+
 /* Formulier: dieetwensen en vinkjes */
 .formulier fieldset {
     margin: 16px 0 0;
@@ -197,7 +238,7 @@
 
 .formulier .vinkje input { width: auto; margin: 0; }
 
-/* Dieetwensen in het beheer */
+/* Dieetwensen */
 .dieet-label {
     background: #fee2e2;
     color: #7f1d1d;
