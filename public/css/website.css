@@ -1,0 +1,196 @@
+/* Nieuwe look van de publieke website (alleen geladen via layouts/app, het beheer blijft zoals het was).
+   Alles staat onder body.website, zodat het niets anders raakt. */
+
+@font-face {
+    font-family: "Anton";
+    src: url("../fonts/anton-latin-400.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body.website {
+    --kleur-accent-donker: #8a6a1c;   /* goud dat leesbaar is op wit */
+    --font-kop: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+    --radius: 6px;
+}
+
+/* ---------- Koppen: zwaar, smal, hoofdletters ---------- */
+.website h1,
+.website h2 {
+    font-family: var(--font-kop);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.05;
+}
+
+.website h1 { font-size: 2.6rem; }
+.website h2 { font-size: 1.7rem; }
+
+.website .accent { color: var(--kleur-primair); }
+
+/* Klein label boven een kop */
+.eyebrow {
+    display: block;
+    margin: 0 0 10px;
+    color: var(--kleur-accent-donker);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+/* ---------- Header ---------- */
+.website .hoofdmenu a,
+.website .menu-knop {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* ---------- Knoppen ---------- */
+.website .knop {
+    border-radius: 4px;
+    padding: 12px 22px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.website .knop-licht { background: transparent; border-color: #cfd6d1; }
+.website .knop-licht:hover { background: var(--kleur-vlak); }
+
+.knop-rand {
+    background: transparent;
+    color: var(--kleur-primair) !important;
+    border-color: var(--kleur-primair);
+}
+
+.knop-rand:hover { background: var(--kleur-primair); color: var(--kleur-wit) !important; }
+
+/* ---------- Hero ---------- */
+.website .hero {
+    position: relative;
+    background:
+        radial-gradient(900px 400px at 85% 10%, rgba(217, 180, 90, 0.22), transparent 70%),
+        linear-gradient(180deg, #eaf1ec 0%, #f7faf8 100%);
+    border-bottom: 1px solid var(--kleur-lijn);
+}
+
+/* Foto toevoegen? Zet class "hero hero-foto" op de section en definieer in de view:
+   style="--hero-foto: url('/images/hero.jpg')". De lichte laag houdt de tekst leesbaar. */
+.website .hero-foto {
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.75) 45%, rgba(255, 255, 255, 0.1) 100%),
+        var(--hero-foto) center / cover no-repeat;
+}
+
+.website .hero-inhoud { padding: 88px 24px 72px; }
+
+.website .hero h1 { font-size: clamp(2.6rem, 7vw, 4.4rem); max-width: 720px; margin-bottom: 14px; }
+
+.hero-sub {
+    max-width: 560px;
+    margin: 0 0 22px;
+    font-size: 1.15rem;
+    color: var(--kleur-tekst-zacht);
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 26px; padding: 0; list-style: none; }
+
+.tag {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid #cfd6d1;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--kleur-tekst);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.tag:hover { border-color: var(--kleur-primair); color: var(--kleur-primair); }
+
+.hero-knoppen { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+
+.vinkjes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--kleur-tekst-zacht);
+    font-size: 0.9rem;
+}
+
+.vinkjes li::before {
+    content: "✓";
+    margin-right: 6px;
+    color: var(--kleur-primair);
+    font-weight: 700;
+}
+
+/* ---------- Secties op de homepage ---------- */
+.sectie-kop { text-align: center; max-width: 640px; margin: 0 auto 28px; }
+.sectie-kop h2 { margin: 0; }
+.sectie-kop p { margin: 10px 0 0; color: var(--kleur-tekst-zacht); }
+
+.website .kaart {
+    padding: 14px;
+    transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+
+.website .kaart:hover {
+    border-color: var(--kleur-primair);
+    box-shadow: 0 8px 24px rgba(23, 84, 50, 0.12);
+    transform: translateY(-2px);
+}
+
+.website .kaart h3 { font-size: 1.1rem; font-weight: 800; }
+.website .kaart .prijs { color: var(--kleur-primair); }
+
+.website .review { border-top: 3px solid var(--kleur-accent); }
+
+.website .banner {
+    margin-top: 40px;
+    background: var(--kleur-primair);
+    color: var(--kleur-wit);
+    padding: 28px 32px;
+}
+
+.website .banner .banner-tekst strong {
+    font-family: var(--font-kop);
+    font-weight: 400;
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.website .banner .banner-tekst span { color: rgba(255, 255, 255, 0.82); }
+.website .banner .icoon { color: var(--kleur-accent); }
+
+.website .banner .knop {
+    background: var(--kleur-accent);
+    border-color: var(--kleur-accent);
+    color: var(--kleur-tekst) !important;
+}
+
+.website .banner .knop:hover { background: #e6c673; border-color: #e6c673; }
+
+/* ---------- Andere pagina's ---------- */
+.website .pagina-kop h1 { font-size: clamp(2.2rem, 5vw, 3rem); }
+
+.website .pakket-kaart:hover { border-color: var(--kleur-primair); }
+.website .pakket-info h2 { font-size: 1.5rem; }
+
+.website .site-footer { border-top: 3px solid var(--kleur-primair); }
+
+@media (max-width: 600px) {
+    .website .hero-inhoud { padding: 56px 20px 48px; }
+    .website .banner { padding: 22px 20px; }
+}

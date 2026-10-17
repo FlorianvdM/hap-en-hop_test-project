@@ -81,6 +81,7 @@ Route::middleware(['auth', IsAdmin::class])
         Route::delete('/berichten/{bericht}', [AdminController::class, 'berichtVerwijderen'])->name('berichten.verwijderen');
 
         Route::get('/instellingen', [AdminController::class, 'instellingen'])->name('instellingen');
+        Route::post('/instellingen/onderhoud', [AdminController::class, 'onderhoudWisselen'])->name('onderhoud');
 
         Route::resource('pakketten', AdminPakketController::class)
             ->except('show')

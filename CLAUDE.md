@@ -31,7 +31,7 @@ Schoolproject van Flo (MBO Utrecht, BE-Backend).
   (`<x-header />`, `<x-icon />`, `<x-favicon />`, ...). Layouts: `layouts/app` (publiek) en `layouts/admin`.
 - Verwijderknoppen in het beheer gebruiken `data-bevestig="..."` op het formulier (eigen pop-up).
   Zet daar alleen vaste tekst in, nooit klantgegevens.
-- Meldingen: `->with('fout', '...')` komt in de pop-up, `->with('succes', '...')` verdwijnt na 8 seconden.
+- Meldingen: `->with('fout', '...')` komt in de pop-up, `->with('succes', '...')` verdwijnt na 4 seconden.
 
 ## Bedrijfsregels (niet veranderen zonder overleg)
 - Een bestelling bestaat uit regels (`bestelregels`) met de prijs van het moment van bestellen.

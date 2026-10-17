@@ -17,6 +17,7 @@ class BestellingController extends Controller
     public const DIEETWENSEN = [
         'vegetarisch' => 'Vegetarisch',
         'veganistisch' => 'Veganistisch',
+        'halal' => 'Halal',
         'glutenvrij' => 'Glutenvrij',
         'lactosevrij' => 'Lactosevrij',
         'notenallergie' => 'Notenallergie',
@@ -99,10 +100,27 @@ class BestellingController extends Controller
     /**
      * Stuurt de bevestiging naar de klant en de melding naar Hap & Hop.
      * Gaat het mailen mis, dan blijft de bestelling gewoon bestaan en komt de fout in het logboek.
-     * Geeft terug of de bevestiging aan de klant is verstuurd.
+     * Geeft terug of de bevestiging aan de klant is verstuurd (of klaargezet in de wachtrij).
      */
     private function verstuurMails(Bestelling $bestelling): bool
     {
+        $pauze = (int) config('hapenhop.mail_pauze');
+
+        // Op de achtergrond versturen: de klant hoeft niet te wachten, een losse "queue worker" verstuurt de mails.
+        // De melding voor Hap & Hop wordt met vertraging klaargezet (zie HAPHOP_MAIL_PAUZE).
+        if (config('hapenhop.mail_wachtrij')) {
+            try {
+                Mail::to($bestelling->email)->queue(new BestellingBevestiging($bestelling));
+                Mail::to(config('hapenhop.bestelmelding_naar'))->later(now()->addSeconds($pauze), new NieuweBestelling($bestelling));
+
+                return true;
+            } catch (Throwable $e) {
+                report($e);
+
+                return false;
+            }
+        }
+
         $bevestigingVerstuurd = false;
 
         try {
@@ -114,8 +132,6 @@ class BestellingController extends Controller
 
         // Testomgevingen zoals de gratis Mailtrap-sandbox weigeren twee mails vlak na elkaar.
         // Met HAPHOP_MAIL_PAUZE in .env wachten we even voordat de tweede mail wordt verstuurd.
-        $pauze = (int) config('hapenhop.mail_pauze');
-
         if ($pauze > 0) {
             sleep($pauze);
         }

@@ -5,16 +5,36 @@
 @section('hero')
     <section class="hero">
         <div class="hero-inhoud">
-            <h1>Verse broodjes &amp; heerlijke catering</h1>
-            <p>Voor elke gelegenheid, van ontbijt tot lunch.</p>
-            <a class="knop" href="{{ route('pakketten.index') }}">Bekijk onze pakketten</a>
+            <span class="eyebrow">Houten en omgeving</span>
+            <h1>Verse broodjes &amp; heerlijke <span class="accent">catering</span></h1>
+            <p class="hero-sub">Voor elke gelegenheid, van ontbijt tot lunch.</p>
+
+            <ul class="tags">
+                <li><a class="tag" href="{{ route('pakketten.index') }}">Ontbijt</a></li>
+                <li><a class="tag" href="{{ route('pakketten.index') }}">Lunch</a></li>
+                <li><a class="tag" href="{{ route('contact') }}">Catering op maat</a></li>
+            </ul>
+
+            <div class="hero-knoppen">
+                <a class="knop" href="{{ route('pakketten.index') }}">Bestel direct</a>
+                <a class="knop knop-rand" href="{{ route('info') }}">Meer info</a>
+            </div>
+
+            <ul class="vinkjes">
+                <li>Verse en lokale ingrediënten</li>
+                <li>Bezorgen of afhalen</li>
+                <li>Pin, contant of op factuur</li>
+            </ul>
         </div>
     </section>
 @endsection
 
 @section('content')
     @if ($producten->isNotEmpty())
-        <h2 style="margin-top: 0;">Onze favorieten</h2>
+        <div class="sectie-kop">
+            <span class="eyebrow">Wat heb je nodig?</span>
+            <h2>Onze favorieten</h2>
+        </div>
 
         <div class="favorieten">
             @foreach ($producten as $product)
@@ -29,7 +49,10 @@
     @endif
 
     @if ($reviews->isNotEmpty())
-        <h2>Wat klanten zeggen</h2>
+        <div class="sectie-kop" style="margin-top: 48px;">
+            <span class="eyebrow">Reviews</span>
+            <h2>Wat klanten zeggen</h2>
+        </div>
 
         <div class="reviews">
             @foreach ($reviews as $review)

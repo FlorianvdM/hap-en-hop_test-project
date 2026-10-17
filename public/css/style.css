@@ -89,6 +89,76 @@ h3 { margin: 0 0 4px; }
     color: var(--kleur-accent);
 }
 
+/* Uitklapmenu "Over ons" */
+.menu-groep { position: relative; }
+
+.menu-knop {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: #ffffff;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.menu-knop:hover,
+.menu-knop.actief,
+.menu-groep.open .menu-knop {
+    color: var(--kleur-accent);
+    border-bottom-color: var(--kleur-accent);
+}
+
+.menu-knop .icoon { transition: transform 0.15s ease; }
+.menu-groep.open .menu-knop .icoon { transform: rotate(180deg); }
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -16px;
+    z-index: 20;
+    min-width: 200px;
+    margin-top: 10px;
+    padding: 6px 0;
+    background: var(--kleur-primair-donker);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+/* Onzichtbare brug, zodat het menu niet dichtgaat als je met de muis eroverheen gaat */
+.submenu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -12px;
+    height: 12px;
+}
+
+.menu-groep.open .submenu { display: block; }
+
+@media (hover: hover) {
+    .menu-groep:hover .submenu { display: block; }
+    .menu-groep:hover .menu-knop { color: var(--kleur-accent); border-bottom-color: var(--kleur-accent); }
+    .menu-groep:hover .menu-knop .icoon { transform: rotate(180deg); }
+}
+
+.hoofdmenu .submenu a {
+    display: block;
+    padding: 12px 20px;
+    border-bottom: 0;
+    white-space: nowrap;
+}
+
+.hoofdmenu .submenu a:hover { background: rgba(255, 255, 255, 0.08); }
+
 .header-acties {
     margin-left: auto;
     display: flex;
@@ -520,6 +590,8 @@ tr.nieuw td { background: #fffbea; }
         margin-left: 0;
         justify-content: space-between;
     }
+
+    .submenu { left: 50%; transform: translateX(-50%); }
 
     .hero h1 { font-size: 2.4rem; max-width: 100%; }
     .hero p { font-size: 1rem; }

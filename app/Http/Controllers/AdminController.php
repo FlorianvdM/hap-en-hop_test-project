@@ -6,6 +6,7 @@ use App\Models\Bestelling;
 use App\Models\ContactBericht;
 use App\Models\Pakket;
 use App\Models\User;
+use App\Support\Onderhoud;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -163,7 +164,21 @@ class AdminController extends Controller
 
     public function instellingen()
     {
-        return view('admin.instellingen');
+        return view('admin.instellingen', [
+            'beheerders' => User::where('is_admin', true)->orderBy('name')->get(),
+            'onderhoud' => Onderhoud::aan(),
+        ]);
+    }
+
+    public function onderhoudWisselen()
+    {
+        $aanzetten = ! Onderhoud::aan();
+
+        Onderhoud::zet($aanzetten);
+
+        return back()->with('succes', $aanzetten
+            ? 'Onderhoudsmodus staat aan: bezoekers zien nu een 404-pagina.'
+            : 'Onderhoudsmodus staat uit: de website is weer bereikbaar voor iedereen.');
     }
 
     /**

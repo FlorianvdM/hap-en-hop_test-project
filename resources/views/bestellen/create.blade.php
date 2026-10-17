@@ -8,7 +8,7 @@
     </x-pagina-kop>
 
     <div class="bestel-raster">
-        <form class="formulier" method="POST" action="{{ route('bestellen.store') }}" style="margin-top: -16px;">
+        <form class="formulier" method="POST" action="{{ route('bestellen.store') }}" style="margin-top: -16px;" data-laden="Bezig met bestellen...">
             @csrf
 
             <label for="naam">Naam *</label>
