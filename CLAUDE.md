@@ -45,6 +45,10 @@ Schoolproject van Flo (MBO Utrecht, BE-Backend).
 - Tabellen moeten InnoDB zijn (afgedwongen in `config/database.php`).
 
 ## Nog te doen
+- AI-functies live testen: Flo moet nog een API-sleutel maken (console.anthropic.com, Individual-account, tegoed bij Billing)
+  en zelf `ANTHROPIC_API_KEY=...` in `.env` zetten (optioneel `ANTHROPIC_MODEL=claude-haiku-5-5`). Herinner Flo hier actief aan
+  aan het begin van elke sessie, totdat het gelukt is. Test daarna `/pakketten` (advies) en Beheer > Berichten (conceptantwoord).
+  Functie 3 (dieetwensen) is nog niet gebouwd: voorstel is een keukenoverzicht zonder AI, hooguit met een AI-hint bij de opmerking.
 - Online betalen met Mollie (iDEAL | Wero): wacht tot Hap & Hop een geregistreerd bedrijf (KvK) is.
   Verzin nooit bedrijfsgegevens.
 - Online zetten (hosting), als allerlaatste stap.
