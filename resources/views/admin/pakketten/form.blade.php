@@ -24,6 +24,11 @@
         <input type="number" id="prijs" name="prijs" step="0.01" min="0" value="{{ old('prijs', $pakket->prijs) }}" required>
         @error('prijs') <div class="fout">{{ $message }}</div> @enderror
 
+        <label for="voorraad">Voorraad (aantal beschikbaar)</label>
+        <input type="number" id="voorraad" name="voorraad" min="0" max="99999" step="1"
+               value="{{ old('voorraad', $pakket->voorraad) }}" placeholder="Leeg = onbeperkt">
+        @error('voorraad') <div class="fout">{{ $message }}</div> @enderror
+
         <label class="vinkje">
             <input type="hidden" name="actief" value="0">
             <input type="checkbox" name="actief" value="1" @checked((bool) old('actief', $pakket->actief))>

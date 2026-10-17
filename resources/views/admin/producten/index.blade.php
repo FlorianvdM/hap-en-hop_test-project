@@ -22,6 +22,7 @@
                         <th>Naam</th>
                         <th>Beschrijving</th>
                         <th>Vanaf-prijs</th>
+                        <th>Voorraad</th>
                         <th>Homepage</th>
                         <th></th>
                     </tr>
@@ -32,6 +33,7 @@
                             <td>{{ $product->naam }}</td>
                             <td>{{ $product->beschrijving }}</td>
                             <td>&euro; {{ number_format($product->prijs, 2, ',', '.') }}</td>
+                            <td>{{ $product->voorraadBeperkt() ? $product->voorraad : 'Onbeperkt' }}</td>
                             <td>
                                 <span class="status {{ $product->actief ? 'status-zichtbaar' : 'status-verborgen' }}">
                                     {{ $product->actief ? 'Zichtbaar' : 'Verborgen' }}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\BestellingBevestiging;
 use App\Mail\NieuweBestelling;
 use App\Models\Bestelling;
+use App\Models\Pakket;
 use App\Support\Winkelwagen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -60,29 +61,15 @@ class BestellingController extends Controller
             'opmerking' => ['nullable', 'string', 'max:1000'],
         ]);
 
-        $bestelling = DB::transaction(function () use ($data, $regels, $request) {
-            $bestelling = Bestelling::create([
-                'user_id' => $request->user()?->id,
-                'naam' => $data['naam'],
-                'email' => $data['email'],
-                'telefoon' => $data['telefoon'] ?? null,
-                'gewenste_datum' => $data['gewenste_datum'],
-                'dieetwensen' => $data['dieetwensen'] ?? [],
-                'opmerking' => $data['opmerking'] ?? null,
-                'status' => 'nieuw',
-            ]);
+        try {
+            $bestelling = DB::transaction(function () use ($data, $regels, $request) {
+                $this->boekVoorraadAf($regels);
 
-            foreach ($regels as $regel) {
-                $bestelling->regels()->create([
-                    'pakket_id' => $regel->pakket->id,
-                    'pakket_naam' => $regel->pakket->naam,
-                    'aantal' => $regel->aantal,
-                    'prijs' => $regel->pakket->prijs,
-                ]);
-            }
-
-            return $bestelling;
-        });
+                return $this->maakBestelling($data, $regels, $request);
+            });
+        } catch (\DomainException $e) {
+            return redirect()->route('winkelwagen.index')->with('fout', $e->getMessage());
+        }
 
         Winkelwagen::leegmaken();
 
@@ -95,6 +82,56 @@ class BestellingController extends Controller
         return redirect()
             ->route('pakketten.index')
             ->with('succes', $melding);
+    }
+
+    /**
+     * Controleert de voorraad en boekt die af. De pakketten worden vergrendeld, zodat twee klanten
+     * tegelijk niet allebei het laatste pakket kunnen kopen. Gooit een DomainException als er te weinig is.
+     */
+    private function boekVoorraadAf($regels): void
+    {
+        $pakketten = Pakket::whereIn('id', $regels->pluck('pakket.id'))->lockForUpdate()->get()->keyBy('id');
+
+        foreach ($regels as $regel) {
+            $pakket = $pakketten[$regel->pakket->id];
+
+            if ($pakket->voorraadBeperkt() && $pakket->voorraad < $regel->aantal) {
+                throw new \DomainException($pakket->voorraad <= 0
+                    ? "{$pakket->naam} is helaas uitverkocht. Verwijder het uit je winkelwagen om verder te gaan."
+                    : "Er zijn nog maar {$pakket->voorraad} van {$pakket->naam} beschikbaar. Pas het aantal aan om verder te gaan.");
+            }
+        }
+
+        foreach ($regels as $regel) {
+            if ($pakketten[$regel->pakket->id]->voorraadBeperkt()) {
+                $pakketten[$regel->pakket->id]->decrement('voorraad', $regel->aantal);
+            }
+        }
+    }
+
+    private function maakBestelling(array $data, $regels, Request $request): Bestelling
+    {
+        $bestelling = Bestelling::create([
+            'user_id' => $request->user()?->id,
+            'naam' => $data['naam'],
+            'email' => $data['email'],
+            'telefoon' => $data['telefoon'] ?? null,
+            'gewenste_datum' => $data['gewenste_datum'],
+            'dieetwensen' => $data['dieetwensen'] ?? [],
+            'opmerking' => $data['opmerking'] ?? null,
+            'status' => 'nieuw',
+        ]);
+
+        foreach ($regels as $regel) {
+            $bestelling->regels()->create([
+                'pakket_id' => $regel->pakket->id,
+                'pakket_naam' => $regel->pakket->naam,
+                'aantal' => $regel->aantal,
+                'prijs' => $regel->pakket->prijs,
+            ]);
+        }
+
+        return $bestelling;
     }
 
     /**

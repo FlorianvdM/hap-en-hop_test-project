@@ -43,6 +43,9 @@
                     <h3>{{ $product->naam }}</h3>
                     <p class="muted">{{ $product->beschrijving }}</p>
                     <p class="prijs">Vanaf &euro; {{ number_format($product->prijs, 2, ',', '.') }}</p>
+                    @if ($product->voorraadTekst())
+                        <p class="voorraad {{ $product->uitverkocht() ? 'voorraad-op' : '' }}">{{ $product->voorraadTekst() }}</p>
+                    @endif
                 </div>
             @endforeach
         </div>

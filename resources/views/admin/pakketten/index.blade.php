@@ -22,6 +22,7 @@
                         <th>Naam</th>
                         <th>Inhoud</th>
                         <th>Prijs</th>
+                        <th>Voorraad</th>
                         <th>Website</th>
                         <th>Bestellingen</th>
                         <th></th>
@@ -33,6 +34,7 @@
                             <td>{{ $pakket->naam }}</td>
                             <td>{{ str_replace(["\r\n", "\n"], ', ', $pakket->beschrijving) }}</td>
                             <td>&euro; {{ number_format($pakket->prijs, 2, ',', '.') }}</td>
+                            <td>{{ $pakket->voorraadBeperkt() ? $pakket->voorraad : 'Onbeperkt' }}</td>
                             <td>
                                 <span class="status {{ $pakket->actief ? 'status-zichtbaar' : 'status-verborgen' }}">
                                     {{ $pakket->actief ? 'Zichtbaar' : 'Verborgen' }}

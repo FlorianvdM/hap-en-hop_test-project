@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Support\BerichtAssistent;
 use App\Support\Onderhoud;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminController extends Controller
@@ -133,7 +134,16 @@ class AdminController extends Controller
         }
 
         // Nieuw of in behandeling: definitief verwijderd, telt niet mee in totaal of omzet.
-        $bestelling->forceDelete();
+        // De voorraad van pakketten met een beperkte voorraad komt weer terug.
+        DB::transaction(function () use ($bestelling) {
+            foreach ($bestelling->regels as $regel) {
+                Pakket::where('id', $regel->pakket_id)
+                    ->whereNotNull('voorraad')
+                    ->increment('voorraad', $regel->aantal);
+            }
+
+            $bestelling->forceDelete();
+        });
 
         return back()->with('succes', 'Bestelling verwijderd.');
     }

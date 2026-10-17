@@ -20,9 +20,15 @@
 
         <p class="prijs">&euro; {{ number_format($pakket->prijs, 2, ',', '.') }}</p>
 
+        @if ($pakket->voorraadTekst())
+            <p class="voorraad {{ $pakket->uitverkocht() ? 'voorraad-op' : '' }}">{{ $pakket->voorraadTekst() }}</p>
+        @endif
+
         <form method="POST" action="{{ route('winkelwagen.toevoegen', $pakket) }}">
             @csrf
-            <button type="submit" class="knop">In winkelwagen</button>
+            <button type="submit" class="knop" @disabled($pakket->uitverkocht())>
+                {{ $pakket->uitverkocht() ? 'Uitverkocht' : 'In winkelwagen' }}
+            </button>
         </form>
     </div>
 </article>
