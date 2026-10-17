@@ -268,3 +268,30 @@
 .voorraad { color: var(--kleur-tekst-zacht); font-size: 0.9rem; margin: 6px 0; }
 .voorraad-op { color: #b00020; font-weight: 700; }
 .knop:disabled { cursor: not-allowed; opacity: 0.55; }
+
+.team-lijst {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.team-kaart {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    text-align: center;
+}
+
+.team-foto {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: block;
+    height: 110px;
+    margin: 0 auto 16px;
+    object-fit: cover;
+    width: 110px;
+}
+
+.team-foto-leeg { background: #e6e6df; }
+.team-functie { color: var(--kleur-tekst-zacht); font-weight: 700; margin: 0 0 8px; }

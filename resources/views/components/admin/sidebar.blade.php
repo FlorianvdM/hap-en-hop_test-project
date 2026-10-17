@@ -35,6 +35,10 @@
             <x-icon name="star" :size="20" /> Reviews
         </a>
 
+        <a href="{{ route('admin.team.index') }}" class="{{ request()->routeIs('admin.team*') ? 'actief' : '' }}">
+            <x-icon name="user" :size="20" /> Wie zijn wij
+        </a>
+
         <a href="{{ route('admin.gebruikers.index') }}" class="{{ request()->routeIs('admin.gebruikers*') ? 'actief' : '' }}">
             <x-icon name="users" :size="20" /> Gebruikers
         </a>

@@ -45,3 +45,8 @@ zorg dat de groene pop-up melding die bovenin het scherm komt na 8 seconden verd
 zorg dat de favicon aan alle pagina's is gekoppelt
 is er een manier om na het bestellen van een product op de site de pagina weer sneller te laten herladen (anders denkt men misschien dat hun bestelling niet goed is doorgekomen, en dat ze dus geld kwijt zijn)
 als de site ofline is (dus wampserver staat niet aan) geef dan een aangepaste foutmelding
+
+- voeg een funtie toe die aangeeft hoeveel van een bepaald product/pakket nog beschikbaar zijn
+
+- voeg een nieuwe pagina toe genaamd "Producten" en voeg daar alles toe wat nodig
+- 

@@ -5,11 +5,14 @@
 @section('content')
     <div class="kop-met-knop">
         <h1>Producten</h1>
-        <a class="knop" href="{{ route('admin.producten.create') }}">Product toevoegen</a>
+        <div class="acties">
+            <a class="knop knop-licht" href="{{ route('producten') }}" target="_blank" rel="noopener">Bekijk pagina Producten</a>
+            <a class="knop" href="{{ route('admin.producten.create') }}">Product toevoegen</a>
+        </div>
     </div>
 
     <p class="muted" style="margin-bottom: 20px;">
-        Zichtbare producten staan onder "Onze favorieten" op de homepage, met een "Vanaf"-prijs.
+        Zichtbare producten staan op de pagina Producten en onder "Onze favorieten" op de homepage, met een "Vanaf"-prijs.
     </p>
 
     @if ($producten->isEmpty())

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminGebruikerController;
 use App\Http\Controllers\AdminPakketController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminReviewController;
+use App\Http\Controllers\AdminTeamlidController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BestellingController;
 use App\Http\Controllers\ContactController;
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/info', [PageController::class, 'info'])->name('info');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/producten', [PageController::class, 'producten'])->name('producten');
+Route::get('/wie-zijn-wij', [PageController::class, 'wieZijnWij'])->name('wie-zijn-wij');
 Route::get('/pakketten', [PakketController::class, 'index'])->name('pakketten.index');
 Route::post('/pakketten/advies', [PakketController::class, 'advies'])
     ->middleware('throttle:5,1')
@@ -96,6 +99,9 @@ Route::middleware(['auth', IsAdmin::class])
             ->parameters(['producten' => 'product']);
 
         Route::resource('reviews', AdminReviewController::class)
+            ->except('show');
+
+        Route::resource('team', AdminTeamlidController::class)
             ->except('show');
 
         Route::resource('gebruikers', AdminGebruikerController::class)
