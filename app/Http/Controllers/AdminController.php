@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BestellingVerzonden;
 use App\Models\Bestelling;
 use App\Models\ContactBericht;
 use App\Models\Pakket;
@@ -10,6 +11,7 @@ use App\Support\BerichtAssistent;
 use App\Support\Onderhoud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminController extends Controller
@@ -34,6 +36,29 @@ class AdminController extends Controller
         $bestellingen = Bestelling::with('regels')->latest()->get();
 
         return view('admin.bestellingen', compact('bestellingen'));
+    }
+
+    public function keuken()
+    {
+        $bestellingen = Bestelling::with('regels')
+            ->whereIn('status', ['nieuw', 'in behandeling'])
+            ->orderBy('gewenste_datum')
+            ->orderBy('id')
+            ->get();
+
+        $dagen = $bestellingen->groupBy(fn ($bestelling) => $bestelling->gewenste_datum->toDateString())
+            ->map(function ($groep) {
+                return [
+                    'datum' => $groep->first()->gewenste_datum,
+                    'bestellingen' => $groep,
+                    'pakketten' => $groep->flatMap->regels
+                        ->groupBy('pakket_naam')
+                        ->map(fn ($regels) => $regels->sum('aantal'))
+                        ->sortKeys(),
+                ];
+            });
+
+        return view('admin.keuken', compact('dagen'));
     }
 
     public function bestellingenExport(Request $request): StreamedResponse
@@ -119,7 +144,13 @@ class AdminController extends Controller
             'status' => ['required', 'in:nieuw,in behandeling,verzonden'],
         ]);
 
+        $isNuVerzonden = $data['status'] === 'verzonden' && $bestelling->status !== 'verzonden';
+
         $bestelling->update($data);
+
+        if ($isNuVerzonden) {
+            Mail::to($bestelling->email)->send(new BestellingVerzonden($bestelling));
+        }
 
         return back()->with('succes', 'Status bijgewerkt.');
     }

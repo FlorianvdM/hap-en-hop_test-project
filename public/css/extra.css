@@ -295,3 +295,10 @@
 
 .team-foto-leeg { background: #e6e6df; }
 .team-functie { color: var(--kleur-tekst-zacht); font-weight: 700; margin: 0 0 8px; }
+
+.afbeelding { background-position: center; background-size: cover; }
+
+.adres-details { margin-top: 6px; }
+.adres-details summary { cursor: pointer; display: inline-block; list-style: none; }
+.adres-details summary::-webkit-details-marker { display: none; }
+.adres-details address { font-style: normal; margin-top: 6px; white-space: nowrap; }

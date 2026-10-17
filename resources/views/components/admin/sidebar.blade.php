@@ -16,6 +16,10 @@
             @endif
         </a>
 
+        <a href="{{ route('admin.keuken') }}" class="{{ request()->routeIs('admin.keuken') ? 'actief' : '' }}">
+            <x-icon name="package" :size="20" /> Keuken
+        </a>
+
         <a href="{{ route('admin.berichten') }}" class="{{ request()->routeIs('admin.berichten*') ? 'actief' : '' }}">
             <x-icon name="mail" :size="20" /> Berichten
             @if ($ongelezenBerichten > 0)

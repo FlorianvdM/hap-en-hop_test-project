@@ -78,6 +78,7 @@ Route::middleware(['auth', IsAdmin::class])
         Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
         Route::get('/bestellingen', [AdminController::class, 'bestellingen'])->name('bestellingen');
+        Route::get('/keuken', [AdminController::class, 'keuken'])->name('keuken');
         Route::get('/bestellingen/export', [AdminController::class, 'bestellingenExport'])->name('bestellingen.export');
         Route::patch('/bestellingen/{bestelling}', [AdminController::class, 'bestellingStatus'])->name('bestellingen.status');
         Route::delete('/bestellingen/{bestelling}', [AdminController::class, 'bestellingVerwijderen'])->name('bestellingen.verwijderen');

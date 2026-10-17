@@ -17,7 +17,7 @@
         <h2>Welke gegevens wij verwerken en waarom</h2>
         <ul>
             <li>
-                <strong>Bestellingen:</strong> naam, e-mailadres, telefoonnummer (optioneel), gewenste datum en je
+                <strong>Bestellingen:</strong> naam, e-mailadres, telefoonnummer (optioneel), gewenste datum, of je ophaalt of laat bezorgen (bij bezorgen ook je adres) en je
                 opmerking. Dat gebruiken we om je bestelling voor te bereiden en contact met je op te nemen.
             </li>
             <li>

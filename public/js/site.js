@@ -21,7 +21,7 @@
 
         if (!tekst || event.defaultPrevented) {
             return;
-        }
+        }ja 
 
         var knop = formulier.querySelector('button[type="submit"]');
 
@@ -51,6 +51,27 @@
             veld.reportValidity();
         }
     });
+
+    // 4. Het adresblok bij het bestelformulier staat alleen open als de klant bezorging kiest
+    var adresBlok = document.getElementById('bezorgadres');
+
+    if (adresBlok) {
+        var toonAdres = function () {
+            var gekozen = document.querySelector('input[name="levering"]:checked');
+            var bezorgen = gekozen && gekozen.value === 'bezorgen';
+
+            adresBlok.hidden = !bezorgen;
+            adresBlok.querySelectorAll('input').forEach(function (veld) {
+                veld.required = bezorgen;
+            });
+        };
+
+        document.querySelectorAll('input[name="levering"]').forEach(function (keuze) {
+            keuze.addEventListener('change', toonAdres);
+        });
+
+        toonAdres();
+    }
 
     // Komt de bezoeker met de terugknop terug op de pagina, dan werkt de knop weer
     window.addEventListener('pageshow', function (event) {

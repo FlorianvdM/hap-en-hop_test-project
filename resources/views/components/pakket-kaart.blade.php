@@ -5,7 +5,7 @@
 @endphp
 
 <article class="pakket-kaart">
-    <div class="afbeelding"></div>
+    <div class="afbeelding" @if ($pakket->afbeeldingUrl()) style="background-image: url('{{ $pakket->afbeeldingUrl() }}')" @endif></div>
 
     <div class="pakket-info">
         <h2>{{ $pakket->naam }}</h2>

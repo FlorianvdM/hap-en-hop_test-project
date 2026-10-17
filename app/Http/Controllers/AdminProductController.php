@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Support\Afbeeldingen;
 use Illuminate\Http\Request;
 
 class AdminProductController extends Controller
@@ -23,7 +24,7 @@ class AdminProductController extends Controller
 
     public function store(Request $request)
     {
-        Product::create($this->gevalideerd($request));
+        Product::create(Afbeeldingen::opslaan($request, $this->gevalideerd($request), null, 'producten'));
 
         return redirect()
             ->route('admin.producten.index')
@@ -37,7 +38,7 @@ class AdminProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        $product->update($this->gevalideerd($request));
+        $product->update(Afbeeldingen::opslaan($request, $this->gevalideerd($request), $product->afbeelding, 'producten'));
 
         return redirect()
             ->route('admin.producten.index')
@@ -46,6 +47,7 @@ class AdminProductController extends Controller
 
     public function destroy(Product $product)
     {
+        Afbeeldingen::verwijderen($product->afbeelding);
         $product->delete();
 
         return redirect()
@@ -61,6 +63,7 @@ class AdminProductController extends Controller
             'prijs' => ['required', 'numeric', 'min:0', 'max:99999'],
             'voorraad' => ['nullable', 'integer', 'min:0', 'max:99999'],
             'actief' => ['required', 'boolean'],
+            'afbeelding' => Afbeeldingen::REGEL,
         ]);
     }
 }

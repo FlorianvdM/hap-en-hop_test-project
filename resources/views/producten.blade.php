@@ -13,7 +13,7 @@
         <div class="favorieten">
             @foreach ($producten as $product)
                 <div class="kaart">
-                    <div class="afbeelding"></div>
+                    <div class="afbeelding" @if ($product->afbeeldingUrl()) style="background-image: url('{{ $product->afbeeldingUrl() }}')" @endif></div>
                     <h3>{{ $product->naam }}</h3>
                     <p class="muted">{{ $product->beschrijving }}</p>
                     <p class="prijs">Vanaf &euro; {{ number_format($product->prijs, 2, ',', '.') }}</p>

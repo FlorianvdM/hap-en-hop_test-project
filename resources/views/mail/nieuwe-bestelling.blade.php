@@ -11,7 +11,11 @@
         @if ($bestelling->telefoon)
             <strong>Telefoon:</strong> {{ $bestelling->telefoon }}<br>
         @endif
-        <strong>Gewenste datum:</strong> {{ $bestelling->gewenste_datum->format('d-m-Y') }}
+        <strong>Gewenste datum:</strong> {{ $bestelling->gewenste_datum->format('d-m-Y') }}<br>
+        <strong>Levering:</strong> {{ $bestelling->leveringTekst() }}
+        @if ($bestelling->bezorgadres())
+            <br><strong>Adres:</strong> {!! nl2br(e($bestelling->bezorgadres())) !!}
+        @endif
     </p>
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin: 0 0 16px; border-top: 1px solid #e5e7eb;">

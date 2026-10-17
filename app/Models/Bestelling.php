@@ -19,6 +19,10 @@ class Bestelling extends Model
         'email',
         'telefoon',
         'gewenste_datum',
+        'levering',
+        'straat',
+        'postcode',
+        'plaats',
         'dieetwensen',
         'opmerking',
         'status',
@@ -28,6 +32,27 @@ class Bestelling extends Model
         'gewenste_datum' => 'date',
         'dieetwensen' => 'array',
     ];
+
+    public function wordtOpgehaald(): bool
+    {
+        return $this->levering === 'ophalen';
+    }
+
+    /** Het bezorgadres op twee regels, of null als er niet bezorgd wordt of geen adres is. */
+    public function bezorgadres(): ?string
+    {
+        if ($this->wordtOpgehaald() || ! $this->straat) {
+            return null;
+        }
+
+        return $this->straat . "
+" . trim($this->postcode . ' ' . $this->plaats);
+    }
+
+    public function leveringTekst(): string
+    {
+        return $this->wordtOpgehaald() ? 'Ophalen' : 'Bezorgen';
+    }
 
     public function regels(): HasMany
     {

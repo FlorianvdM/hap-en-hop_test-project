@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pakket;
+use App\Support\Afbeeldingen;
 use Illuminate\Http\Request;
 
 class AdminPakketController extends Controller
@@ -25,7 +26,7 @@ class AdminPakketController extends Controller
 
     public function store(Request $request)
     {
-        Pakket::create($this->gevalideerd($request));
+        Pakket::create(Afbeeldingen::opslaan($request, $this->gevalideerd($request), null, 'pakketten'));
 
         return redirect()
             ->route('admin.pakketten.index')
@@ -39,7 +40,7 @@ class AdminPakketController extends Controller
 
     public function update(Request $request, Pakket $pakket)
     {
-        $pakket->update($this->gevalideerd($request));
+        $pakket->update(Afbeeldingen::opslaan($request, $this->gevalideerd($request), $pakket->afbeelding, 'pakketten'));
 
         return redirect()
             ->route('admin.pakketten.index')
@@ -52,6 +53,7 @@ class AdminPakketController extends Controller
             return back()->with('fout', 'Dit pakket komt voor in bestellingen en kan niet worden verwijderd. Zet het op "Verborgen" om het van de website te halen.');
         }
 
+        Afbeeldingen::verwijderen($pakket->afbeelding);
         $pakket->delete();
 
         return redirect()
@@ -67,6 +69,7 @@ class AdminPakketController extends Controller
             'prijs' => ['required', 'numeric', 'min:0', 'max:99999'],
             'voorraad' => ['nullable', 'integer', 'min:0', 'max:99999'],
             'actief' => ['required', 'boolean'],
+            'afbeelding' => Afbeeldingen::REGEL,
         ]);
     }
 }

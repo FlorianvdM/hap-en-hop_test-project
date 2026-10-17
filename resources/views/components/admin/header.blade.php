@@ -11,8 +11,21 @@
         <nav class="hoofdmenu">
             <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'actief' : '' }}">Home</a>
             <a href="{{ route('pakketten.index') }}" class="{{ request()->routeIs('pakketten.*') ? 'actief' : '' }}">Pakketten</a>
-            <a href="{{ route('info') }}" class="{{ request()->routeIs('info') ? 'actief' : '' }}">Info</a>
-            <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'actief' : '' }}">Contact</a>
+
+            <a href="{{ route('producten') }}" class="{{ request()->routeIs('producten') ? 'actief' : '' }}">Producten</a>
+
+            <div class="menu-groep">
+                <button type="button" class="menu-knop {{ request()->routeIs('info', 'contact', 'wie-zijn-wij') ? 'actief' : '' }}"
+                        aria-expanded="false" aria-controls="submenu-over-ons">
+                    Over ons <x-icon name="chevron-down" :size="14" />
+                </button>
+
+                <div class="submenu" id="submenu-over-ons">
+                    <a href="{{ route('wie-zijn-wij') }}" class="{{ request()->routeIs('wie-zijn-wij') ? 'actief' : '' }}">Wie zijn wij</a>
+                    <a href="{{ route('info') }}" class="{{ request()->routeIs('info') ? 'actief' : '' }}">Info</a>
+                    <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'actief' : '' }}">Contact</a>
+                </div>
+            </div>
         </nav>
 
         <div class="header-acties">

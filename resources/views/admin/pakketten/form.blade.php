@@ -5,7 +5,7 @@
 @section('content')
     <h1>{{ $pakket->exists ? 'Pakket wijzigen' : 'Pakket toevoegen' }}</h1>
 
-    <form class="formulier" method="POST"
+    <form class="formulier" method="POST" enctype="multipart/form-data"
           action="{{ $pakket->exists ? route('admin.pakketten.update', $pakket) : route('admin.pakketten.store') }}">
         @csrf
         @if ($pakket->exists)
@@ -28,6 +28,15 @@
         <input type="number" id="voorraad" name="voorraad" min="0" max="99999" step="1"
                value="{{ old('voorraad', $pakket->voorraad) }}" placeholder="Leeg = onbeperkt">
         @error('voorraad') <div class="fout">{{ $message }}</div> @enderror
+
+        <label for="afbeelding">Afbeelding (jpg, png of webp, maximaal 4 MB)</label>
+        @if ($pakket->afbeeldingUrl())
+            <img src="{{ $pakket->afbeeldingUrl() }}" alt="Huidige afbeelding van {{ $pakket->naam }}" width="120"
+                 style="border-radius: 8px; display: block; margin-bottom: 8px;">
+            <p class="muted">Kies een nieuw bestand om de afbeelding te vervangen.</p>
+        @endif
+        <input type="file" id="afbeelding" name="afbeelding" accept="image/jpeg,image/png,image/webp">
+        @error('afbeelding') <div class="fout">{{ $message }}</div> @enderror
 
         <label class="vinkje">
             <input type="hidden" name="actief" value="0">

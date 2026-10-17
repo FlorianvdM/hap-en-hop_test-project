@@ -46,6 +46,7 @@
                         <th>Bestelling</th>
                         <th>Totaal</th>
                         <th>Gewenste datum</th>
+                        <th>Levering</th>
                         <th>Dieetwensen</th>
                         <th>Opmerking</th>
                         <th>Status</th>
@@ -70,6 +71,7 @@
                             </td>
                             <td>&euro; {{ number_format($bestelling->totaal, 2, ',', '.') }}</td>
                             <td>{{ $bestelling->gewenste_datum->format('d-m-Y') }}</td>
+                            <td>@include('admin.partials.levering', ['bestelling' => $bestelling])</td>
                             <td>
                                 @foreach (($bestelling->dieetwensen ?? []) as $wens)
                                     <span class="status dieet-label">{{ ucfirst($wens) }}</span>

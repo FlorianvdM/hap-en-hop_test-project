@@ -30,6 +30,34 @@
             @error('gewenste_datum') <div class="fout">{{ $message }}</div> @enderror
 
             <fieldset>
+                <legend>Ophalen of bezorgen *</legend>
+
+                <label class="vinkje">
+                    <input type="radio" name="levering" value="ophalen" @checked(old('levering', 'ophalen') === 'ophalen')>
+                    Ik haal de bestelling zelf op
+                </label>
+                <label class="vinkje">
+                    <input type="radio" name="levering" value="bezorgen" @checked(old('levering') === 'bezorgen')>
+                    Bezorgen
+                </label>
+            </fieldset>
+            @error('levering') <div class="fout">{{ $message }}</div> @enderror
+
+            <div id="bezorgadres" @if (old('levering') !== 'bezorgen') hidden @endif>
+                <label for="straat">Straat en huisnummer *</label>
+                <input type="text" id="straat" name="straat" value="{{ old('straat') }}" autocomplete="street-address">
+                @error('straat') <div class="fout">{{ $message }}</div> @enderror
+
+                <label for="postcode">Postcode *</label>
+                <input type="text" id="postcode" name="postcode" value="{{ old('postcode') }}" autocomplete="postal-code">
+                @error('postcode') <div class="fout">{{ $message }}</div> @enderror
+
+                <label for="plaats">Plaats *</label>
+                <input type="text" id="plaats" name="plaats" value="{{ old('plaats') }}" autocomplete="address-level2">
+                @error('plaats') <div class="fout">{{ $message }}</div> @enderror
+            </div>
+
+            <fieldset>
                 <legend>Dieetwensen (optioneel)</legend>
 
                 @foreach ($dieetwensen as $sleutel => $label)

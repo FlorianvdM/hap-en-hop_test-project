@@ -99,7 +99,7 @@ class ExtraFunctiesTest extends TestCase
 
         $this->post('/bestellen', [
             'naam' => 'Ali', 'email' => 'ali@example.com',
-            'gewenste_datum' => now()->addDays(2)->format('Y-m-d'),
+            'levering' => 'ophalen', 'gewenste_datum' => now()->addDays(2)->format('Y-m-d'),
             'dieetwensen' => ['halal'],
         ])->assertRedirect('/pakketten');
 
@@ -126,7 +126,7 @@ class ExtraFunctiesTest extends TestCase
     {
         $pakket = Pakket::first();
         $this->post("/winkelwagen/{$pakket->id}");
-        $this->post('/bestellen', ['naam' => 'Ali', 'email' => 'ali@example.com', 'gewenste_datum' => now()->addDays(2)->format('Y-m-d')]);
+        $this->post('/bestellen', ['naam' => 'Ali', 'email' => 'ali@example.com', 'levering' => 'ophalen', 'gewenste_datum' => now()->addDays(2)->format('Y-m-d')]);
 
         $this->get('/pakketten')->assertOk()->assertSee('data-verdwijnt="4000"', false)->assertSee('js/site.js');
     }
@@ -165,7 +165,7 @@ class ExtraFunctiesTest extends TestCase
 
         $pakket = Pakket::first();
         $this->post("/winkelwagen/{$pakket->id}");
-        $this->post('/bestellen', ['naam' => 'Ali', 'email' => 'ali@example.com', 'gewenste_datum' => now()->addDays(2)->format('Y-m-d')])
+        $this->post('/bestellen', ['naam' => 'Ali', 'email' => 'ali@example.com', 'levering' => 'ophalen', 'gewenste_datum' => now()->addDays(2)->format('Y-m-d')])
             ->assertRedirect('/pakketten');
 
         // niets is nog verstuurd, wel twee taken klaargezet
