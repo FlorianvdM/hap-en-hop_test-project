@@ -5,7 +5,7 @@
 @section('content')
     <div class="tekstpagina">
         <x-pagina-kop titel="Privacyverklaring">
-            Hier lees je hoe Hap &amp; Hop omgaat met jouw gegevens. Laatst bijgewerkt: 14 oktober 2026.
+            Hier lees je hoe Hap &amp; Hop omgaat met jouw gegevens. Laatst bijgewerkt: 17 oktober 2026.
         </x-pagina-kop>
 
         <h2>Wie wij zijn</h2>
@@ -34,6 +34,19 @@
             bereiden.
         </p>
 
+        <h2>AI-assistent</h2>
+        <p>
+            Op de pagina met pakketten kun je een advies vragen aan onze AI-assistent. Wat je daar invult (het aantal
+            personen en je wensen) sturen we samen met onze pakkettenlijst naar een externe AI-dienst van Anthropic, die
+            het advies maakt. Wij slaan jouw invoer en het advies niet op. Vul daarom geen namen, adressen of andere
+            persoonsgegevens in. Het advies is automatisch gemaakt en kan fouten bevatten; bij twijfel of een allergie
+            nemen we graag persoonlijk contact met je op.
+        </p>
+        <p>
+            Berichten uit het contactformulier kunnen door een beheerder met hulp van dezelfde AI-dienst worden
+            beantwoord: de AI maakt dan een conceptantwoord, dat een medewerker altijd zelf controleert en verstuurt.
+        </p>
+
         <h2>Hoe lang wij gegevens bewaren</h2>
         <ul>
             <li>Bestelgegevens bewaren we zolang dat nodig is voor de uitvoering en onze administratie. Voor de administratie geldt een wettelijke bewaartermijn van zeven jaar.</li>
@@ -44,7 +57,7 @@
         <h2>Delen met anderen</h2>
         <p>
             Wij verkopen jouw gegevens nooit. We delen alleen gegevens met partijen die we nodig hebben voor onze
-            dienstverlening, zoals onze hostingprovider, onze e-mailprovider en, bij online betalen, onze betaalprovider.
+            dienstverlening, zoals onze hostingprovider, onze e-mailprovider, onze AI-dienst (Anthropic, zie hierboven) en, bij online betalen, onze betaalprovider.
         </p>
 
         <h2>Cookies</h2>

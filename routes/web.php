@@ -21,6 +21,9 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/info', [PageController::class, 'info'])->name('info');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/pakketten', [PakketController::class, 'index'])->name('pakketten.index');
+Route::post('/pakketten/advies', [PakketController::class, 'advies'])
+    ->middleware('throttle:5,1')
+    ->name('pakketten.advies');
 
 // Winkelwagen en bestellen
 Route::get('/winkelwagen', [WinkelwagenController::class, 'index'])->name('winkelwagen.index');
@@ -78,7 +81,8 @@ Route::middleware(['auth', IsAdmin::class])
 
         Route::get('/berichten', [AdminController::class, 'berichten'])->name('berichten');
         Route::patch('/berichten/{bericht}', [AdminController::class, 'berichtGelezen'])->name('berichten.gelezen');
-        Route::delete('/berichten/{bericht}', [AdminController::class, 'berichtVerwijderen'])->name('berichten.verwijderen');
+        Route::post('/berichten/{bericht}/concept', [AdminController::class, 'berichtConcept'])->name('berichten.concept');
+        Route::delete('/berichten/{bericht}',[AdminController::class, 'berichtVerwijderen'])->name('berichten.verwijderen');
 
         Route::get('/instellingen', [AdminController::class, 'instellingen'])->name('instellingen');
         Route::post('/instellingen/onderhoud', [AdminController::class, 'onderhoudWisselen'])->name('onderhoud');

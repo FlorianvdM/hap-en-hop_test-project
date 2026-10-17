@@ -6,6 +6,7 @@ use App\Models\Bestelling;
 use App\Models\ContactBericht;
 use App\Models\Pakket;
 use App\Models\User;
+use App\Support\BerichtAssistent;
 use App\Support\Onderhoud;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -149,6 +150,23 @@ class AdminController extends Controller
         $bericht->update(['gelezen' => true]);
 
         return back()->with('succes', 'Bericht gemarkeerd als gelezen.');
+    }
+
+    public function berichtConcept(ContactBericht $bericht, BerichtAssistent $assistent)
+    {
+        if (! $assistent->beschikbaar()) {
+            return back()->with('fout', 'De AI-assistent staat nog niet aan: er is geen API-sleutel ingesteld.');
+        }
+
+        try {
+            $concept = $assistent->concept($bericht);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()->with('fout', 'Het conceptantwoord maken is niet gelukt. Probeer het later opnieuw.');
+        }
+
+        return back()->with('concept', ['id' => $bericht->id, 'tekst' => $concept]);
     }
 
     public function berichtVerwijderen(ContactBericht $bericht)

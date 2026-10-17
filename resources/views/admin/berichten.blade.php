@@ -48,9 +48,21 @@
                                             <button type="submit" class="knop knop-klein">Gelezen</button>
                                         </form>
                                     @endif
+                                    <form method="POST" action="{{ route('admin.berichten.concept', $bericht) }}">
+                                        @csrf
+                                        <button type="submit" class="knop knop-klein">Conceptantwoord</button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
+                        @if (session('concept.id') === $bericht->id)
+                            <tr>
+                                <td colspan="4">
+                                    <strong>Conceptantwoord (controleer en pas aan voordat je het verstuurt)</strong>
+                                    <textarea rows="8" style="width: 100%;" readonly>{{ session('concept.tekst') }}</textarea>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>
