@@ -24,8 +24,8 @@
                         @method('PATCH')
                         <label class="sr-only" for="aantal-{{ $regel->pakket->id }}">Aantal</label>
                         <input type="number" id="aantal-{{ $regel->pakket->id }}" name="aantal"
-                               min="1" max="100" value="{{ $regel->aantal }}">
-                        <button type="submit" class="knop knop-klein knop-licht">Bijwerken</button>
+                               min="1" max="100" value="{{ $regel->aantal }}" data-auto-verstuur>
+                        <noscript><button type="submit" class="knop knop-klein knop-licht">Bijwerken</button></noscript>
                     </form>
 
                     <div class="wagen-prijs">&euro; {{ number_format($regel->totaal, 2, ',', '.') }}</div>

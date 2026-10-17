@@ -37,6 +37,21 @@
         }, 0);
     });
 
+    // 3. Velden met data-auto-verstuur sturen hun formulier zelf op zodra de waarde verandert
+    document.addEventListener('change', function (event) {
+        var veld = event.target;
+
+        if (!veld.hasAttribute || !veld.hasAttribute('data-auto-verstuur') || !veld.form) {
+            return;
+        }
+
+        if (veld.checkValidity()) {
+            veld.form.submit();
+        } else {
+            veld.reportValidity();
+        }
+    });
+
     // Komt de bezoeker met de terugknop terug op de pagina, dan werkt de knop weer
     window.addEventListener('pageshow', function (event) {
         if (!event.persisted) {
