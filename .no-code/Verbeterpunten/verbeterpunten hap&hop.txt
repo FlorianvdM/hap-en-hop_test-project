@@ -1,0 +1,47 @@
+verbeterpunten hap&hop:
+
+- verschillende kleuren bij status bestellingen
+- optie om foute bestellingen te verwijderen na bestellen (omzet en totale bestellingen gaan dan ook weg)
+- optie om bestellingen te verwijderen na afronding
+- optie om berichten te verwijderen na gelezen
+- mogelijkheid om pakketten/producten te toevoegen, wijzigen en verwijderen alleen bij beheerderspaneel
+- mogelijkheid om de gebruikers direct te kunnen mailen vanuit het gebruikersoverzicht
+- mogelijkheid om de gebruikersgegevens te kunnen wijzigen/verwijderen vanuit het gebruikersoverzicht
+
+
+- maak één unieke layout/pop-up melding voor alle waarschuwingen op de pagina zelf
+- zorg dat een admin nooit een andere admin kan verwijderen, de rol moet eerst veranderen en daarna kan dat account pas verwijderd worden
+- laat de melding voor als de status op verzonden staat en je wilt een bestelling verwijderen weg
+- zorg dat de omzet er pas bij wordt gerekend als de bestelling is ge soft delet
+
+voeg extra toe:
+- E-mail bij een nieuwe bestelling
+- hosting (herinner mij als aller laatste)
+- Social-iconen
+- Dieetwensen in het bestelformulier
+- Een eigen 404-pagina en een favicon met het logo
+- Winkelwagen
+- "Mijn bestellingen"
+- Omzetgrafiek per maand op het dashboard (zet er een knop bij zodat ze het makkelijk aan en uit kunnen zetten als ze het wel of niet willen)
+- Export van bestellingen naar Excel of CSV (maak hier ook een aparte knop voor)
+- Reviews of een "wat klanten zeggen"-blok op de homepage
+- Online betalen met iDEAL (als ééna laatste)
+- QR Code die meteen leid naar de bestelpagina
+- Wachtwoord vergeten
+
+
+- Privacyverklaring
+- In .env APP_DEBUG=false zetten, het standaard beheerwachtwoord wijzigen en .env nooit op GitHub zetten. (herinner mij hier aan)
+
+
+- als er een extra beheerder is toegevoegd, zet die dan ook bij instellingen
+- zet een knop bij instellingen die ingedrukt kan worden on een 404 fout te weergeven voor alle bezoekers voor heel de site (bijv voor onderhoud aan de site)
+
+Wat je op de echte server moet aanpassen: APP_DEBUG=false, APP_ENV=production, een eigen database-gebruiker met wachtwoord, het echte APP_URL en een echt afzenderadres. Dat komt allemaal terug in blok 6, maar de opmerkingen in het bestand helpen je alvast. (Herininner mij hier aan)
+
+voeg bij dieet wensen halal toe
+voeg het hap en hop logo toe bij de bevestigingsmail 
+zorg dat de groene pop-up melding die bovenin het scherm komt na 8 seconden verdwijnt
+zorg dat de favicon aan alle pagina's is gekoppelt
+is er een manier om na het bestellen van een product op de site de pagina weer sneller te laten herladen (anders denkt men misschien dat hun bestelling niet goed is doorgekomen, en dat ze dus geld kwijt zijn)
+als de site ofline is (dus wampserver staat niet aan) geef dan een aangepaste foutmelding
