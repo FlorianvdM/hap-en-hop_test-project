@@ -8,6 +8,10 @@ return [
     'tiktok' => 'https://www.tiktok.com/@haphopcatering',
     'instagram' => 'https://www.instagram.com/haphopcatering',
 
+    // Telefoonnummer op de contactpagina. Zet het in .env (HAPHOP_TELEFOON="+31 6 12345678"),
+    // zodat het niet in de code op GitHub komt. Leeg = de regel "Telefoon" wordt niet getoond.
+    'telefoon' => env('HAPHOP_TELEFOON'),
+
     // KvK-nummer. Leeg laten zolang Hap & Hop niet is ingeschreven; dan toont de footer niets.
     // Zodra het bestaat zet je HAPHOP_KVK=12345678 in .env op de server.
     'kvk' => env('HAPHOP_KVK'),

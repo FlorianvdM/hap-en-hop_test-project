@@ -3,6 +3,15 @@
 @section('title', 'Contact | Hap & Hop')
 
 @section('content')
+    @php
+        // Contactgegevens uit config/hapenhop.php (en dus uit .env)
+        $telefoon = config('hapenhop.telefoon');
+        $email = config('hapenhop.email');
+
+        // Voor de belknop op een telefoon: alleen cijfers en een eventuele plus
+        $telefoonLink = $telefoon ? preg_replace('/[^+\d]/', '', $telefoon) : null;
+    @endphp
+
     <x-pagina-kop titel="Contact">
         Heb je een vraag, wil je een bestelling plaatsen of sparren over maatwerk? Neem gerust contact met ons op.
     </x-pagina-kop>
@@ -12,36 +21,43 @@
             @csrf
 
             <label for="naam">Naam *</label>
-            <input type="text" id="naam" name="naam" placeholder="Je naam"
-                   value="{{ old('naam', auth()->user()?->name) }}" required>
-            @error('naam') <div class="fout">{{ $message }}</div> @enderror
+            <input type="text" id="naam" name="naam" placeholder="Je naam" value="{{ old('naam', auth()->user()?->name) }}"
+                required>
+            @error('naam')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <label for="email">E-mailadres *</label>
             <input type="email" id="email" name="email" placeholder="Je e-mailadres"
-                   value="{{ old('email', auth()->user()?->email) }}" required>
-            @error('email') <div class="fout">{{ $message }}</div> @enderror
+                value="{{ old('email', auth()->user()?->email) }}" required>
+            @error('email')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <label for="bericht">Bericht *</label>
-            <textarea id="bericht" name="bericht" rows="6" placeholder="Typ je bericht..." required>{{ old('bericht') }}</textarea>
-            @error('bericht') <div class="fout">{{ $message }}</div> @enderror
+            <textarea id="bericht" name="bericht" rows="6" placeholder="Typ je bericht..."
+                required>{{ old('bericht') }}</textarea>
+            @error('bericht')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <button type="submit" class="knop">Versturen</button>
         </form>
 
         <aside class="contact-kaart">
-            <div class="contact-item">
-                <x-icon name="phone" />
-                <div>
-                    <strong>Telefoon</strong>
-                    <span>Nog invullen</span>
+            {{-- De telefoonregel staat er alleen als er een nummer is ingesteld --}}
+            @if ($telefoon)
+                <div class="contact-item">
+                    <x-icon name="phone" />
+                    <div>
+                        <strong>Telefoon</strong>
+                        <span><a href="tel:{{ $telefoonLink }}">{{ $telefoon }}</a></span>
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <div class="contact-item">
                 <x-icon name="mail" />
                 <div>
                     <strong>E-mail</strong>
-                    <span>Haphopcatering@outlook.com</span>
+                    <span><a href="mailto:{{ $email }}">{{ $email }}</a></span>
                 </div>
             </div>
 
