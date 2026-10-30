@@ -25,3 +25,8 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Eigen werkbestanden, niet nodig op de website
+/.claude/
+/.no-code/
+/mobile-*.png

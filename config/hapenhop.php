@@ -2,12 +2,19 @@
 
 return [
     'naam' => 'Hap & Hop',
-    'email' => 'Haphopcatering@outlook.com',
+
+    // Contactadres op de website en in de privacyverklaring. Pas aan in .env (HAPHOP_EMAIL).
+    'email' => env('HAPHOP_EMAIL', 'Haphopcatering@outlook.com'),
     'tiktok' => 'https://www.tiktok.com/@haphopcatering',
     'instagram' => 'https://www.instagram.com/haphopcatering',
 
-    // Naar dit adres gaat de melding bij een nieuwe bestelling
-    'bestelmelding_naar' => 'Haphopcatering@outlook.com',
+    // Naar dit adres gaat de melding bij een nieuwe bestelling.
+    // Staat HAPHOP_BESTELMELDING_NAAR niet in .env, dan gebruiken we het contactadres hierboven.
+    'bestelmelding_naar' => env('HAPHOP_BESTELMELDING_NAAR', env('HAPHOP_EMAIL', 'Haphopcatering@outlook.com')),
+
+    // Beheerder die de seeder aanmaakt (php artisan db:seed). Het wachtwoord staat alleen in .env.
+    'admin_email' => env('HAPHOP_ADMIN_EMAIL', 'admin@hapenhop.nl'),
+    'admin_wachtwoord' => env('HAPHOP_ADMIN_WACHTWOORD'),
 
     // Aantal seconden wachten tussen de twee bestelmails. Standaard 0 (niet wachten).
     // Zet HAPHOP_MAIL_PAUZE=11 in .env als je met de gratis Mailtrap-sandbox test.
