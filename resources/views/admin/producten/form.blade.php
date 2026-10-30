@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 
 @section('title', ($product->exists ? 'Product wijzigen' : 'Product toevoegen') . ' | Hap & Hop')
+@section('paginatitel')
+    {{ $product->exists ? 'Product wijzigen' : 'Product toevoegen' }}
+@endsection
 
 @section('content')
-    <h1>{{ $product->exists ? 'Product wijzigen' : 'Product toevoegen' }}</h1>
-
     <form class="formulier" method="POST" enctype="multipart/form-data"
         action="{{ $product->exists ? route('admin.producten.update', $product) : route('admin.producten.store') }}">
         @csrf

@@ -1,13 +1,12 @@
 @extends('layouts.admin')
 
 @section('title', 'Instellingen | Hap & Hop')
+@section('paginatitel', 'Beheerder')
+@section('subtitel')
+    Je bent ingelogd als beheerder. Hier heb je toegang tot alle functies.
+@endsection
 
 @section('content')
-    <h1>Beheerder</h1>
-    <p class="muted" style="margin-bottom: 20px;">
-        Je bent ingelogd als beheerder. Hier heb je toegang tot alle functies.
-    </p>
-
     <div class="profiel-kaart">
         <div class="avatar">
             <x-icon name="user" :size="28" />

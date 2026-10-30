@@ -1,14 +1,12 @@
 @extends('layouts.admin')
 
 @section('title', 'Gebruikers | Hap & Hop')
+@section('paginatitel', 'Gebruikers')
+@section('subtitel')
+    Alle accounts op de website. Met "Mailen" opent je e-mailprogramma met het adres al ingevuld. Een beheerder kun je pas verwijderen nadat je zijn of haar rol hebt gewijzigd naar Klant.
+@endsection
 
 @section('content')
-    <h1>Gebruikers</h1>
-    <p class="muted" style="margin-bottom: 20px;">
-        Alle accounts op de website. Met "Mailen" opent je e-mailprogramma met het adres al ingevuld.
-        Een beheerder kun je pas verwijderen nadat je zijn of haar rol hebt gewijzigd naar Klant.
-    </p>
-
     <div class="tabel-wrap">
         <table>
             <thead>

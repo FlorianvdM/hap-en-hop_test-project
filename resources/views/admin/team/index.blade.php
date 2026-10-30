@@ -1,17 +1,16 @@
 @extends('layouts.admin')
 
 @section('title', 'Wie zijn wij | Hap & Hop')
+@section('paginatitel', 'Wie zijn wij')
+@section('subtitel')
+    Zichtbare personen staan op de pagina "Wie zijn wij", gesorteerd op volgorde (laagste nummer eerst).
+@endsection
+
+@section('acties')
+    <a class="knop" href="{{ route('admin.team.create') }}">Opdrachtgever toevoegen</a>
+@endsection
 
 @section('content')
-    <div class="kop-met-knop">
-        <h1>Wie zijn wij</h1>
-        <a class="knop" href="{{ route('admin.team.create') }}">Opdrachtgever toevoegen</a>
-    </div>
-
-    <p class="muted" style="margin-bottom: 20px;">
-        Zichtbare personen staan op de pagina "Wie zijn wij", gesorteerd op volgorde (laagste nummer eerst).
-    </p>
-
     @if ($teamleden->isEmpty())
         <p>Er zijn nog geen opdrachtgevers toegevoegd.</p>
     @else

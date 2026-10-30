@@ -1,10 +1,9 @@
 @extends('layouts.admin')
 
 @section('title', 'Gebruiker wijzigen | Hap & Hop')
+@section('paginatitel', 'Gebruiker wijzigen')
 
 @section('content')
-    <h1>Gebruiker wijzigen</h1>
-
     <form class="formulier" method="POST" action="{{ route('admin.gebruikers.update', $gebruiker) }}">
         @csrf
         @method('PUT')

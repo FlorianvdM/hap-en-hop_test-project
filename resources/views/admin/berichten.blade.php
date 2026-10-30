@@ -1,13 +1,12 @@
 @extends('layouts.admin')
 
 @section('title', 'Berichten | Hap & Hop')
+@section('paginatitel', 'Berichten')
+@section('subtitel')
+    Berichten uit het contactformulier. Ongelezen berichten zijn geel gemarkeerd. Verwijderen kan nadat je een bericht als gelezen hebt gemarkeerd.
+@endsection
 
 @section('content')
-    <h1>Berichten</h1>
-    <p class="muted">
-        Berichten uit het contactformulier. Ongelezen berichten zijn geel gemarkeerd. Verwijderen kan nadat je een bericht als gelezen hebt gemarkeerd.
-    </p>
-
     @if ($berichten->isEmpty())
         <p>Er zijn nog geen berichten.</p>
     @else

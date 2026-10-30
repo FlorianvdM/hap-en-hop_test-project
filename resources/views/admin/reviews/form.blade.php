@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 
 @section('title', ($review->exists ? 'Review wijzigen' : 'Review toevoegen') . ' | Hap & Hop')
+@section('paginatitel')
+    {{ $review->exists ? 'Review wijzigen' : 'Review toevoegen' }}
+@endsection
 
 @section('content')
-    <h1>{{ $review->exists ? 'Review wijzigen' : 'Review toevoegen' }}</h1>
-
     <form class="formulier" method="POST"
           action="{{ $review->exists ? route('admin.reviews.update', $review) : route('admin.reviews.store') }}">
         @csrf

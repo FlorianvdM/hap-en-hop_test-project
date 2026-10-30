@@ -1,17 +1,16 @@
 @extends('layouts.admin')
 
 @section('title', 'Reviews | Hap & Hop')
+@section('paginatitel', 'Reviews')
+@section('subtitel')
+    Zichtbare reviews staan onder "Wat klanten zeggen" op de homepage. Er worden maximaal 6 getoond, de nieuwste eerst.
+@endsection
+
+@section('acties')
+    <a class="knop" href="{{ route('admin.reviews.create') }}">Review toevoegen</a>
+@endsection
 
 @section('content')
-    <div class="kop-met-knop">
-        <h1>Reviews</h1>
-        <a class="knop" href="{{ route('admin.reviews.create') }}">Review toevoegen</a>
-    </div>
-
-    <p class="muted" style="margin-bottom: 20px;">
-        Zichtbare reviews staan onder "Wat klanten zeggen" op de homepage. Er worden maximaal 6 getoond, de nieuwste eerst.
-    </p>
-
     @if ($reviews->isEmpty())
         <p>Er zijn nog geen reviews.</p>
     @else

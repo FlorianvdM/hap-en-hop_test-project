@@ -1,22 +1,19 @@
 @extends('layouts.admin')
 
 @section('title', 'Pakketten | Hap & Hop')
+@section('paginatitel', 'Pakketten')
+@section('subtitel', 'Pakketten die klanten kunnen bestellen. Verborgen pakketten staan niet op de website.')
+
+@section('acties')
+    <a class="knop" href="{{ route('admin.pakketten.create') }}">Pakket toevoegen</a>
+@endsection
 
 @section('content')
-    <div class="kop-met-knop">
-        <h1>Pakketten</h1>
-        <a class="knop" href="{{ route('admin.pakketten.create') }}">Pakket toevoegen</a>
-    </div>
-
-    <p class="muted" style="margin-bottom: 20px;">
-        Pakketten die klanten kunnen bestellen. Verborgen pakketten staan niet op de website.
-    </p>
-
     @if ($pakketten->isEmpty())
         <p>Er zijn nog geen pakketten.</p>
     @else
         <div class="tabel-wrap">
-            <table>
+            <table class="tabel-kaarten">
                 <thead>
                     <tr>
                         <th>Naam</th>
@@ -31,17 +28,17 @@
                 <tbody>
                     @foreach ($pakketten as $pakket)
                         <tr>
-                            <td>{{ $pakket->naam }}</td>
-                            <td>{{ str_replace(["\r\n", "\n"], ', ', $pakket->beschrijving) }}</td>
-                            <td>&euro; {{ number_format($pakket->prijs, 2, ',', '.') }}</td>
-                            <td>{{ $pakket->voorraadBeperkt() ? $pakket->voorraad : 'Onbeperkt' }}</td>
-                            <td>
+                            <td data-label="Naam"><strong>{{ $pakket->naam }}</strong></td>
+                            <td data-label="Inhoud">{{ str_replace(["\r\n", "\n"], ', ', $pakket->beschrijving) }}</td>
+                            <td data-label="Prijs">&euro; {{ number_format($pakket->prijs, 2, ',', '.') }}</td>
+                            <td data-label="Voorraad">{{ $pakket->voorraadBeperkt() ? $pakket->voorraad : 'Onbeperkt' }}</td>
+                            <td data-label="Website">
                                 <span class="status {{ $pakket->actief ? 'status-zichtbaar' : 'status-verborgen' }}">
                                     {{ $pakket->actief ? 'Zichtbaar' : 'Verborgen' }}
                                 </span>
                             </td>
-                            <td>{{ $pakket->bestellingen_count }}</td>
-                            <td>
+                            <td data-label="Bestellingen">{{ $pakket->bestellingen_count }}</td>
+                            <td data-label="">
                                 <div class="acties">
                                     <a class="knop knop-klein knop-licht" href="{{ route('admin.pakketten.edit', $pakket) }}">Wijzigen</a>
                                     <form method="POST"

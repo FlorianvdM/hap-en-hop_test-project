@@ -1,22 +1,17 @@
 @extends('layouts.admin')
 
 @section('title', 'Producten | Hap & Hop')
+@section('paginatitel', 'Producten')
+@section('subtitel')
+    Zichtbare producten staan op de pagina Producten en onder "Onze favorieten" op de homepage. Bestelbare producten hebben een vaste prijs en een knop "In winkelwagen"; de andere tonen een "Vanaf"-prijs.
+@endsection
+
+@section('acties')
+    <a class="knop knop-licht" href="{{ route('producten') }}" target="_blank" rel="noopener">Bekijk pagina Producten</a>
+    <a class="knop" href="{{ route('admin.producten.create') }}">Product toevoegen</a>
+@endsection
 
 @section('content')
-    <div class="kop-met-knop">
-        <h1>Producten</h1>
-        <div class="acties">
-            <a class="knop knop-licht" href="{{ route('producten') }}" target="_blank" rel="noopener">Bekijk pagina
-                Producten</a>
-            <a class="knop" href="{{ route('admin.producten.create') }}">Product toevoegen</a>
-        </div>
-    </div>
-
-    <p class="muted" style="margin-bottom: 20px;">
-        Zichtbare producten staan op de pagina Producten en onder "Onze favorieten" op de homepage.
-        Bestelbare producten hebben een vaste prijs en een knop "In winkelwagen"; de andere tonen een "Vanaf"-prijs.
-    </p>
-
     @if ($producten->isEmpty())
         <p>Er zijn nog geen producten.</p>
     @else

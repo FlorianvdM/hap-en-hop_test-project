@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 
 @section('title', ($teamlid->exists ? 'Opdrachtgever wijzigen' : 'Opdrachtgever toevoegen') . ' | Hap & Hop')
+@section('paginatitel')
+    {{ $teamlid->exists ? 'Opdrachtgever wijzigen' : 'Opdrachtgever toevoegen' }}
+@endsection
 
 @section('content')
-    <h1>{{ $teamlid->exists ? 'Opdrachtgever wijzigen' : 'Opdrachtgever toevoegen' }}</h1>
-
     <form class="formulier" method="POST" enctype="multipart/form-data"
           action="{{ $teamlid->exists ? route('admin.team.update', $teamlid) : route('admin.team.store') }}">
         @csrf
