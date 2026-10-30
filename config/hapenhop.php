@@ -7,6 +7,7 @@ return [
     'email' => env('HAPHOP_EMAIL', 'Haphopcatering@outlook.com'),
     'tiktok' => 'https://www.tiktok.com/@haphopcatering',
     'instagram' => 'https://www.instagram.com/haphopcatering',
+    'facebook' => 'https://www.facebook.com/profile.php?id=61595299014970',
 
     // Telefoonnummer op de contactpagina. Zet het in .env (HAPHOP_TELEFOON="+31 6 12345678"),
     // zodat het niet in de code op GitHub komt. Leeg = de regel "Telefoon" wordt niet getoond.

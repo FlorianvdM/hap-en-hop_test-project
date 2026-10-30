@@ -2,12 +2,13 @@
     // Gegevens uit config/hapenhop.php
     $tiktok = config('hapenhop.tiktok');
     $instagram = config('hapenhop.instagram');
+    $facebook = config('hapenhop.facebook');
     $email = config('hapenhop.email');
     $kvk = config('hapenhop.kvk');
 @endphp
 
 <footer class="site-footer">
-    @if ($tiktok || $instagram)
+    @if ($tiktok || $instagram || $facebook)
         <div class="social">
             @if ($tiktok)
                 <a href="{{ $tiktok }}" target="_blank" rel="noopener noreferrer" aria-label="Hap &amp; Hop op TikTok">
@@ -18,6 +19,12 @@
             @if ($instagram)
                 <a href="{{ $instagram }}" target="_blank" rel="noopener noreferrer" aria-label="Hap &amp; Hop op Instagram">
                     <x-icon name="instagram" :size="20" />
+                </a>
+            @endif
+
+            @if ($facebook)
+                <a href="{{ $facebook }}" target="_blank" rel="noopener noreferrer" aria-label="Hap &amp; Hop op Facebook">
+                    <x-icon name="facebook" :size="20" />
                 </a>
             @endif
         </div>
