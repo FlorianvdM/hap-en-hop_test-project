@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Instellingen | Hap &amp; Hop')
+@section('title', 'Instellingen | Hap & Hop')
 
 @section('content')
     <h1>Beheerder</h1>

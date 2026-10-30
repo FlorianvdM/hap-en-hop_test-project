@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Keuken | Hap &amp; Hop')
+@section('title', 'Keuken | Hap & Hop')
 
 @section('content')
     <h1>Keuken</h1>

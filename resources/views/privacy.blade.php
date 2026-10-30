@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Privacyverklaring | Hap &amp; Hop')
+@section('title', 'Privacyverklaring | Hap & Hop')
 
 @section('content')
     <div class="tekstpagina">

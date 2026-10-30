@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pagina niet gevonden | Hap &amp; Hop')
+@section('title', 'Pagina niet gevonden | Hap & Hop')
 
 @section('content')
     <div class="foutpagina">

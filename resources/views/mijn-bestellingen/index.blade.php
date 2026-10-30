@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Mijn bestellingen | Hap &amp; Hop')
+@section('title', 'Mijn bestellingen | Hap & Hop')
 
 @section('content')
     @php

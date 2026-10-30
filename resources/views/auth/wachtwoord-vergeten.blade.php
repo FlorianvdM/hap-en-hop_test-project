@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Wachtwoord vergeten | Hap &amp; Hop')
+@section('title', 'Wachtwoord vergeten | Hap & Hop')
 
 @section('content')
     <x-pagina-kop titel="Wachtwoord vergeten">

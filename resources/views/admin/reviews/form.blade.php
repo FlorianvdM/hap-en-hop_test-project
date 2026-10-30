@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', ($review->exists ? 'Review wijzigen' : 'Review toevoegen') . ' | Hap &amp; Hop')
+@section('title', ($review->exists ? 'Review wijzigen' : 'Review toevoegen') . ' | Hap & Hop')
 
 @section('content')
     <h1>{{ $review->exists ? 'Review wijzigen' : 'Review toevoegen' }}</h1>

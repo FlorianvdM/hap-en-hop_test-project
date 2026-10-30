@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Wie zijn wij | Hap &amp; Hop')
+@section('title', 'Wie zijn wij | Hap & Hop')
 
 @section('content')
     <div class="kop-met-knop">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Registreren | Hap &amp; Hop')
+@section('title', 'Registreren | Hap & Hop')
 
 @section('content')
     <h1>Account aanmaken</h1>

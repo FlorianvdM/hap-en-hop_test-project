@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inloggen | Hap &amp; Hop')
+@section('title', 'Inloggen | Hap & Hop')
 
 @section('content')
     <h1>Inloggen</h1>

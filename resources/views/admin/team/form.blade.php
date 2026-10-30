@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', ($teamlid->exists ? 'Opdrachtgever wijzigen' : 'Opdrachtgever toevoegen') . ' | Hap &amp; Hop')
+@section('title', ($teamlid->exists ? 'Opdrachtgever wijzigen' : 'Opdrachtgever toevoegen') . ' | Hap & Hop')
 
 @section('content')
     <h1>{{ $teamlid->exists ? 'Opdrachtgever wijzigen' : 'Opdrachtgever toevoegen' }}</h1>

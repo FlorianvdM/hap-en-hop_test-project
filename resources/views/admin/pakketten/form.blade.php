@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', ($pakket->exists ? 'Pakket wijzigen' : 'Pakket toevoegen') . ' | Hap &amp; Hop')
+@section('title', ($pakket->exists ? 'Pakket wijzigen' : 'Pakket toevoegen') . ' | Hap & Hop')
 
 @section('content')
     <h1>{{ $pakket->exists ? 'Pakket wijzigen' : 'Pakket toevoegen' }}</h1>

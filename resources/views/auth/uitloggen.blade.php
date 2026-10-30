@@ -1,6 +1,6 @@
 @extends(auth()->user()->is_admin ? 'layouts.admin' : 'layouts.app')
 
-@section('title', 'Uitloggen | Hap &amp; Hop')
+@section('title', 'Uitloggen | Hap & Hop')
 @section('zonder_zijbalk', 'ja')
 
 @section('content')

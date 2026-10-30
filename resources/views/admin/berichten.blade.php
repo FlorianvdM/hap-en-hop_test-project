@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Berichten | Hap &amp; Hop')
+@section('title', 'Berichten | Hap & Hop')
 
 @section('content')
     <h1>Berichten</h1>

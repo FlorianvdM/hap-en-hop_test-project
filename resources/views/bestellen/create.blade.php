@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Bestellen | Hap &amp; Hop')
+@section('title', 'Bestellen | Hap & Hop')
 
 @section('content')
     <x-pagina-kop titel="Bestellen">
