@@ -2,6 +2,12 @@
 
 @section('title', 'Mijn bestellingen | Hap & Hop')
 
+@section('kop')
+    <x-pagina-kop titel="Mijn bestellingen">
+        Hier zie je de bestellingen die je hebt geplaatst terwijl je was ingelogd.
+    </x-pagina-kop>
+@endsection
+
 @section('content')
     @php
         $statusNamen = [
@@ -11,9 +17,6 @@
         ];
     @endphp
 
-    <x-pagina-kop titel="Mijn bestellingen">
-        Hier zie je de bestellingen die je hebt geplaatst terwijl je was ingelogd.
-    </x-pagina-kop>
 
     @forelse ($bestellingen as $bestelling)
         <article class="bestelling-kaart">

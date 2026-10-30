@@ -2,93 +2,123 @@
 
 @section('title', 'Bestellen | Hap & Hop')
 
-@section('content')
+@section('kop')
     <x-pagina-kop titel="Bestellen">
         Vul je gegevens in en kies voor wanneer je de bestelling nodig hebt.
     </x-pagina-kop>
+@endsection
 
-    <div class="bestel-raster">
-        <form class="formulier" method="POST" action="{{ route('bestellen.store') }}" style="margin-top: -16px;"
-            data-laden="Bezig met bestellen...">
+@section('content')
+    <div class="raster-zij">
+        <form method="POST" action="{{ route('bestellen.store') }}" data-laden="Bezig met bestellen...">
             @csrf
 
-            <label for="naam">Naam *</label>
-            <input type="text" id="naam" name="naam" value="{{ old('naam', auth()->user()?->name) }}" required>
-            @error('naam')
-            <div class="fout">{{ $message }}</div> @enderror
+            <section class="blok">
+                <h2>Jouw gegevens</h2>
 
-            <label for="email">E-mailadres *</label>
-            <input type="email" id="email" name="email" value="{{ old('email', auth()->user()?->email) }}" required>
-            @error('email')
-            <div class="fout">{{ $message }}</div> @enderror
+                <div class="duo">
+                    <div class="veld">
+                        <label for="naam">Naam *</label>
+                        <input type="text" id="naam" name="naam" value="{{ old('naam', auth()->user()?->name) }}" required>
+                        @error('naam') <div class="fout">{{ $message }}</div> @enderror
+                    </div>
 
-            <label for="telefoon">Telefoonnummer (optioneel)</label>
-            <input type="text" id="telefoon" name="telefoon" value="{{ old('telefoon') }}">
-            @error('telefoon')
-            <div class="fout">{{ $message }}</div> @enderror
+                    <div class="veld">
+                        <label for="email">E-mailadres *</label>
+                        <input type="email" id="email" name="email" value="{{ old('email', auth()->user()?->email) }}" required>
+                        @error('email') <div class="fout">{{ $message }}</div> @enderror
+                    </div>
+                </div>
 
-            <label for="gewenste_datum">Gewenste datum *</label>
-            <input type="date" id="gewenste_datum" name="gewenste_datum" min="{{ now()->addDay()->format('Y-m-d') }}"
-                value="{{ old('gewenste_datum') }}" required>
-            @error('gewenste_datum')
-            <div class="fout">{{ $message }}</div> @enderror
+                <div class="veld">
+                    <label for="telefoon">Telefoonnummer (optioneel)</label>
+                    <input type="text" id="telefoon" name="telefoon" value="{{ old('telefoon') }}">
+                    @error('telefoon') <div class="fout">{{ $message }}</div> @enderror
+                </div>
+            </section>
 
-            <fieldset>
-                <legend>Ophalen of bezorgen *</legend>
+            <section class="blok">
+                <h2>Wanneer en hoe</h2>
 
-                <label class="vinkje">
-                    <input type="radio" name="levering" value="ophalen" @checked(old('levering', 'ophalen') === 'ophalen')>
-                    Ik haal de bestelling zelf op
-                </label>
-                <label class="vinkje">
-                    <input type="radio" name="levering" value="bezorgen" @checked(old('levering') === 'bezorgen')>
-                    Bezorgen
-                </label>
-            </fieldset>
-            @error('levering')
-            <div class="fout">{{ $message }}</div> @enderror
+                <div class="veld" style="margin-top: 0; max-width: 280px;">
+                    <label for="gewenste_datum">Gewenste datum *</label>
+                    <input type="date" id="gewenste_datum" name="gewenste_datum"
+                        min="{{ now()->addDay()->format('Y-m-d') }}" value="{{ old('gewenste_datum') }}" required>
+                    @error('gewenste_datum') <div class="fout">{{ $message }}</div> @enderror
+                </div>
 
-            <div id="bezorgadres" @if (old('levering') !== 'bezorgen') hidden @endif>
-                <label for="straat">Straat en huisnummer *</label>
-                <input type="text" id="straat" name="straat" value="{{ old('straat') }}" autocomplete="street-address">
-                @error('straat')
-                <div class="fout">{{ $message }}</div> @enderror
+                <div class="veld">
+                    <span class="label">Ophalen of bezorgen *</span>
+                    <div class="keuze">
+                        <label class="tegel">
+                            <input type="radio" name="levering" value="ophalen" @checked(old('levering', 'ophalen') === 'ophalen')>
+                            <div>
+                                <strong>Ik haal de bestelling zelf op</strong>
+                                <span>Je haalt hem op in Houten.</span>
+                            </div>
+                        </label>
+                        <label class="tegel">
+                            <input type="radio" name="levering" value="bezorgen" @checked(old('levering') === 'bezorgen')>
+                            <div>
+                                <strong>Bezorgen</strong>
+                                <span>Wij bezorgen in Houten en omgeving.</span>
+                            </div>
+                        </label>
+                    </div>
+                    @error('levering') <div class="fout">{{ $message }}</div> @enderror
+                </div>
 
-                <label for="postcode">Postcode *</label>
-                <input type="text" id="postcode" name="postcode" value="{{ old('postcode') }}" autocomplete="postal-code">
-                @error('postcode')
-                <div class="fout">{{ $message }}</div> @enderror
+                {{-- Dit blok klapt open als de klant bezorgen kiest (zie public/js/site.js) --}}
+                <div class="adres" id="bezorgadres" @if (old('levering') !== 'bezorgen') hidden @endif>
+                    <div class="duo">
+                        <div class="veld">
+                            <label for="straat">Straat en huisnummer *</label>
+                            <input type="text" id="straat" name="straat" value="{{ old('straat') }}" autocomplete="street-address">
+                            @error('straat') <div class="fout">{{ $message }}</div> @enderror
+                        </div>
 
-                <label for="plaats">Plaats *</label>
-                <input type="text" id="plaats" name="plaats" value="{{ old('plaats') }}" autocomplete="address-level2">
-                @error('plaats')
-                <div class="fout">{{ $message }}</div> @enderror
-            </div>
+                        <div class="veld">
+                            <label for="postcode">Postcode *</label>
+                            <input type="text" id="postcode" name="postcode" value="{{ old('postcode') }}" autocomplete="postal-code">
+                            @error('postcode') <div class="fout">{{ $message }}</div> @enderror
+                        </div>
+                    </div>
 
-            <fieldset>
-                <legend>Dieetwensen (optioneel)</legend>
+                    <div class="veld">
+                        <label for="plaats">Plaats *</label>
+                        <input type="text" id="plaats" name="plaats" value="{{ old('plaats') }}" autocomplete="address-level2">
+                        @error('plaats') <div class="fout">{{ $message }}</div> @enderror
+                    </div>
+                </div>
+            </section>
 
-                @foreach ($dieetwensen as $sleutel => $label)
-                    <label class="vinkje">
-                        <input type="checkbox" name="dieetwensen[]" value="{{ $sleutel }}" @checked(in_array($sleutel, (array) old('dieetwensen', []), true))>
-                        {{ $label }}
-                    </label>
-                @endforeach
-            </fieldset>
-            @error('dieetwensen')
-            <div class="fout">{{ $message }}</div> @enderror
-            @error('dieetwensen.*')
-            <div class="fout">{{ $message }}</div> @enderror
+            <section class="blok">
+                <h2>Dieetwensen en opmerking</h2>
 
-            <label for="opmerking">Opmerking (optioneel)</label>
-            <textarea id="opmerking" name="opmerking" rows="4">{{ old('opmerking') }}</textarea>
-            <p class="muted" style="margin: 4px 0 0; font-size: 0.9rem;">
-                Heb je een ernstige allergie? Vermeld dat dan ook hier.
-            </p>
-            @error('opmerking')
-            <div class="fout">{{ $message }}</div> @enderror
+                <div class="veld" style="margin-top: 0;">
+                    <span class="label">Dieetwensen (optioneel)</span>
+                    <div class="chips">
+                        @foreach ($dieetwensen as $sleutel => $label)
+                            <label class="chip">
+                                <input type="checkbox" name="dieetwensen[]" value="{{ $sleutel }}"
+                                    @checked(in_array($sleutel, (array) old('dieetwensen', []), true))>
+                                {{ $label }}
+                            </label>
+                        @endforeach
+                    </div>
+                    @error('dieetwensen') <div class="fout">{{ $message }}</div> @enderror
+                    @error('dieetwensen.*') <div class="fout">{{ $message }}</div> @enderror
+                </div>
 
-            <button type="submit" class="knop">Bestelling plaatsen</button>
+                <div class="veld">
+                    <label for="opmerking">Opmerking (optioneel)</label>
+                    <textarea id="opmerking" name="opmerking" rows="4">{{ old('opmerking') }}</textarea>
+                    <small>Heb je een ernstige allergie? Vermeld dat dan ook hier.</small>
+                    @error('opmerking') <div class="fout">{{ $message }}</div> @enderror
+                </div>
+            </section>
+
+            <button type="submit" class="knop" style="min-height: 54px; padding: 0 40px; font-size: 17px;">Bestelling plaatsen</button>
         </form>
 
         <aside class="samenvatting">
@@ -108,12 +138,10 @@
                 <span>&euro; {{ number_format($totaal, 2, ',', '.') }}</span>
             </div>
 
-            <p style="margin: 16px 0 0;">
-                <a href="{{ route('winkelwagen.index') }}">Winkelwagen aanpassen</a>
-            </p>
+            <a class="link" href="{{ route('winkelwagen.index') }}">Winkelwagen aanpassen</a>
 
             @guest
-                <p class="muted" style="margin: 16px 0 0; font-size: 0.9rem;">
+                <p class="notitie">
                     Wil je je bestelling later terugzien onder "Mijn bestellingen"?
                     <a href="{{ route('login') }}">Log in</a> of
                     <a href="{{ route('register') }}">maak een account aan</a>

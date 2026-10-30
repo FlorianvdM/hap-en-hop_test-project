@@ -2,11 +2,14 @@
 
 @section('title', 'Wachtwoord vergeten | Hap & Hop')
 
-@section('content')
+@section('kop')
     <x-pagina-kop titel="Wachtwoord vergeten">
         Vul je e-mailadres in. Hoort er een account bij, dan sturen we je een link om een nieuw wachtwoord in te stellen.
     </x-pagina-kop>
+@endsection
 
+@section('content')
+    <div class="inlog">
     <form class="formulier" method="POST" action="{{ route('password.email') }}">
         @csrf
 
@@ -18,4 +21,5 @@
     </form>
 
     <p style="margin-top: 16px;"><a href="{{ route('login') }}">Terug naar inloggen</a></p>
+    </div>
 @endsection

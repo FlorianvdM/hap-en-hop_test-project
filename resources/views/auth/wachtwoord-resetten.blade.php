@@ -2,11 +2,14 @@
 
 @section('title', 'Nieuw wachtwoord | Hap & Hop')
 
-@section('content')
+@section('kop')
     <x-pagina-kop titel="Nieuw wachtwoord instellen">
         Kies een nieuw wachtwoord van minimaal 8 tekens.
     </x-pagina-kop>
+@endsection
 
+@section('content')
+    <div class="inlog">
     <form class="formulier" method="POST" action="{{ route('password.update') }}">
         @csrf
         <input type="hidden" name="token" value="{{ $token }}">
@@ -24,4 +27,5 @@
 
         <button type="submit" class="knop">Wachtwoord opslaan</button>
     </form>
+    </div>
 @endsection

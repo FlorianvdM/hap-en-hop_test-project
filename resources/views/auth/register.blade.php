@@ -2,9 +2,14 @@
 
 @section('title', 'Registreren | Hap & Hop')
 
-@section('content')
-    <h1>Account aanmaken</h1>
+@section('kop')
+    <x-pagina-kop titel="Account aanmaken">
+        Met een account zie je je bestellingen terug onder "Mijn bestellingen".
+    </x-pagina-kop>
+@endsection
 
+@section('content')
+    <div class="inlog">
     <form class="formulier" method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -26,5 +31,6 @@
         <button type="submit" class="knop">Registreren</button>
     </form>
 
-    <p>Heb je al een account? <a href="{{ route('login') }}">Log hier in</a>.</p>
+    <p class="muted">Heb je al een account? <a href="{{ route('login') }}">Log hier in</a>.</p>
+    </div>
 @endsection

@@ -2,12 +2,14 @@
 
 @section('title', 'Info | Hap & Hop')
 
-@section('content')
+@section('kop')
     <x-pagina-kop titel="Informatie">
         Hier vind je alles wat je moet weten over onze service, bezorging en bestelling.
     </x-pagina-kop>
+@endsection
 
-    <div class="info-lijst">
+@section('content')
+    <div class="info-raster">
         <x-info-blok icon="truck" titel="Bezorgen & afhalen">
             Wij bezorgen in de regio of je kunt je bestelling zelf afhalen.
         </x-info-blok>

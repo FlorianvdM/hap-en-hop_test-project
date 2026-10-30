@@ -2,32 +2,34 @@
 
 @section('title', 'Wie zijn wij | Hap & Hop')
 
-@section('content')
+@section('kop')
     <x-pagina-kop titel="Wie zijn wij">
         Maak kennis met de mensen achter Hap &amp; Hop.
     </x-pagina-kop>
+@endsection
 
+@section('content')
     @if ($teamleden->isEmpty())
         <p>We stellen ons binnenkort aan je voor.</p>
     @else
-        <div class="team-lijst">
+        <div class="team">
             @foreach ($teamleden as $teamlid)
                 <article class="team-kaart">
                     @if ($teamlid->fotoUrl())
                         <img class="team-foto" src="{{ $teamlid->fotoUrl() }}" alt="Foto van {{ $teamlid->naam }}"
-                             loading="lazy">
+                            loading="lazy" style="object-fit: cover;">
                     @else
-                        <div class="team-foto team-foto-leeg" role="img" aria-label="Foto volgt"></div>
+                        <div class="team-foto" role="img" aria-label="Foto volgt"><x-icon name="user" :size="48" /></div>
                     @endif
 
-                    <h2>{{ $teamlid->naam }}</h2>
+                    <h3>{{ $teamlid->naam }}</h3>
 
                     @if ($teamlid->functie)
                         <p class="team-functie">{{ $teamlid->functie }}</p>
                     @endif
 
                     @if ($teamlid->biografie)
-                        <p>{!! nl2br(e($teamlid->biografie)) !!}</p>
+                        <p class="muted">{!! nl2br(e($teamlid->biografie)) !!}</p>
                     @endif
                 </article>
             @endforeach

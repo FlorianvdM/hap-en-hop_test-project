@@ -2,9 +2,14 @@
 
 @section('title', 'Inloggen | Hap & Hop')
 
-@section('content')
-    <h1>Inloggen</h1>
+@section('kop')
+    <x-pagina-kop titel="Inloggen">
+        Log in om je bestellingen terug te zien.
+    </x-pagina-kop>
+@endsection
 
+@section('content')
+    <div class="inlog">
     <form class="formulier" method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -16,14 +21,15 @@
         <input type="password" id="password" name="password" required>
         @error('password') <div class="fout">{{ $message }}</div> @enderror
 
-        <label>
-            <input type="checkbox" name="onthouden" value="1" style="width:auto;"> Onthoud mij
+        <label class="vinkje">
+            <input type="checkbox" name="onthouden" value="1"> Onthoud mij
         </label>
 
         <button type="submit" class="knop">Inloggen</button>
     </form>
 
-    <p style="margin-top: 16px;"><a href="{{ route('password.request') }}">Wachtwoord vergeten?</a></p>
+    <p><a href="{{ route('password.request') }}">Wachtwoord vergeten?</a></p>
 
-    <p>Nog geen account? <a href="{{ route('register') }}">Registreer je hier</a>.</p>
+    <p class="muted">Nog geen account? <a href="{{ route('register') }}">Registreer je hier</a>.</p>
+    </div>
 @endsection

@@ -2,11 +2,14 @@
 
 @section('title', 'Privacyverklaring | Hap & Hop')
 
+@section('kop')
+    <x-pagina-kop titel="Privacyverklaring">
+        Hier lees je hoe Hap &amp; Hop omgaat met jouw gegevens. Laatst bijgewerkt: 17 oktober 2026.
+    </x-pagina-kop>
+@endsection
+
 @section('content')
     <div class="tekstpagina">
-        <x-pagina-kop titel="Privacyverklaring">
-            Hier lees je hoe Hap &amp; Hop omgaat met jouw gegevens. Laatst bijgewerkt: 17 oktober 2026.
-        </x-pagina-kop>
 
         <h2>Wie wij zijn</h2>
         <p>
