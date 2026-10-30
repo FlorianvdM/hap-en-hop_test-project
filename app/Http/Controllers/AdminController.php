@@ -6,6 +6,7 @@ use App\Mail\BestellingVerzonden;
 use App\Models\Bestelling;
 use App\Models\ContactBericht;
 use App\Models\Pakket;
+use App\Models\Product;
 use App\Models\User;
 use App\Support\BerichtAssistent;
 use App\Support\Onderhoud;
@@ -94,8 +95,8 @@ class AdminController extends Controller
                 'E-mailadres',
                 'Telefoon',
                 'Gewenste datum',
-                'Pakketten',
-                'Aantal pakketten',
+                'Bestelling',
+                'Aantal stuks',
                 'Totaal (EUR)',
                 'Dieetwensen',
                 'Opmerking',
@@ -165,12 +166,21 @@ class AdminController extends Controller
         }
 
         // Nieuw of in behandeling: definitief verwijderd, telt niet mee in totaal of omzet.
-        // De voorraad van pakketten met een beperkte voorraad komt weer terug.
+        // De voorraad van pakketten en producten met een beperkte voorraad komt weer terug.
         DB::transaction(function () use ($bestelling) {
             foreach ($bestelling->regels as $regel) {
-                Pakket::where('id', $regel->pakket_id)
-                    ->whereNotNull('voorraad')
-                    ->increment('voorraad', $regel->aantal);
+                // Een regel is een pakket OF een product; bij een leeg id gebeurt er niets
+                if ($regel->pakket_id) {
+                    Pakket::where('id', $regel->pakket_id)
+                        ->whereNotNull('voorraad')
+                        ->increment('voorraad', $regel->aantal);
+                }
+
+                if ($regel->product_id) {
+                    Product::where('id', $regel->product_id)
+                        ->whereNotNull('voorraad')
+                        ->increment('voorraad', $regel->aantal);
+                }
             }
 
             $bestelling->forceDelete();

@@ -47,6 +47,11 @@ class AdminProductController extends Controller
 
     public function destroy(Product $product)
     {
+        // Een product dat in bestellingen voorkomt, bewaren we: de bestelgeschiedenis blijft dan kloppen
+        if ($product->bestelregels()->exists()) {
+            return back()->with('fout', 'Dit product komt voor in bestellingen en kan niet worden verwijderd. Zet het op "Verborgen" om het van de website te halen.');
+        }
+
         Afbeeldingen::verwijderen($product->afbeelding);
         $product->delete();
 
@@ -62,6 +67,7 @@ class AdminProductController extends Controller
             'beschrijving' => ['nullable', 'string', 'max:255'],
             'prijs' => ['required', 'numeric', 'min:0', 'max:99999'],
             'voorraad' => ['nullable', 'integer', 'min:0', 'max:99999'],
+            'bestelbaar' => ['sometimes', 'boolean'],
             'actief' => ['required', 'boolean'],
             'afbeelding' => Afbeeldingen::REGEL,
         ]);

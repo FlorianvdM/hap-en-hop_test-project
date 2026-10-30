@@ -34,6 +34,11 @@ Route::post('/winkelwagen/{pakket}', [WinkelwagenController::class, 'toevoegen']
 Route::patch('/winkelwagen/{pakket}', [WinkelwagenController::class, 'wijzigen'])->name('winkelwagen.wijzigen');
 Route::delete('/winkelwagen/{pakket}', [WinkelwagenController::class, 'verwijderen'])->name('winkelwagen.verwijderen');
 
+// Producten (bijvoorbeeld losse broodjes) in de winkelwagen
+Route::post('/winkelwagen/product/{product}', [WinkelwagenController::class, 'productToevoegen'])->name('winkelwagen.product.toevoegen');
+Route::patch('/winkelwagen/product/{product}', [WinkelwagenController::class, 'productWijzigen'])->name('winkelwagen.product.wijzigen');
+Route::delete('/winkelwagen/product/{product}', [WinkelwagenController::class, 'productVerwijderen'])->name('winkelwagen.product.verwijderen');
+
 Route::get('/bestellen', [BestellingController::class, 'create'])->name('bestellen.create');
 Route::post('/bestellen', [BestellingController::class, 'store'])
     ->middleware('throttle:10,1')

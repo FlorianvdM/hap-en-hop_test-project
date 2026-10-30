@@ -4,7 +4,7 @@
 
 @section('content')
     <x-pagina-kop titel="Winkelwagen">
-        Controleer je pakketten en pas de aantallen aan voordat je bestelt.
+        Controleer je bestelling en pas de aantallen aan voordat je bestelt.
     </x-pagina-kop>
 
     @if ($regels->isEmpty())
@@ -13,24 +13,37 @@
     @else
         <div class="wagen-lijst">
             @foreach ($regels as $regel)
+                @php
+                    // Een regel is een pakket of een product; de routes verschillen per soort
+                    $isProduct = $regel->soort === 'product';
+                    $wijzigUrl = $isProduct
+                        ? route('winkelwagen.product.wijzigen', $regel->item)
+                        : route('winkelwagen.wijzigen', $regel->item);
+                    $verwijderUrl = $isProduct
+                        ? route('winkelwagen.product.verwijderen', $regel->item)
+                        : route('winkelwagen.verwijderen', $regel->item);
+                    $veldId = 'aantal-' . $regel->soort . '-' . $regel->item->id;
+                @endphp
+
                 <div class="wagen-regel">
                     <div class="wagen-info">
-                        <strong>{{ $regel->pakket->naam }}</strong>
-                        <span class="muted">&euro; {{ number_format($regel->pakket->prijs, 2, ',', '.') }} per pakket</span>
+                        <strong>{{ $regel->item->naam }}</strong>
+                        <span class="muted">&euro; {{ number_format($regel->item->prijs, 2, ',', '.') }} per
+                            {{ $isProduct ? 'stuk' : 'pakket' }}</span>
                     </div>
 
-                    <form class="wagen-aantal" method="POST" action="{{ route('winkelwagen.wijzigen', $regel->pakket) }}">
+                    <form class="wagen-aantal" method="POST" action="{{ $wijzigUrl }}">
                         @csrf
                         @method('PATCH')
-                        <label class="sr-only" for="aantal-{{ $regel->pakket->id }}">Aantal</label>
-                        <input type="number" id="aantal-{{ $regel->pakket->id }}" name="aantal"
-                               min="1" max="100" value="{{ $regel->aantal }}" data-auto-verstuur>
+                        <label class="sr-only" for="{{ $veldId }}">Aantal</label>
+                        <input type="number" id="{{ $veldId }}" name="aantal" min="1" max="100" value="{{ $regel->aantal }}"
+                            data-auto-verstuur>
                         <noscript><button type="submit" class="knop knop-klein knop-licht">Bijwerken</button></noscript>
                     </form>
 
                     <div class="wagen-prijs">&euro; {{ number_format($regel->totaal, 2, ',', '.') }}</div>
 
-                    <form method="POST" action="{{ route('winkelwagen.verwijderen', $regel->pakket) }}">
+                    <form method="POST" action="{{ $verwijderUrl }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="link-verwijder">Verwijderen</button>

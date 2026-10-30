@@ -6,6 +6,7 @@ use App\Mail\BestellingBevestiging;
 use App\Mail\NieuweBestelling;
 use App\Models\Bestelling;
 use App\Models\Pakket;
+use App\Models\Product;
 use App\Support\Winkelwagen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -89,28 +90,46 @@ class BestellingController extends Controller
     }
 
     /**
-     * Controleert de voorraad en boekt die af. De pakketten worden vergrendeld, zodat twee klanten
-     * tegelijk niet allebei het laatste pakket kunnen kopen. Gooit een DomainException als er te weinig is.
+     * Controleert de voorraad en boekt die af, voor pakketten en producten.
+     * Ze worden vergrendeld, zodat twee klanten tegelijk niet allebei het laatste exemplaar kunnen kopen.
+     * Gooit een DomainException als er te weinig is.
      */
     private function boekVoorraadAf($regels): void
     {
-        $pakketten = Pakket::whereIn('id', $regels->pluck('pakket.id'))->lockForUpdate()->get()->keyBy('id');
+        // De id's van de pakketten en producten in de winkelwagen
+        $pakketIds = $regels->where('soort', 'pakket')->map(fn ($regel) => $regel->item->id)->all();
+        $productIds = $regels->where('soort', 'product')->map(fn ($regel) => $regel->item->id)->all();
 
+        $pakketten = Pakket::whereIn('id', $pakketIds)->lockForUpdate()->get()->keyBy('id');
+        $producten = Product::whereIn('id', $productIds)->lockForUpdate()->get()->keyBy('id');
+
+        // Eerst alles controleren...
         foreach ($regels as $regel) {
-            $pakket = $pakketten[$regel->pakket->id];
+            $item = $this->actueel($regel, $pakketten, $producten);
 
-            if ($pakket->voorraadBeperkt() && $pakket->voorraad < $regel->aantal) {
-                throw new \DomainException($pakket->voorraad <= 0
-                    ? "{$pakket->naam} is helaas uitverkocht. Verwijder het uit je winkelwagen om verder te gaan."
-                    : "Er zijn nog maar {$pakket->voorraad} van {$pakket->naam} beschikbaar. Pas het aantal aan om verder te gaan.");
+            if ($item->voorraadBeperkt() && $item->voorraad < $regel->aantal) {
+                throw new \DomainException($item->voorraad <= 0
+                    ? "{$item->naam} is helaas uitverkocht. Verwijder het uit je winkelwagen om verder te gaan."
+                    : "Er zijn nog maar {$item->voorraad} van {$item->naam} beschikbaar. Pas het aantal aan om verder te gaan.");
             }
         }
 
+        // ...en pas daarna de voorraad verlagen
         foreach ($regels as $regel) {
-            if ($pakketten[$regel->pakket->id]->voorraadBeperkt()) {
-                $pakketten[$regel->pakket->id]->decrement('voorraad', $regel->aantal);
+            $item = $this->actueel($regel, $pakketten, $producten);
+
+            if ($item->voorraadBeperkt()) {
+                $item->decrement('voorraad', $regel->aantal);
             }
         }
+    }
+
+    /** Zoekt het vergrendelde pakket of product dat bij een winkelwagenregel hoort. */
+    private function actueel($regel, $pakketten, $producten): Pakket|Product
+    {
+        return $regel->soort === 'pakket'
+            ? $pakketten[$regel->item->id]
+            : $producten[$regel->item->id];
     }
 
     private function maakBestelling(array $data, $regels, Request $request): Bestelling
@@ -132,11 +151,13 @@ class BestellingController extends Controller
         ]);
 
         foreach ($regels as $regel) {
+            // Een regel hoort bij een pakket OF een product; de naam en prijs bewaren we van dit moment
             $bestelling->regels()->create([
-                'pakket_id' => $regel->pakket->id,
-                'pakket_naam' => $regel->pakket->naam,
+                'pakket_id' => $regel->soort === 'pakket' ? $regel->item->id : null,
+                'product_id' => $regel->soort === 'product' ? $regel->item->id : null,
+                'pakket_naam' => $regel->item->naam,
                 'aantal' => $regel->aantal,
-                'prijs' => $regel->pakket->prijs,
+                'prijs' => $regel->item->prijs,
             ]);
         }
 

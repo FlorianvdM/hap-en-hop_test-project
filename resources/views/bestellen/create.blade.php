@@ -8,26 +8,30 @@
     </x-pagina-kop>
 
     <div class="bestel-raster">
-        <form class="formulier" method="POST" action="{{ route('bestellen.store') }}" style="margin-top: -16px;" data-laden="Bezig met bestellen...">
+        <form class="formulier" method="POST" action="{{ route('bestellen.store') }}" style="margin-top: -16px;"
+            data-laden="Bezig met bestellen...">
             @csrf
 
             <label for="naam">Naam *</label>
             <input type="text" id="naam" name="naam" value="{{ old('naam', auth()->user()?->name) }}" required>
-            @error('naam') <div class="fout">{{ $message }}</div> @enderror
+            @error('naam')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <label for="email">E-mailadres *</label>
             <input type="email" id="email" name="email" value="{{ old('email', auth()->user()?->email) }}" required>
-            @error('email') <div class="fout">{{ $message }}</div> @enderror
+            @error('email')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <label for="telefoon">Telefoonnummer (optioneel)</label>
             <input type="text" id="telefoon" name="telefoon" value="{{ old('telefoon') }}">
-            @error('telefoon') <div class="fout">{{ $message }}</div> @enderror
+            @error('telefoon')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <label for="gewenste_datum">Gewenste datum *</label>
-            <input type="date" id="gewenste_datum" name="gewenste_datum"
-                   min="{{ now()->addDay()->format('Y-m-d') }}"
-                   value="{{ old('gewenste_datum') }}" required>
-            @error('gewenste_datum') <div class="fout">{{ $message }}</div> @enderror
+            <input type="date" id="gewenste_datum" name="gewenste_datum" min="{{ now()->addDay()->format('Y-m-d') }}"
+                value="{{ old('gewenste_datum') }}" required>
+            @error('gewenste_datum')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <fieldset>
                 <legend>Ophalen of bezorgen *</legend>
@@ -41,20 +45,24 @@
                     Bezorgen
                 </label>
             </fieldset>
-            @error('levering') <div class="fout">{{ $message }}</div> @enderror
+            @error('levering')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <div id="bezorgadres" @if (old('levering') !== 'bezorgen') hidden @endif>
                 <label for="straat">Straat en huisnummer *</label>
                 <input type="text" id="straat" name="straat" value="{{ old('straat') }}" autocomplete="street-address">
-                @error('straat') <div class="fout">{{ $message }}</div> @enderror
+                @error('straat')
+                <div class="fout">{{ $message }}</div> @enderror
 
                 <label for="postcode">Postcode *</label>
                 <input type="text" id="postcode" name="postcode" value="{{ old('postcode') }}" autocomplete="postal-code">
-                @error('postcode') <div class="fout">{{ $message }}</div> @enderror
+                @error('postcode')
+                <div class="fout">{{ $message }}</div> @enderror
 
                 <label for="plaats">Plaats *</label>
                 <input type="text" id="plaats" name="plaats" value="{{ old('plaats') }}" autocomplete="address-level2">
-                @error('plaats') <div class="fout">{{ $message }}</div> @enderror
+                @error('plaats')
+                <div class="fout">{{ $message }}</div> @enderror
             </div>
 
             <fieldset>
@@ -62,21 +70,23 @@
 
                 @foreach ($dieetwensen as $sleutel => $label)
                     <label class="vinkje">
-                        <input type="checkbox" name="dieetwensen[]" value="{{ $sleutel }}"
-                               @checked(in_array($sleutel, (array) old('dieetwensen', []), true))>
+                        <input type="checkbox" name="dieetwensen[]" value="{{ $sleutel }}" @checked(in_array($sleutel, (array) old('dieetwensen', []), true))>
                         {{ $label }}
                     </label>
                 @endforeach
             </fieldset>
-            @error('dieetwensen') <div class="fout">{{ $message }}</div> @enderror
-            @error('dieetwensen.*') <div class="fout">{{ $message }}</div> @enderror
+            @error('dieetwensen')
+            <div class="fout">{{ $message }}</div> @enderror
+            @error('dieetwensen.*')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <label for="opmerking">Opmerking (optioneel)</label>
             <textarea id="opmerking" name="opmerking" rows="4">{{ old('opmerking') }}</textarea>
             <p class="muted" style="margin: 4px 0 0; font-size: 0.9rem;">
                 Heb je een ernstige allergie? Vermeld dat dan ook hier.
             </p>
-            @error('opmerking') <div class="fout">{{ $message }}</div> @enderror
+            @error('opmerking')
+            <div class="fout">{{ $message }}</div> @enderror
 
             <button type="submit" class="knop">Bestelling plaatsen</button>
         </form>
@@ -87,7 +97,7 @@
             <ul>
                 @foreach ($regels as $regel)
                     <li>
-                        <span>{{ $regel->aantal }}&times; {{ $regel->pakket->naam }}</span>
+                        <span>{{ $regel->aantal }}&times; {{ $regel->item->naam }}</span>
                         <span>&euro; {{ number_format($regel->totaal, 2, ',', '.') }}</span>
                     </li>
                 @endforeach

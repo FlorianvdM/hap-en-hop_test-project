@@ -6,13 +6,15 @@
     <div class="kop-met-knop">
         <h1>Producten</h1>
         <div class="acties">
-            <a class="knop knop-licht" href="{{ route('producten') }}" target="_blank" rel="noopener">Bekijk pagina Producten</a>
+            <a class="knop knop-licht" href="{{ route('producten') }}" target="_blank" rel="noopener">Bekijk pagina
+                Producten</a>
             <a class="knop" href="{{ route('admin.producten.create') }}">Product toevoegen</a>
         </div>
     </div>
 
     <p class="muted" style="margin-bottom: 20px;">
-        Zichtbare producten staan op de pagina Producten en onder "Onze favorieten" op de homepage, met een "Vanaf"-prijs.
+        Zichtbare producten staan op de pagina Producten en onder "Onze favorieten" op de homepage.
+        Bestelbare producten hebben een vaste prijs en een knop "In winkelwagen"; de andere tonen een "Vanaf"-prijs.
     </p>
 
     @if ($producten->isEmpty())
@@ -24,9 +26,10 @@
                     <tr>
                         <th>Naam</th>
                         <th>Beschrijving</th>
-                        <th>Vanaf-prijs</th>
+                        <th>Prijs</th>
                         <th>Voorraad</th>
-                        <th>Homepage</th>
+                        <th>Bestelbaar</th>
+                        <th>Zichtbaar</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -37,6 +40,7 @@
                             <td>{{ $product->beschrijving }}</td>
                             <td>&euro; {{ number_format($product->prijs, 2, ',', '.') }}</td>
                             <td>{{ $product->voorraadBeperkt() ? $product->voorraad : 'Onbeperkt' }}</td>
+                            <td>{{ $product->bestelbaar ? 'Ja' : 'Nee' }}</td>
                             <td>
                                 <span class="status {{ $product->actief ? 'status-zichtbaar' : 'status-verborgen' }}">
                                     {{ $product->actief ? 'Zichtbaar' : 'Verborgen' }}
@@ -44,11 +48,11 @@
                             </td>
                             <td>
                                 <div class="acties">
-                                    <a class="knop knop-klein knop-licht" href="{{ route('admin.producten.edit', $product) }}">Wijzigen</a>
-                                    <form method="POST"
-                                          action="{{ route('admin.producten.destroy', $product) }}"
-                                          data-bevestig-titel="Product verwijderen?"
-                                          data-bevestig="Weet je zeker dat je dit product wilt verwijderen?">
+                                    <a class="knop knop-klein knop-licht"
+                                        href="{{ route('admin.producten.edit', $product) }}">Wijzigen</a>
+                                    <form method="POST" action="{{ route('admin.producten.destroy', $product) }}"
+                                        data-bevestig-titel="Product verwijderen?"
+                                        data-bevestig="Weet je zeker dat je dit product wilt verwijderen?">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="knop knop-klein knop-gevaar">Verwijderen</button>

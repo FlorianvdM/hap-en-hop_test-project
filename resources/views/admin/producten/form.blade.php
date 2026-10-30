@@ -6,7 +6,7 @@
     <h1>{{ $product->exists ? 'Product wijzigen' : 'Product toevoegen' }}</h1>
 
     <form class="formulier" method="POST" enctype="multipart/form-data"
-          action="{{ $product->exists ? route('admin.producten.update', $product) : route('admin.producten.store') }}">
+        action="{{ $product->exists ? route('admin.producten.update', $product) : route('admin.producten.store') }}">
         @csrf
         @if ($product->exists)
             @method('PUT')
@@ -14,36 +14,53 @@
 
         <label for="naam">Naam *</label>
         <input type="text" id="naam" name="naam" value="{{ old('naam', $product->naam) }}" required>
-        @error('naam') <div class="fout">{{ $message }}</div> @enderror
+        @error('naam')
+        <div class="fout">{{ $message }}</div> @enderror
 
         <label for="beschrijving">Korte beschrijving</label>
         <input type="text" id="beschrijving" name="beschrijving" value="{{ old('beschrijving', $product->beschrijving) }}">
-        @error('beschrijving') <div class="fout">{{ $message }}</div> @enderror
+        @error('beschrijving')
+        <div class="fout">{{ $message }}</div> @enderror
 
-        <label for="prijs">Vanaf-prijs (&euro;) *</label>
-        <input type="number" id="prijs" name="prijs" step="0.01" min="0" value="{{ old('prijs', $product->prijs) }}" required>
-        @error('prijs') <div class="fout">{{ $message }}</div> @enderror
+        <label for="prijs">Prijs (&euro;) *</label>
+        <input type="number" id="prijs" name="prijs" step="0.01" min="0" value="{{ old('prijs', $product->prijs) }}"
+            required>
+        @error('prijs')
+        <div class="fout">{{ $message }}</div> @enderror
+        <p class="muted">Is het product bestelbaar? Dan is dit de vaste prijs per stuk. Anders toont de website "Vanaf" voor
+            deze prijs.</p>
 
         <label for="voorraad">Voorraad (aantal beschikbaar)</label>
         <input type="number" id="voorraad" name="voorraad" min="0" max="99999" step="1"
-               value="{{ old('voorraad', $product->voorraad) }}" placeholder="Leeg = onbeperkt">
-        @error('voorraad') <div class="fout">{{ $message }}</div> @enderror
+            value="{{ old('voorraad', $product->voorraad) }}" placeholder="Leeg = onbeperkt">
+        @error('voorraad')
+        <div class="fout">{{ $message }}</div> @enderror
 
         <label for="afbeelding">Afbeelding (jpg, png of webp, maximaal 4 MB)</label>
         @if ($product->afbeeldingUrl())
             <img src="{{ $product->afbeeldingUrl() }}" alt="Huidige afbeelding van {{ $product->naam }}" width="120"
-                 style="border-radius: 8px; display: block; margin-bottom: 8px;">
+                style="border-radius: 8px; display: block; margin-bottom: 8px;">
             <p class="muted">Kies een nieuw bestand om de afbeelding te vervangen.</p>
         @endif
         <input type="file" id="afbeelding" name="afbeelding" accept="image/jpeg,image/png,image/webp">
-        @error('afbeelding') <div class="fout">{{ $message }}</div> @enderror
+        @error('afbeelding')
+        <div class="fout">{{ $message }}</div> @enderror
+
+        <label class="vinkje">
+            <input type="hidden" name="bestelbaar" value="0">
+            <input type="checkbox" name="bestelbaar" value="1" @checked((bool) old('bestelbaar', $product->bestelbaar))>
+            Bestelbaar (klanten kunnen dit product in de winkelwagen leggen)
+        </label>
+        @error('bestelbaar')
+        <div class="fout">{{ $message }}</div> @enderror
 
         <label class="vinkje">
             <input type="hidden" name="actief" value="0">
             <input type="checkbox" name="actief" value="1" @checked((bool) old('actief', $product->actief))>
-            Zichtbaar op de homepage
+            Zichtbaar op de website
         </label>
-        @error('actief') <div class="fout">{{ $message }}</div> @enderror
+        @error('actief')
+        <div class="fout">{{ $message }}</div> @enderror
 
         <div class="acties" style="margin-top: 20px;">
             <button type="submit" class="knop">Opslaan</button>
