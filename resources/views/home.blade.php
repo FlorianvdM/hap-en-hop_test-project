@@ -42,7 +42,8 @@
                     <div class="afbeelding" @if ($product->afbeeldingUrl()) style="background-image: url('{{ $product->afbeeldingUrl() }}')" @endif></div>
                     <h3>{{ $product->naam }}</h3>
                     <p class="muted">{{ $product->beschrijving }}</p>
-                    <p class="prijs">Vanaf &euro; {{ number_format($product->prijs, 2, ',', '.') }}</p>
+                    {{-- Bestelbare producten hebben een vaste prijs, de andere een "Vanaf"-prijs --}}
+                    <p class="prijs">{{ $product->bestelbaar ? '' : 'Vanaf ' }}&euro; {{ number_format($product->prijs, 2, ',', '.') }}</p>
                     @if ($product->voorraadTekst())
                         <p class="voorraad {{ $product->uitverkocht() ? 'voorraad-op' : '' }}">{{ $product->voorraadTekst() }}</p>
                     @endif
