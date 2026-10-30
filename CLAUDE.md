@@ -5,7 +5,7 @@ Schoolproject van Flo (MBO Utrecht, BE-Backend).
 
 ## Stack
 - Laravel 13, PHP 8.4 of hoger, MySQL (InnoDB), Blade-views.
-- Geen Tailwind of Vite: eigen CSS in `public/css/` (`style.css`, `extra.css`, `beheer.css`).
+- Geen Tailwind of Vite: één eigen stijlblad, `public/css/style.css` (klanten en beheer). Lettertypen (Cormorant Garamond en Figtree) staan in `public/fonts/`.
 - Sessies, cache en wachtrij gebruiken de database.
 - Mail lokaal via Mailtrap (gratis sandbox). Instellingen staan in `config/hapenhop.php` en `.env`.
 
