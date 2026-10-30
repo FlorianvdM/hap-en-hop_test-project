@@ -8,6 +8,10 @@ return [
     'tiktok' => 'https://www.tiktok.com/@haphopcatering',
     'instagram' => 'https://www.instagram.com/haphopcatering',
 
+    // KvK-nummer. Leeg laten zolang Hap & Hop niet is ingeschreven; dan toont de footer niets.
+    // Zodra het bestaat zet je HAPHOP_KVK=12345678 in .env op de server.
+    'kvk' => env('HAPHOP_KVK'),
+
     // Naar dit adres gaat de melding bij een nieuwe bestelling.
     // Staat HAPHOP_BESTELMELDING_NAAR niet in .env, dan gebruiken we het contactadres hierboven.
     'bestelmelding_naar' => env('HAPHOP_BESTELMELDING_NAAR', env('HAPHOP_EMAIL', 'Haphopcatering@outlook.com')),

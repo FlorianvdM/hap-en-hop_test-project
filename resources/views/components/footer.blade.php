@@ -1,6 +1,9 @@
 @php
+    // Gegevens uit config/hapenhop.php
     $tiktok = config('hapenhop.tiktok');
     $instagram = config('hapenhop.instagram');
+    $email = config('hapenhop.email');
+    $kvk = config('hapenhop.kvk');
 @endphp
 
 <footer class="site-footer">
@@ -19,6 +22,14 @@
             @endif
         </div>
     @endif
+
+    {{-- Contactgegevens; het KvK-nummer verschijnt pas als het is ingevuld --}}
+    <div>
+        <a href="mailto:{{ $email }}">{{ $email }}</a>
+        @if ($kvk)
+            &middot; KvK {{ $kvk }}
+        @endif
+    </div>
 
     <div>
         <a href="{{ route('privacy') }}">Privacyverklaring</a>
