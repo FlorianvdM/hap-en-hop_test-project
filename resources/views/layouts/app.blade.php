@@ -5,23 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Hap &amp; Hop')</title>
     <x-favicon />
+
+    {{-- Eén stijlblad voor de hele website. De lettertypen staan op de eigen server (public/fonts). --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/extra.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="preload" href="{{ asset('fonts/anton-latin-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/figtree-latin-400-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/cormorant-garamond-latin-700-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
     <script src="{{ asset('js/site.js') }}" defer></script>
 </head>
-<body class="website">
+<body>
     <x-header />
 
-    @yield('hero')
+    <main class="hoofd">
+        {{-- Pagina's kunnen een hero (homepage) en/of een paginakop over de volle breedte meegeven --}}
+        @yield('hero')
+        @yield('kop')
 
-    <main class="container">
         @if (session('succes'))
-            <div class="melding succes" data-verdwijnt="4000">{{ session('succes') }}</div>
+            <div class="wrap">
+                <div class="melding succes" data-verdwijnt="4000">{{ session('succes') }}</div>
+            </div>
         @endif
 
-        @yield('content')
+        {{-- "breed" = de pagina bepaalt zelf zijn secties (homepage); anders komt de inhoud in een vaste kolom --}}
+        @hasSection('breed')
+            @yield('breed')
+        @else
+            <div class="pagina-inhoud">
+                <div class="wrap">
+                    @yield('content')
+                </div>
+            </div>
+        @endif
     </main>
 
     <x-footer />

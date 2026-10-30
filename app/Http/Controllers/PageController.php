@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pakket;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Teamlid;
@@ -11,6 +12,8 @@ class PageController extends Controller
     public function home()
     {
         return view('home', [
+            // De drie goedkoopste actieve pakketten voor op de homepage
+            'pakketten' => Pakket::where('actief', true)->orderBy('prijs')->take(3)->get(),
             'producten' => Product::where('actief', true)->orderBy('prijs')->get(),
             'reviews' => Review::where('actief', true)->latest()->take(6)->get(),
         ]);
