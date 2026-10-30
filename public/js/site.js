@@ -21,7 +21,7 @@
 
         if (!tekst || event.defaultPrevented) {
             return;
-        }ja 
+        }
 
         var knop = formulier.querySelector('button[type="submit"]');
 
@@ -111,6 +111,19 @@
             }
         });
     });
+
+    // 5. Menuknop op een telefoon: klapt het hoofdmenu open en dicht
+    var kop = document.getElementById('site-header');
+    var menuKnop = document.querySelector('.menu-knop-mobiel');
+
+    if (kop && menuKnop) {
+        menuKnop.addEventListener('click', function () {
+            var open = kop.classList.toggle('menu-open');
+
+            menuKnop.setAttribute('aria-expanded', open ? 'true' : 'false');
+            menuKnop.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+        });
+    }
 
     // 3. Offline-pagina: als de website niet bereikbaar is, laat de browser een eigen melding zien
     if ('serviceWorker' in navigator) {
