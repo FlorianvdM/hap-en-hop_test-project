@@ -27,6 +27,18 @@ class PaginasTest extends TestCase
         return User::where('email', 'admin@hapenhop.nl')->firstOrFail();
     }
 
+    public function test_foutmeldingen_zijn_nederlands_met_locale_nl(): void
+    {
+        app()->setLocale('nl');
+
+        $this->post(route('bestellen.store'), [])->assertRedirect();
+        $this->post(route('contact.store'), ['email' => 'geen-adres'])
+            ->assertSessionHasErrors([
+                'naam' => 'Naam is verplicht.',
+                'email' => 'Vul een geldig e-mailadres in.',
+            ]);
+    }
+
     /** Een echt (1x1) PNG-bestand; zo is de GD-extensie niet nodig om afbeeldingen te testen. */
     private function foto(string $naam = 'portret.png'): UploadedFile
     {

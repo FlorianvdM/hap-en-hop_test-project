@@ -673,7 +673,7 @@ h3 {
     font-size: 18px;
 }
 
-/* Paginakop en adviespaneel */
+/* Paginakop */
 .pagina-kop {
     background: #fff;
     border-bottom: 1px solid var(--lijn);
@@ -691,33 +691,6 @@ h3 {
 .pagina-inhoud {
     padding: 56px 0 96px;
 }
-.advies {
-    background: var(--bos-tint);
-    border: 1px solid var(--lijn);
-    border-radius: 20px;
-    padding: 36px;
-    display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    gap: 48px;
-    margin-bottom: 48px;
-}
-.advies h2 {
-    font-size: 34px;
-}
-.advies p {
-    margin-top: 10px;
-    color: var(--inkt-zacht);
-}
-.advies-form {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 16px;
-    align-items: start;
-}
-.advies-form .breed {
-    grid-column: 1/-1;
-}
-
 /* Formulieren */
 .veld {
     display: flex;
@@ -1688,14 +1661,6 @@ td .klein {
     }
     .pagina-kop h1 {
         font-size: 44px;
-    }
-    .advies {
-        grid-template-columns: 1fr;
-        padding: 24px;
-        gap: 24px;
-    }
-    .advies-form {
-        grid-template-columns: 1fr;
     }
     .raster-zij,
     .contact-raster {

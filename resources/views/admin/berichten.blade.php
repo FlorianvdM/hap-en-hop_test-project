@@ -3,7 +3,8 @@
 @section('title', 'Berichten | Hap & Hop')
 @section('paginatitel', 'Berichten')
 @section('subtitel')
-    Berichten uit het contactformulier. Ongelezen berichten zijn geel gemarkeerd. Verwijderen kan nadat je een bericht als gelezen hebt gemarkeerd.
+    Berichten uit het contactformulier. Ongelezen berichten zijn geel gemarkeerd. Verwijderen kan nadat je een bericht als
+    gelezen hebt gemarkeerd.
 @endsection
 
 @section('content')
@@ -32,10 +33,9 @@
                             <td>
                                 <div class="acties">
                                     @if ($bericht->gelezen)
-                                        <form method="POST"
-                                              action="{{ route('admin.berichten.verwijderen', $bericht) }}"
-                                              data-bevestig-titel="Bericht verwijderen?"
-                                              data-bevestig="Weet je zeker dat je dit bericht wilt verwijderen?">
+                                        <form method="POST" action="{{ route('admin.berichten.verwijderen', $bericht) }}"
+                                            data-bevestig-titel="Bericht verwijderen?"
+                                            data-bevestig="Weet je zeker dat je dit bericht wilt verwijderen?">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="knop knop-klein knop-gevaar">Verwijderen</button>
@@ -47,21 +47,9 @@
                                             <button type="submit" class="knop knop-klein">Gelezen</button>
                                         </form>
                                     @endif
-                                    <form method="POST" action="{{ route('admin.berichten.concept', $bericht) }}">
-                                        @csrf
-                                        <button type="submit" class="knop knop-klein">Conceptantwoord</button>
-                                    </form>
                                 </div>
                             </td>
                         </tr>
-                        @if (session('concept.id') === $bericht->id)
-                            <tr>
-                                <td colspan="4">
-                                    <strong>Conceptantwoord (controleer en pas aan voordat je het verstuurt)</strong>
-                                    <textarea rows="8" style="width: 100%;" readonly>{{ session('concept.tekst') }}</textarea>
-                                </td>
-                            </tr>
-                        @endif
                     @endforeach
                 </tbody>
             </table>

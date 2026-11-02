@@ -8,12 +8,12 @@ use App\Models\ContactBericht;
 use App\Models\Pakket;
 use App\Models\Product;
 use App\Models\User;
-use App\Support\BerichtAssistent;
 use App\Support\Onderhoud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
 
 class AdminController extends Controller
 {
@@ -150,7 +150,13 @@ class AdminController extends Controller
         $bestelling->update($data);
 
         if ($isNuVerzonden) {
-            Mail::to($bestelling->email)->send(new BestellingVerzonden($bestelling));
+            try {
+                Mail::to($bestelling->email)->send(new BestellingVerzonden($bestelling));
+            } catch (Throwable $e) {
+                report($e);
+
+                return back()->with('fout', 'Status bijgewerkt, maar de mail naar de klant kon niet worden verstuurd. Laat de klant zelf weten dat de bestelling klaar is.');
+            }
         }
 
         return back()->with('succes', 'Status bijgewerkt.');
@@ -201,23 +207,6 @@ class AdminController extends Controller
         $bericht->update(['gelezen' => true]);
 
         return back()->with('succes', 'Bericht gemarkeerd als gelezen.');
-    }
-
-    public function berichtConcept(ContactBericht $bericht, BerichtAssistent $assistent)
-    {
-        if (! $assistent->beschikbaar()) {
-            return back()->with('fout', 'De AI-assistent staat nog niet aan: er is geen API-sleutel ingesteld.');
-        }
-
-        try {
-            $concept = $assistent->concept($bericht);
-        } catch (\Throwable $e) {
-            report($e);
-
-            return back()->with('fout', 'Het conceptantwoord maken is niet gelukt. Probeer het later opnieuw.');
-        }
-
-        return back()->with('concept', ['id' => $bericht->id, 'tekst' => $concept]);
     }
 
     public function berichtVerwijderen(ContactBericht $bericht)

@@ -20,8 +20,8 @@ class OnderhoudsModus
             return $next($request);
         }
 
-        // Inloggen en uitloggen blijven bereikbaar, zodat een beheerder de website weer open kan zetten
-        if ($request->is('login', 'uitloggen', 'webhooks/*')) {
+        // Inloggen, uitloggen en wachtwoord vergeten blijven bereikbaar, zodat een beheerder de website weer open kan zetten
+        if ($request->is('login', 'uitloggen', 'wachtwoord-vergeten', 'wachtwoord-resetten', 'wachtwoord-resetten/*')) {
             return $next($request);
         }
 

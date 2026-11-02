@@ -88,6 +88,20 @@ class KeukenTest extends TestCase
         Mail::assertSent(BestellingVerzonden::class, 1);
     }
 
+    public function test_mislukte_verzendmail_geeft_een_melding_in_plaats_van_een_foutpagina(): void
+    {
+        $bestelling = $this->bestelling('Anna', 'in behandeling', 1);
+        Mail::shouldReceive('to')->andThrow(new \RuntimeException('Mailserver weigert'));
+
+        $this->actingAs($this->admin())
+            ->from(route('admin.bestellingen'))
+            ->patch(route('admin.bestellingen.status', $bestelling), ['status' => 'verzonden'])
+            ->assertRedirect(route('admin.bestellingen'))
+            ->assertSessionHas('fout');
+
+        $this->assertSame('verzonden', $bestelling->fresh()->status);
+    }
+
     public function test_mail_vermeldt_ophalen_of_bezorgen(): void
     {
         $ophalen = $this->bestelling('Anna', 'nieuw', 1);

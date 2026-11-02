@@ -75,6 +75,7 @@ class ExtraFunctiesTest extends TestCase
             $this->get($pad)->assertNotFound();
         }
         $this->get('/login')->assertOk();
+        $this->get('/wachtwoord-vergeten')->assertOk();
         // het beheer stuurt bezoekers door naar de (bereikbare) inlogpagina
         $this->get('/admin')->assertRedirect('/login');
 
