@@ -54,7 +54,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
     Route::get('/registreren', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/registreren', [AuthController::class, 'register']);
+    Route::post('/registreren', [AuthController::class, 'register'])->middleware('throttle:5,1');
 
     Route::get('/wachtwoord-vergeten', [WachtwoordController::class, 'aanvragen'])->name('password.request');
     Route::post('/wachtwoord-vergeten', [WachtwoordController::class, 'versturen'])
