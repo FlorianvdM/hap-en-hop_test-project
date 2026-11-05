@@ -27,10 +27,7 @@ class PageController extends Controller
 
     public function catering()
     {
-        // Producten die niet bestelbaar zijn, zijn catering op aanvraag
-        return view('catering', [
-            'producten' => Product::where('actief', true)->where('bestelbaar', false)->orderBy('naam')->get(),
-        ]);
+        return view('catering');
     }
 
     public function producten()

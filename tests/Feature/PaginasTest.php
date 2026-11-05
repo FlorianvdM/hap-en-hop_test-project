@@ -45,7 +45,8 @@ class PaginasTest extends TestCase
 
         $this->get(route('catering'))->assertOk()->assertSee('Catering aanvragen');
         $this->get(route('home'))->assertSee(route('catering'));
-        $this->get(route('catering'))->assertSee('Catering Test')->assertSee('Neem contact op')->assertDontSee('12,50');
+        // Het formulier staat op de pagina; tegels van producten niet
+        $this->get(route('catering'))->assertSee('Aantal personen')->assertDontSee('Catering Test')->assertDontSee('12,50');
         $this->get(route('producten'))->assertDontSee('Catering Test');
     }
 

@@ -32,7 +32,7 @@
                     </button>
                 </form>
             @else
-                <a class="knop knop-licht" href="{{ route('contact') }}">Neem contact op</a>
+                <a class="knop knop-licht" href="{{ route('catering') . '#aanvraag' }}">Catering aanvragen</a>
             @endif
         </div>
     </div>

@@ -34,8 +34,8 @@
             required>
         @error('prijs')
         <div class="fout">{{ $message }}</div> @enderror
-        <p class="muted">Is het product bestelbaar? Dan is dit de vaste prijs per stuk. Anders toont de website geen prijs,
-            alleen een knop "Neem contact op".</p>
+        <p class="muted">Is het product bestelbaar? Dan is dit de vaste prijs per stuk. Producten die niet bestelbaar zijn,
+            staan niet op de website.</p>
 
         <label for="voorraad">Voorraad (aantal beschikbaar)</label>
         <input type="number" id="voorraad" name="voorraad" min="0" max="99999" step="1"

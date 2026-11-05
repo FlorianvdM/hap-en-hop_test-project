@@ -25,7 +25,7 @@
 
         <details>
             <summary>Doen jullie ook catering op andere dagen?</summary>
-            <p>Ja, catering kan ook op andere dagen. Vraag het aan via de <a href="{{ route('catering') }}#aanvraag">cateringpagina</a>,
+            <p>Ja, catering kan ook op andere dagen. Vraag het aan via de <a href="{{ route('catering') . '#aanvraag' }}">cateringpagina</a>,
                 dan maken we een voorstel met de prijs.</p>
         </details>
 

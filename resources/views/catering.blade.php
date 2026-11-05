@@ -29,14 +29,6 @@
         </x-info-blok>
     </div>
 
-    @if ($producten->isNotEmpty())
-        <div class="kaarten" style="margin-top: 48px;">
-            @foreach ($producten as $product)
-                <x-product-kaart :product="$product" />
-            @endforeach
-        </div>
-    @endif
-
     <section id="aanvraag" style="margin-top: 56px;">
         <h2>Catering aanvragen</h2>
         <p class="muted">Vul in wat je zoekt. We nemen contact met je op met een voorstel en de prijs.</p>
