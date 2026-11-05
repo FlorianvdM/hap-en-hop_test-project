@@ -1,9 +1,9 @@
 // Toont een eigen melding als de website niet bereikbaar is (bijvoorbeeld als de server uit staat).
 // Dit werkt voor bezoekers die de website al eens hebben geopend.
-const CACHE = 'hapenhop-offline-v2';
+const CACHE = 'hapenhop-offline-v3';
 const OFFLINE_PAGINA = '/offline.html';
 // Afbeeldingen die op de offline-pagina staan
-const AFBEELDINGEN = ['/images/logo.png', '/favicon.ico', '/favicon-32x32.png', '/apple-touch-icon.png'];
+const AFBEELDINGEN = ['/images/logo-merk.png','/favicon.ico', '/favicon-32x32.png', '/apple-touch-icon.png'];
 
 self.addEventListener('install', (event) => {
     event.waitUntil(

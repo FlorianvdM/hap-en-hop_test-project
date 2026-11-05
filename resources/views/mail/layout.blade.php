@@ -14,8 +14,8 @@
                     <tr>
                         <td style="background: #175432; padding: 14px 28px; color: #d9b45a; font-size: 22px; font-weight: bold;">
                             @if (isset($message) && is_file(public_path('images/logo-mail.png')))
-                                <img src="{{ $message->embed(public_path('images/logo-mail.png')) }}" alt="Hap &amp; Hop" height="80"
-                                     style="display: block; height: 80px; width: auto; border: 0;">
+                                <img src="{{ $message->embed(public_path('images/logo-mail.png')) }}" alt="Hap &amp; Hop" height="100"
+                                     style="display: block; height: 100px; width: auto; border: 0;">
                             @else
                                 Hap &amp; Hop
                             @endif

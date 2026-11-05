@@ -6,6 +6,11 @@
     <title>@yield('title', 'Hap &amp; Hop')</title>
     <x-favicon />
 
+    {{-- Voorbeeld als de link wordt gedeeld (WhatsApp, Facebook, X) --}}
+    <meta property="og:site_name" content="Hap &amp; Hop">
+    <meta property="og:image" content="{{ asset('images/og-banner.png') }}">
+    <meta name="twitter:card" content="summary_large_image">
+
     {{-- Eén stijlblad voor de hele website. De lettertypen staan op de eigen server (public/fonts). --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="preload" href="{{ asset('fonts/figtree-latin-400-normal.woff2') }}" as="font" type="font/woff2" crossorigin>

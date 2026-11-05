@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-    <header><img src="{{ asset('images/logo.png') }}" alt="Hap &amp; Hop"></header>
+    <header><img src="{{ asset('images/logo-merk.png') }}" alt="Hap &amp; Hop"></header>
     <main>
         <p class="code">503</p>
         <h1>We zijn zo terug</h1>
