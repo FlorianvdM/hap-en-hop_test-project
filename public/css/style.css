@@ -1587,6 +1587,13 @@ td .klein {
     .submenu::before {
         display: none;
     }
+    /* In het telefoonmenu blijft "Over ons" dicht tot je erop tikt (ook niet open bij hover) */
+    .menu-groep:not(.open) .submenu {
+        display: none;
+    }
+    .menu-groep:not(.open) .menu-knop svg.icoon {
+        transform: none;
+    }
     .hoofdmenu .submenu a {
         color: #e1ece5;
         min-height: 44px;
@@ -2126,6 +2133,14 @@ td .klein {
     gap: 18px;
 }
 
+/* Telefoon: winkelwagen en menuknop op een eigen regel onder het logo */
+@media (max-width: 600px) {
+    .header-acties {
+        order: 2;
+        width: 100%;
+        margin-left: 0;
+    }
+}
 @media (max-width: 860px) {
     .profiel-kaart {
         flex-direction: column;
