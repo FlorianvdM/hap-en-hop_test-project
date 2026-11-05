@@ -717,6 +717,7 @@ h3 {
 input[type="text"],
 input[type="email"],
 input[type="tel"],
+input[type="search"],
 input[type="password"],
 input[type="number"],
 input[type="date"],
@@ -1487,6 +1488,34 @@ td .klein {
     font-weight: 700;
     letter-spacing: 0;
 }
+.dag-kop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.bezorglijst {
+    background: #fff;
+    border: 1px solid var(--lijn);
+    border-radius: 16px;
+    padding: 20px 26px;
+}
+.bezorglijst h3 {
+    font-family: var(--tekst);
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.bezorglijst li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--lijn);
+}
+.bezorglijst li:last-child {
+    border-bottom: 0;
+}
+.bezorglijst address {
+    font-style: normal;
+}
 .maken {
     display: flex;
     flex-wrap: wrap;
@@ -1907,6 +1936,10 @@ td .klein {
     background: #cdeed6;
     color: #0d4a24;
 }
+.status-klaar {
+    background: #d9f1ee;
+    color: #0b4a44;
+}
 .status-verborgen {
     background: #e3e8e4;
     color: #3b4a40;
@@ -1925,6 +1958,7 @@ td .klein {
 }
 .status-select.status-nieuw,
 .status-select.status-in-behandeling,
+.status-select.status-klaar,
 .status-select.status-verzonden {
     cursor: pointer;
 }
@@ -1956,6 +1990,33 @@ td .klein {
 }
 .melding-dialoog [hidden] {
     display: none;
+}
+
+/* Beheer: zoeken, filteren en pagina's */
+.zoek-balk {
+    display: flex;
+    align-items: end;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+}
+.zoek-balk .veld {
+    margin: 0;
+    min-width: 200px;
+}
+.zoek-balk .veld:first-child {
+    flex: 1;
+}
+.paginatie {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 18px 0;
+    font-size: 14px;
+}
+.paginatie [aria-disabled="true"] {
+    opacity: 0.45;
+    pointer-events: none;
 }
 
 /* Onzichtbaar spamveld (honeypot) */
@@ -2204,4 +2265,36 @@ td .klein {
 td[data-label="Totaal"],
 td[data-label="Prijs"] {
     white-space: nowrap;
+}
+
+/* Afdrukken (keuken en bezorglijst): alleen de inhoud, elke dag op een eigen pagina */
+@media print {
+    .zijbalk,
+    .beheer-balk .acties,
+    .onderhoud,
+    .melding,
+    .geen-print,
+    .adres-details {
+        display: none !important;
+    }
+    body,
+    .beheer,
+    .beheer-hoofd,
+    .beheer-inhoud {
+        display: block;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+    }
+    .dag {
+        display: block;
+        break-after: page;
+    }
+    .dag > * {
+        margin-bottom: 14px;
+    }
+    .maken li,
+    .bezorglijst {
+        border-color: #999;
+    }
 }

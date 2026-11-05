@@ -13,6 +13,7 @@
         $statusNamen = [
             'nieuw' => 'Ontvangen',
             'in behandeling' => 'In behandeling',
+            'klaar' => 'Klaar om op te halen',
             'verzonden' => 'Verzonden',
         ];
     @endphp
@@ -23,7 +24,8 @@
             <div class="bestelling-kop">
                 <h2>Bestelling #{{ $bestelling->id }}</h2>
                 <span class="status status-{{ str_replace(' ', '-', $bestelling->status) }}">
-                    {{ $statusNamen[$bestelling->status] ?? ucfirst($bestelling->status) }}
+                    {{-- Een opgehaalde bestelling is niet "verzonden" --}}
+                    {{ $bestelling->status === 'verzonden' && $bestelling->wordtOpgehaald() ? 'Opgehaald' : ($statusNamen[$bestelling->status] ?? ucfirst($bestelling->status)) }}
                 </span>
             </div>
 

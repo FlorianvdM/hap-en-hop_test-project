@@ -12,6 +12,7 @@ use App\Support\Onderhoud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
 
@@ -32,17 +33,39 @@ class AdminController extends Controller
         ]);
     }
 
-    public function bestellingen()
+    public function bestellingen(Request $request)
     {
-        $bestellingen = Bestelling::with('regels')->latest()->get();
+        $zoek = trim((string) $request->query('zoek'));
+        $status = $request->query('status');
 
-        return view('admin.bestellingen', compact('bestellingen'));
+        $bestellingen = Bestelling::with('regels')
+            // Zoeken op naam, e-mailadres of bestelnummer (met of zonder #)
+            ->when($zoek !== '', function ($query) use ($zoek) {
+                $query->where(function ($query) use ($zoek) {
+                    $query->where('naam', 'like', "%{$zoek}%")
+                        ->orWhere('email', 'like', "%{$zoek}%");
+
+                    if (ctype_digit(ltrim($zoek, '#'))) {
+                        $query->orWhere('id', (int) ltrim($zoek, '#'));
+                    }
+                });
+            })
+            ->when(array_key_exists((string) $status, Bestelling::STATUSSEN), fn ($query) => $query->where('status', $status))
+            ->latest()
+            ->paginate(20)
+            ->withQueryString();
+
+        return view('admin.bestellingen', compact('bestellingen', 'zoek', 'status'));
     }
 
-    public function keuken()
+    public function keuken(Request $request)
     {
+        // ?datum=2026-11-12 toont één dag, bijvoorbeeld om alleen de donderdag af te drukken
+        $datum = $request->date('datum');
+
         $bestellingen = Bestelling::with('regels')
             ->whereIn('status', ['nieuw', 'in behandeling'])
+            ->when($datum, fn ($query) => $query->whereDate('gewenste_datum', $datum))
             ->orderBy('gewenste_datum')
             ->orderBy('id')
             ->get();
@@ -52,6 +75,7 @@ class AdminController extends Controller
                 return [
                     'datum' => $groep->first()->gewenste_datum,
                     'bestellingen' => $groep,
+                    'bezorgen' => $groep->reject->wordtOpgehaald(),
                     'pakketten' => $groep->flatMap->regels
                         ->groupBy('pakket_naam')
                         ->map(fn ($regels) => $regels->sum('aantal'))
@@ -59,7 +83,7 @@ class AdminController extends Controller
                 ];
             });
 
-        return view('admin.keuken', compact('dagen'));
+        return view('admin.keuken', compact('dagen', 'datum'));
     }
 
     public function bestellingenExport(Request $request): StreamedResponse
@@ -142,14 +166,18 @@ class AdminController extends Controller
     public function bestellingStatus(Request $request, Bestelling $bestelling)
     {
         $data = $request->validate([
-            'status' => ['required', 'in:nieuw,in behandeling,verzonden'],
+            'status' => ['required', Rule::in(array_keys($bestelling->mogelijkeStatussen()))],
         ]);
 
-        $isNuVerzonden = $data['status'] === 'verzonden' && $bestelling->status !== 'verzonden';
+        // De klant krijgt één mail: bij "klaar" (ophalen) of bij "verzonden".
+        // Kwam de bestelling van "klaar", dan weet de klant het al.
+        $oud = $bestelling->status;
+        $mailen = $data['status'] !== $oud
+            && ($data['status'] === 'klaar' || ($data['status'] === 'verzonden' && $oud !== 'klaar'));
 
         $bestelling->update($data);
 
-        if ($isNuVerzonden) {
+        if ($mailen) {
             try {
                 Mail::to($bestelling->email)->send(new BestellingVerzonden($bestelling));
             } catch (Throwable $e) {
@@ -195,11 +223,26 @@ class AdminController extends Controller
         return back()->with('succes', 'Bestelling verwijderd.');
     }
 
-    public function berichten()
+    public function berichten(Request $request)
     {
-        $berichten = ContactBericht::latest()->get();
+        $zoek = trim((string) $request->query('zoek'));
+        $filter = $request->query('filter');
 
-        return view('admin.berichten', compact('berichten'));
+        $berichten = ContactBericht::query()
+            ->when($zoek !== '', function ($query) use ($zoek) {
+                $query->where(function ($query) use ($zoek) {
+                    $query->where('naam', 'like', "%{$zoek}%")
+                        ->orWhere('email', 'like', "%{$zoek}%")
+                        ->orWhere('bericht', 'like', "%{$zoek}%");
+                });
+            })
+            ->when($filter === 'ongelezen', fn ($query) => $query->where('gelezen', false))
+            ->when($filter === 'catering', fn ($query) => $query->where('bericht', 'like', 'Cateringaanvraag%'))
+            ->latest()
+            ->paginate(20)
+            ->withQueryString();
+
+        return view('admin.berichten', compact('berichten', 'zoek', 'filter'));
     }
 
     public function berichtGelezen(ContactBericht $bericht)

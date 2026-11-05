@@ -33,6 +33,25 @@ class Bestelling extends Model
         'dieetwensen' => 'array',
     ];
 
+    /**
+     * Alle statussen met hun naam in het beheer. "Klaar" is een tussenstap voor bestellingen die worden opgehaald;
+     * alleen "verzonden" telt (na verwijderen) mee in de omzet.
+     */
+    public const STATUSSEN = [
+        'nieuw' => 'Nieuw',
+        'in behandeling' => 'In behandeling',
+        'klaar' => 'Klaar om op te halen',
+        'verzonden' => 'Verzonden',
+    ];
+
+    /** De statussen die bij deze bestelling passen: "klaar" alleen als de klant ophaalt. */
+    public function mogelijkeStatussen(): array
+    {
+        return $this->wordtOpgehaald()
+            ? self::STATUSSEN
+            : array_diff_key(self::STATUSSEN, ['klaar' => true]);
+    }
+
     public function wordtOpgehaald(): bool
     {
         return $this->levering === 'ophalen';

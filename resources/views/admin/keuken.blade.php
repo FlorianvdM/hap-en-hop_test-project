@@ -2,12 +2,24 @@
 
 @section('title', 'Keuken | Hap & Hop')
 @section('paginatitel', 'Keuken')
-@section('subtitel', 'Openstaande bestellingen (status Nieuw of In behandeling) per gewenste datum, met het totaal per pakket en de dieetwensen.')
+@section('subtitel', 'Openstaande bestellingen (status Nieuw of In behandeling) per gewenste datum, met het totaal per pakket of broodje, de dieetwensen en de bezorglijst.')
+
+@section('acties')
+    @if ($datum)
+        <a class="knop knop-licht" href="{{ route('admin.keuken') }}">Alle dagen</a>
+    @endif
+    <button type="button" class="knop" onclick="window.print()">Afdrukken</button>
+@endsection
 
 @section('content')
     @forelse ($dagen as $dag)
         <section class="dag">
-            <h2>{{ $dag['datum']->format('d-m-Y') }}</h2>
+            <div class="dag-kop">
+                <h2>{{ ucfirst($dag['datum']->locale('nl')->translatedFormat('l j F Y')) }}</h2>
+                @unless ($datum)
+                    <a class="knop knop-klein knop-licht geen-print" href="{{ route('admin.keuken', ['datum' => $dag['datum']->toDateString()]) }}">Alleen deze dag</a>
+                @endunless
+            </div>
 
             <div>
                 <p class="muted" style="font-size: 14px; margin-bottom: 10px;">Totaal te maken</p>
@@ -58,8 +70,29 @@
                     </tbody>
                 </table>
             </div>
+
+            {{-- Bezorglijst: alle adressen van deze dag bij elkaar --}}
+            @if ($dag['bezorgen']->isNotEmpty())
+                <div class="bezorglijst">
+                    <h3>Bezorgen ({{ $dag['bezorgen']->count() }})</h3>
+                    <ol>
+                        @foreach ($dag['bezorgen'] as $bestelling)
+                            <li>
+                                <strong>#{{ $bestelling->id }} {{ $bestelling->naam }}</strong>
+                                @if ($bestelling->telefoon) &middot; {{ $bestelling->telefoon }} @endif
+                                <address>{!! nl2br(e($bestelling->bezorgadres() ?? 'Geen adres opgegeven')) !!}</address>
+                                <span class="muted">
+                                    @foreach ($bestelling->regels as $regel)
+                                        {{ $regel->aantal }}&times; {{ $regel->pakket_naam }}@unless ($loop->last), @endunless
+                                    @endforeach
+                                </span>
+                            </li>
+                        @endforeach
+                    </ol>
+                </div>
+            @endif
         </section>
     @empty
-        <p>Er zijn geen openstaande bestellingen.</p>
+        <p>{{ $datum ? 'Er zijn geen openstaande bestellingen voor deze dag.' : 'Er zijn geen openstaande bestellingen.' }}</p>
     @endforelse
 @endsection

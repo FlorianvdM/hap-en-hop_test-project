@@ -37,6 +37,7 @@ Schoolproject van Flo (MBO Utrecht, BE-Backend).
 - Een bestelling bestaat uit regels (`bestelregels`) met de prijs van het moment van bestellen.
 - Bestelling verwijderen: status `verzonden` wordt soft deleted en telt mee in de omzet (maand van verwijderen).
   Andere statussen worden definitief verwijderd en tellen nooit mee.
+  Status `klaar` (klaar om op te halen, alleen bij ophalen) is een tussenstap en telt dus niet mee; de klant krijgt één mail (bij `klaar` of bij `verzonden`).
 - Een beheerder kan zichzelf of een andere beheerder niet verwijderen (eerst de rol wijzigen).
 - Een pakket met bestelregels kan niet worden verwijderd, alleen verborgen.
   Een bericht verwijderen kan pas nadat het gelezen is.

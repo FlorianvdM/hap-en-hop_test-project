@@ -30,8 +30,31 @@
         @error('tot') <div class="fout" style="flex-basis: 100%;">{{ $message }}</div> @enderror
     </form>
 
+    {{-- Zoeken en filteren; de knop Wissen haalt alles weg --}}
+    <form class="zoek-balk" method="GET" action="{{ route('admin.bestellingen') }}">
+        <div class="veld">
+            <label for="zoek">Zoeken</label>
+            <input type="search" id="zoek" name="zoek" value="{{ $zoek }}" placeholder="Naam, e-mailadres of bestelnummer">
+        </div>
+
+        <div class="veld">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="">Alle statussen</option>
+                @foreach (\App\Models\Bestelling::STATUSSEN as $waarde => $label)
+                    <option value="{{ $waarde }}" @selected($status === $waarde)>{{ $label }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <button type="submit" class="knop">Zoeken</button>
+        @if ($zoek !== '' || $status)
+            <a class="knop knop-licht" href="{{ route('admin.bestellingen') }}">Wissen</a>
+        @endif
+    </form>
+
     @if ($bestellingen->isEmpty())
-        <p>Er zijn nog geen bestellingen.</p>
+        <p>{{ $zoek !== '' || $status ? 'Geen bestellingen gevonden.' : 'Er zijn nog geen bestellingen.' }}</p>
     @else
         <div class="tabel-wrap">
             <table class="tabel-kaarten">
@@ -98,9 +121,9 @@
                                     <select name="status" aria-label="Status van bestelling #{{ $bestelling->id }}"
                                             class="status-select status-{{ str_replace(' ', '-', $bestelling->status) }}"
                                             onchange="this.form.submit()">
-                                        @foreach (['nieuw', 'in behandeling', 'verzonden'] as $status)
+                                        @foreach ($bestelling->mogelijkeStatussen() as $status => $label)
                                             <option value="{{ $status }}" @selected($bestelling->status === $status)>
-                                                {{ ucfirst($status) }}
+                                                {{ $label }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -124,6 +147,8 @@
                 </tbody>
             </table>
         </div>
+
+        @include('admin.partials.paginatie', ['lijst' => $bestellingen])
 
         <p class="muted" style="font-size: 14px; max-width: 760px;">
             Verwijder je een bestelling met status Verzonden, dan verdwijnt hij uit de lijst en telt hij mee in de omzet.

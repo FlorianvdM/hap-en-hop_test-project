@@ -8,8 +8,29 @@
 @endsection
 
 @section('content')
+    <form class="zoek-balk" method="GET" action="{{ route('admin.berichten') }}">
+        <div class="veld">
+            <label for="zoek">Zoeken</label>
+            <input type="search" id="zoek" name="zoek" value="{{ $zoek }}" placeholder="Naam, e-mailadres of tekst">
+        </div>
+
+        <div class="veld">
+            <label for="filter">Tonen</label>
+            <select id="filter" name="filter">
+                <option value="">Alle berichten</option>
+                <option value="ongelezen" @selected($filter === 'ongelezen')>Alleen ongelezen</option>
+                <option value="catering" @selected($filter === 'catering')>Alleen cateringaanvragen</option>
+            </select>
+        </div>
+
+        <button type="submit" class="knop">Zoeken</button>
+        @if ($zoek !== '' || $filter)
+            <a class="knop knop-licht" href="{{ route('admin.berichten') }}">Wissen</a>
+        @endif
+    </form>
+
     @if ($berichten->isEmpty())
-        <p>Er zijn nog geen berichten.</p>
+        <p>{{ $zoek !== '' || $filter ? 'Geen berichten gevonden.' : 'Er zijn nog geen berichten.' }}</p>
     @else
         <div class="tabel-wrap">
             <table>
@@ -54,5 +75,7 @@
                 </tbody>
             </table>
         </div>
+
+        @include('admin.partials.paginatie', ['lijst' => $berichten])
     @endif
 @endsection
