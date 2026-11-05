@@ -3,7 +3,7 @@
 @section('title', 'Producten | Hap & Hop')
 @section('paginatitel', 'Producten')
 @section('subtitel')
-    Zichtbare producten staan op de pagina Producten en onder "Onze favorieten" op de homepage. Bestelbare producten hebben een vaste prijs en een knop "In winkelwagen"; de andere tonen een "Vanaf"-prijs.
+    Zichtbare producten staan op de pagina Producten en onder "Onze favorieten" op de homepage. Bestelbare producten hebben een vaste prijs en een knop "In winkelwagen"; de andere tonen geen prijs, alleen "Neem contact op".
 @endsection
 
 @section('acties')

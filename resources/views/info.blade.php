@@ -10,17 +10,17 @@
 
 @section('content')
     <div class="info-raster">
-        <x-info-blok icon="truck" titel="Bezorgen & afhalen">
-            Wij bezorgen in de regio of je kunt je bestelling zelf afhalen.
+        <x-info-blok icon="clock" titel="Openingstijd">
+            Elke donderdag verse broodjes: voor 10.30 uur besteld, vanaf 12.00 uur ophalen of bezorgen.<br>
+            Catering op andere dagen is ook mogelijk!
         </x-info-blok>
 
-        <x-info-blok icon="clock" titel="Openingstijden">
-            Maandag t/m vrijdag: 08.00 – 16.00<br>
-            Zaterdag en zondag: Gesloten
+        <x-info-blok icon="truck" titel="Bezorgen & afhalen">
+            Ophalen kan op {{ config('hapenhop.adres') }}. Wij bezorgen ook in Houten en omgeving.
         </x-info-blok>
 
         <x-info-blok icon="leaf" titel="Onze producten">
-            Wij werken met verse en lokale ingrediënten waar mogelijk.
+            Alles wordt vers en met veel aandacht bereid.
         </x-info-blok>
 
         <x-info-blok icon="credit-card" titel="Betalen">

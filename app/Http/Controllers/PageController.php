@@ -24,6 +24,11 @@ class PageController extends Controller
         return view('info');
     }
 
+    public function catering()
+    {
+        return view('catering');
+    }
+
     public function producten()
     {
         return view('producten', [

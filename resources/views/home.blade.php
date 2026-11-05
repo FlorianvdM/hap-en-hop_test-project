@@ -8,24 +8,24 @@
             <div>
                 <h1>Verse broodjes en heerlijke catering in Houten</h1>
                 <p class="lead">
-                    Van ontbijt tot lunch: pakketten en broodjes die we vers voor je klaarmaken.
-                    Je bestelt online, wij bezorgen of je haalt ze zelf op.
+                    Elke donderdag verse broodjes: bestel voor 10.30 uur en haal ze vanaf 12.00 uur op, of laat ze bezorgen.
+                    Catering voor een feest of op het werk kan ook op andere dagen.
                 </p>
 
                 <div class="hero-knoppen">
                     <a class="knop knop-goud" href="{{ route('pakketten.index') }}">Bekijk de pakketten</a>
-                    <a class="knop knop-rand" href="{{ route('contact') }}">Catering op maat aanvragen</a>
+                    <a class="knop knop-rand" href="{{ route('catering') }}">Catering op maat</a>
                 </div>
 
                 <ul class="feiten">
                     <li><x-icon name="truck" /> Bezorgen of afhalen</li>
                     <li><x-icon name="credit-card" /> Pin, contant of op factuur</li>
-                    <li><x-icon name="clock" /> Ma t/m vr 08.00 &ndash; 16.00</li>
+                    <li><x-icon name="clock" /> Donderdag: bestellen voor 10.30</li>
                 </ul>
             </div>
 
             <div class="hero-merk">
-                <img src="{{ asset('images/logo-merk.png') }}" alt="Logo van Hap &amp; Hop">
+                <img src="{{ asset('images/logo-volledig.png') }}" alt="Logo van Hap &amp; Hop">
             </div>
         </div>
     </section>

@@ -16,6 +16,8 @@
                 class="{{ request()->routeIs('pakketten.*') ? 'actief' : '' }}">Pakketten</a>
             <a href="{{ route('producten') }}"
                 class="{{ request()->routeIs('producten') ? 'actief' : '' }}">Broodjes</a>
+            <a href="{{ route('catering') }}"
+                class="{{ request()->routeIs('catering') ? 'actief' : '' }}">Catering</a>
 
             {{-- Uitklapmenu "Over ons" (open en dicht via public/js/site.js) --}}
             <div class="menu-groep">

@@ -4,14 +4,14 @@ return [
     'naam' => 'Hap & Hop',
 
     // Contactadres op de website en in de privacyverklaring. Pas aan in .env (HAPHOP_EMAIL).
-    'email' => env('HAPHOP_EMAIL', 'Haphopcatering@outlook.com'),
+    'email' => env('HAPHOP_EMAIL', 'info@haphop.nl'),
+    'adres' => 'Sleepboot 2, 3991 CN Houten',
     'tiktok' => 'https://www.tiktok.com/@haphopcatering',
     'instagram' => 'https://www.instagram.com/haphopcatering',
     'facebook' => 'https://www.facebook.com/profile.php?id=61595299014970',
 
-    // Telefoonnummer op de contactpagina. Zet het in .env (HAPHOP_TELEFOON="+31 6 12345678"),
-    // zodat het niet in de code op GitHub komt. Leeg = de regel "Telefoon" wordt niet getoond.
-    'telefoon' => env('HAPHOP_TELEFOON'),
+    // Zakelijk telefoonnummer op de website. Een ander nummer kan via HAPHOP_TELEFOON in .env.
+    'telefoon' => env('HAPHOP_TELEFOON', '+31 6 10402693'),
 
     // KvK-nummer. Leeg laten zolang Hap & Hop niet is ingeschreven; dan toont de footer niets.
     // Zodra het bestaat zet je HAPHOP_KVK=12345678 in .env op de server.

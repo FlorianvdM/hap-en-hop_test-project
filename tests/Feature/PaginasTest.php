@@ -39,6 +39,15 @@ class PaginasTest extends TestCase
             ]);
     }
 
+    public function test_cateringpagina_staat_in_het_menu_en_toont_geen_prijzen(): void
+    {
+        Product::create(['naam' => 'Catering Test', 'prijs' => 12.5, 'actief' => true, 'bestelbaar' => false]);
+
+        $this->get(route('catering'))->assertOk()->assertSee('Catering aanvragen');
+        $this->get(route('home'))->assertSee(route('catering'));
+        $this->get(route('producten'))->assertSee('Catering Test')->assertDontSee('12,50');
+    }
+
     /** Een echt (1x1) PNG-bestand; zo is de GD-extensie niet nodig om afbeeldingen te testen. */
     private function foto(string $naam = 'portret.png'): UploadedFile
     {

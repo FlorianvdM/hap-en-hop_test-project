@@ -73,16 +73,16 @@
             <div class="contact-item">
                 <x-icon name="map-pin" />
                 <div>
-                    <strong>Werkgebied</strong>
-                    <span>Houten en omgeving</span>
+                    <strong>Adres</strong>
+                    <span>{{ config('hapenhop.adres') }}</span>
                 </div>
             </div>
 
             <div class="contact-item">
                 <x-icon name="clock" />
                 <div>
-                    <strong>Bereikbaar</strong>
-                    <span>Ma t/m vr 08.00 &ndash; 16.00</span>
+                    <strong>Broodjes</strong>
+                    <span>Elke donderdag, bestellen voor 10.30 uur</span>
                 </div>
             </div>
         </aside>

@@ -48,6 +48,7 @@
                 <ul>
                     <li><a href="{{ route('pakketten.index') }}">Pakketten</a></li>
                     <li><a href="{{ route('producten') }}">Broodjes</a></li>
+                    <li><a href="{{ route('catering') }}">Catering</a></li>
                     <li><a href="{{ route('winkelwagen.index') }}">Winkelwagen</a></li>
                     @auth
                         <li><a href="{{ route('mijn-bestellingen') }}">Mijn bestellingen</a></li>
@@ -73,7 +74,7 @@
                     @if ($telefoon)
                         <li><a href="tel:{{ $telefoonLink }}">{{ $telefoon }}</a></li>
                     @endif
-                    <li>Houten en omgeving</li>
+                    <li>{{ config('hapenhop.adres') }}</li>
                 </ul>
             </div>
         </div>

@@ -22,6 +22,7 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/info', [PageController::class, 'info'])->name('info');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/producten', [PageController::class, 'producten'])->name('producten');
+Route::get('/catering', [PageController::class, 'catering'])->name('catering');
 Route::get('/wie-zijn-wij', [PageController::class, 'wieZijnWij'])->name('wie-zijn-wij');
 Route::get('/pakketten', [PakketController::class, 'index'])->name('pakketten.index');
 

@@ -18,12 +18,9 @@
         @endif
 
         <div class="kaart-voet">
-            {{-- Bestelbare producten hebben een vaste prijs, de andere een "Vanaf"-prijs --}}
-            <span class="prijs">
-                @unless ($product->bestelbaar)<small>Vanaf</small>@endunless&euro; {{ number_format($product->prijs, 2, ',', '.') }}
-            </span>
-
+            {{-- Alleen bestelbare producten tonen een prijs; bij catering spreek je de prijs samen af --}}
             @if ($product->bestelbaar)
+                <span class="prijs">&euro; {{ number_format($product->prijs, 2, ',', '.') }}</span>
                 <form method="POST" action="{{ route('winkelwagen.product.toevoegen', $product) }}">
                     @csrf
                     <button type="submit" class="knop" @disabled($product->uitverkocht())>
