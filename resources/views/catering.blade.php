@@ -20,7 +20,7 @@
         </x-info-blok>
 
         <x-info-blok icon="leaf" titel="Vers bereid">
-            Alles wordt vers en met veel aandacht bereid. Ook met dieetwensen, zoals vegetarisch of halal, houden we rekening.
+            Alles wordt met veel aandacht bereid. Ook met dieetwensen, zoals vegetarisch of halal, houden we rekening.
         </x-info-blok>
 
         <x-info-blok icon="truck" titel="Ophalen of bezorgen">
