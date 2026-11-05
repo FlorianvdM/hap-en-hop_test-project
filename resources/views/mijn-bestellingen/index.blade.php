@@ -62,4 +62,11 @@
         <p style="margin-bottom: 16px;">Je hebt nog geen bestellingen geplaatst terwijl je was ingelogd.</p>
         <a class="knop" href="{{ route('pakketten.index') }}">Bekijk onze pakketten</a>
     @endforelse
+
+    @unless (auth()->user()->is_admin)
+        <p class="muted" style="margin-top: 56px;">
+            Wil je je account niet meer gebruiken?
+            <a href="{{ route('account.verwijderen.bevestig') }}">Account verwijderen</a>
+        </p>
+    @endunless
 @endsection

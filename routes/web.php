@@ -21,9 +21,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/info', [PageController::class, 'info'])->name('info');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/sitemap.xml', [PageController::class, 'sitemap'])->name('sitemap');
+Route::get('/veelgestelde-vragen', [PageController::class, 'vragen'])->name('vragen');
 Route::get('/voorwaarden', [PageController::class, 'voorwaarden'])->name('voorwaarden');
 Route::get('/producten', [PageController::class, 'producten'])->name('producten');
 Route::get('/catering', [PageController::class, 'catering'])->name('catering');
+Route::post('/catering', [ContactController::class, 'catering'])
+    ->middleware('throttle:5,1')
+    ->name('catering.store');
 Route::get('/wie-zijn-wij', [PageController::class, 'wieZijnWij'])->name('wie-zijn-wij');
 Route::get('/pakketten', [PakketController::class, 'index'])->name('pakketten.index');
 
@@ -68,6 +73,12 @@ Route::middleware('guest')->group(function () {
 // Voor ingelogde gebruikers
 Route::middleware('auth')->group(function () {
     Route::get('/mijn-bestellingen', [MijnBestellingenController::class, 'index'])->name('mijn-bestellingen');
+
+    // Eigen account verwijderen (met wachtwoord ter bevestiging)
+    Route::get('/account-verwijderen', [AuthController::class, 'showAccountVerwijderen'])->name('account.verwijderen.bevestig');
+    Route::delete('/account', [AuthController::class, 'accountVerwijderen'])
+        ->middleware('throttle:5,1')
+        ->name('account.verwijderen');
 
     // Uitloggen met bevestigingspagina
     Route::get('/uitloggen', [AuthController::class, 'showLogout'])->name('logout.confirm');

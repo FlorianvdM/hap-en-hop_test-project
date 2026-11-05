@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('title', 'Privacyverklaring | Hap & Hop')
+@section('beschrijving', 'Zo gaat Hap & Hop om met je gegevens.')
 
 @section('kop')
     <x-pagina-kop titel="Privacyverklaring">
-        Hier lees je hoe Hap &amp; Hop omgaat met jouw gegevens. Laatst bijgewerkt: 17 oktober 2026.
+        Hier lees je hoe Hap &amp; Hop omgaat met jouw gegevens. Laatst bijgewerkt: 5 november 2026.
     </x-pagina-kop>
 @endsection
 
@@ -41,7 +42,7 @@
         <ul>
             <li>Bestelgegevens bewaren we zolang dat nodig is voor de uitvoering en onze administratie. Voor de administratie geldt een wettelijke bewaartermijn van zeven jaar.</li>
             <li>Berichten uit het contactformulier bewaren we niet langer dan nodig is om je vraag af te handelen.</li>
-            <li>Een account bewaren we tot je vraagt om het te verwijderen.</li>
+            <li>Een account bewaren we tot je het verwijdert. Dat kan zelf, onderaan bij "Mijn bestellingen". Je bestellingen bewaren we daarna nog voor de administratie, maar ze zijn dan niet meer aan een account gekoppeld.</li>
         </ul>
 
         <h2>Delen met anderen</h2>

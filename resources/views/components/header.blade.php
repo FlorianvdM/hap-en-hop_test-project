@@ -1,6 +1,6 @@
 @php
     $winkelwagenAantal = \App\Support\Winkelwagen::aantalStuks();
-    $overOnsActief = request()->routeIs('info', 'contact', 'wie-zijn-wij');
+    $overOnsActief = request()->routeIs('info', 'contact', 'wie-zijn-wij', 'vragen');
 @endphp
 
 <header class="site-header" id="site-header">
@@ -30,6 +30,7 @@
                     <a href="{{ route('wie-zijn-wij') }}"
                         class="{{ request()->routeIs('wie-zijn-wij') ? 'actief' : '' }}">Wie zijn wij</a>
                     <a href="{{ route('info') }}" class="{{ request()->routeIs('info') ? 'actief' : '' }}">Info</a>
+                    <a href="{{ route('vragen') }}" class="{{ request()->routeIs('vragen') ? 'actief' : '' }}">Veelgestelde vragen</a>
                     <a href="{{ route('contact') }}"
                         class="{{ request()->routeIs('contact') ? 'actief' : '' }}">Contact</a>
                 </div>

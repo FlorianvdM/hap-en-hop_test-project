@@ -61,6 +61,7 @@
                 <ul>
                     <li><a href="{{ route('wie-zijn-wij') }}">Wie zijn wij</a></li>
                     <li><a href="{{ route('info') }}">Info</a></li>
+                    <li><a href="{{ route('vragen') }}">Veelgestelde vragen</a></li>
                     <li><a href="{{ route('contact') }}">Contact</a></li>
                     <li><a href="{{ route('privacy') }}">Privacyverklaring</a></li>
                     <li><a href="{{ route('voorwaarden') }}">Algemene voorwaarden</a></li>

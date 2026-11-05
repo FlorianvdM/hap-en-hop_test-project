@@ -47,6 +47,30 @@ class PageController extends Controller
         ]);
     }
 
+    public function vragen()
+    {
+        return view('vragen');
+    }
+
+    /** Lijst van de publieke pagina's voor zoekmachines */
+    public function sitemap()
+    {
+        $routes = ['home', 'pakketten.index', 'producten', 'catering', 'info', 'contact', 'wie-zijn-wij', 'vragen', 'privacy', 'voorwaarden'];
+
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "
+"
+            . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "
+";
+
+        foreach ($routes as $naam) {
+            $xml .= '  <url><loc>' . e(route($naam)) . '</loc></url>' . "
+";
+        }
+
+        return response($xml . '</urlset>' . "
+", 200, ['Content-Type' => 'application/xml']);
+    }
+
     public function voorwaarden()
     {
         return view('voorwaarden');

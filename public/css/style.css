@@ -1028,6 +1028,11 @@ textarea:focus {
 .contact-item span {
     color: #d7e6db;
 }
+.contact-item span + a {
+    display: block;
+    margin-top: 4px;
+    color: var(--goud);
+}
 
 /* Footer */
 .site-footer {
@@ -1950,6 +1955,32 @@ td .klein {
 }
 .melding-dialoog [hidden] {
     display: none;
+}
+
+/* Onzichtbaar spamveld (honeypot) */
+.honingpot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* Veelgestelde vragen */
+.vragen {
+    max-width: 760px;
+}
+.vragen details {
+    border-bottom: 1px solid var(--lijn);
+    padding: 16px 0;
+}
+.vragen summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 17px;
+}
+.vragen details p {
+    margin: 10px 0 0;
 }
 
 /* Adres bij bezorging (beheer) */

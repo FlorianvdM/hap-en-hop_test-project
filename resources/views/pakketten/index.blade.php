@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Pakketten | Hap & Hop')
+@section('beschrijving', 'Lunch- en ontbijtpakketten van Hap & Hop, vers bereid in Houten. Bestel online, ophalen of laten bezorgen.')
 
 @section('kop')
     <x-pagina-kop titel="Onze pakketten">

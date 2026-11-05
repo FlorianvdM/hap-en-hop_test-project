@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Contact | Hap & Hop')
+@section('beschrijving', 'Neem contact op met Hap & Hop in Houten voor een vraag, een bestelling of catering op maat.')
 
 @section('kop')
     <x-pagina-kop titel="Contact">
@@ -43,6 +44,8 @@
                 @error('bericht') <div class="fout">{{ $message }}</div> @enderror
             </div>
 
+            <x-honingpot />
+
             <div style="margin-top: 22px;">
                 <button type="submit" class="knop">Versturen</button>
             </div>
@@ -75,6 +78,7 @@
                 <div>
                     <strong>Adres</strong>
                     <span>{{ config('hapenhop.adres') }}</span>
+                    <a href="{{ config('hapenhop.route') }}" target="_blank" rel="noopener noreferrer">Route plannen</a>
                 </div>
             </div>
 

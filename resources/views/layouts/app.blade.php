@@ -6,7 +6,13 @@
     <title>@yield('title', 'Hap &amp; Hop')</title>
     <x-favicon />
 
-    {{-- Voorbeeld als de link wordt gedeeld (WhatsApp, Facebook, X) --}}
+    {{-- Korte beschrijving voor Google en als voorbeeld als de link wordt gedeeld (WhatsApp, Facebook, X) --}}
+    <meta name="description" content="@yield('beschrijving', 'Verse broodjes, pakketten en catering in Houten en omgeving.')">
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', 'Hap &amp; Hop')">
+    <meta property="og:description" content="@yield('beschrijving', 'Verse broodjes, pakketten en catering in Houten en omgeving.')">
     <meta property="og:site_name" content="Hap &amp; Hop">
     <meta property="og:image" content="{{ asset('images/og-banner.png') }}">
     <meta name="twitter:card" content="summary_large_image">

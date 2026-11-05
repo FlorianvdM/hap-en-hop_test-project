@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Home | Hap & Hop')
+@section('beschrijving', 'Verse broodjes, pakketten en catering in Houten. Elke donderdag broodjes: bestel voor 10.30 uur, ophalen of bezorgen vanaf 12.00 uur.')
 
 @section('hero')
     <section class="hero">

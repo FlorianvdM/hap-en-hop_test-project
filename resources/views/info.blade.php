@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Info | Hap & Hop')
+@section('beschrijving', 'Openingstijd, bezorgen, afhalen en betalen bij Hap & Hop in Houten.')
 
 @section('kop')
     <x-pagina-kop titel="Informatie">
@@ -16,7 +17,9 @@
         </x-info-blok>
 
         <x-info-blok icon="truck" titel="Bezorgen & afhalen">
-            Ophalen kan op {{ config('hapenhop.adres') }}. Wij bezorgen ook in Houten en omgeving.
+            Ophalen kan op {{ config('hapenhop.adres') }}
+            (<a href="{{ config('hapenhop.route') }}" target="_blank" rel="noopener noreferrer">route plannen</a>).
+            Wij bezorgen ook in Houten en omgeving.
         </x-info-blok>
 
         <x-info-blok icon="leaf" titel="Onze producten">

@@ -6,6 +6,8 @@ return [
     // Contactadres op de website en in de privacyverklaring. Pas aan in .env (HAPHOP_EMAIL).
     'email' => env('HAPHOP_EMAIL', 'info@haphop.nl'),
     'adres' => 'Sleepboot 2, 3991 CN Houten',
+    // Gewone link naar Google Maps (geen ingebouwde kaart, dus geen cookies van Google)
+    'route' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Sleepboot 2, 3991 CN Houten'),
     'tiktok' => 'https://www.tiktok.com/@haphopcatering',
     'instagram' => 'https://www.instagram.com/haphopcatering',
     'facebook' => 'https://www.facebook.com/profile.php?id=61595299014970',

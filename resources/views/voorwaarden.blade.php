@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Algemene voorwaarden | Hap & Hop')
+@section('beschrijving', 'De algemene voorwaarden voor bestellingen bij Hap & Hop.')
 
 @section('kop')
     <x-pagina-kop titel="Algemene voorwaarden">

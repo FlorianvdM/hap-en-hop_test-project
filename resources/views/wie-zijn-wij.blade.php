@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Wie zijn wij | Hap & Hop')
+@section('beschrijving', 'Maak kennis met de mensen achter Hap & Hop, verse broodjes en catering in Houten.')
 
 @section('kop')
     <x-pagina-kop titel="Wie zijn wij">
