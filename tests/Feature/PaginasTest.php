@@ -45,7 +45,8 @@ class PaginasTest extends TestCase
 
         $this->get(route('catering'))->assertOk()->assertSee('Catering aanvragen');
         $this->get(route('home'))->assertSee(route('catering'));
-        $this->get(route('producten'))->assertSee('Catering Test')->assertDontSee('12,50');
+        $this->get(route('catering'))->assertSee('Catering Test')->assertSee('Neem contact op')->assertDontSee('12,50');
+        $this->get(route('producten'))->assertDontSee('Catering Test');
     }
 
     /** Een echt (1x1) PNG-bestand; zo is de GD-extensie niet nodig om afbeeldingen te testen. */
@@ -58,7 +59,7 @@ class PaginasTest extends TestCase
 
     public function test_productenpagina_toont_alleen_zichtbare_producten_met_voorraad(): void
     {
-        Product::create(['naam' => 'Zichtbaar testproduct', 'prijs' => 4.5, 'voorraad' => 3, 'actief' => true]);
+        Product::create(['naam' => 'Zichtbaar testproduct', 'prijs' => 4.5, 'voorraad' => 3, 'actief' => true, 'bestelbaar' => true]);
         Product::create(['naam' => 'Verborgen testproduct', 'prijs' => 4.5, 'actief' => false]);
 
         $this->get(route('producten'))

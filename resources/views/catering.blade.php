@@ -28,6 +28,14 @@
         </x-info-blok>
     </div>
 
+    @if ($producten->isNotEmpty())
+        <div class="kaarten" style="margin-top: 48px;">
+            @foreach ($producten as $product)
+                <x-product-kaart :product="$product" />
+            @endforeach
+        </div>
+    @endif
+
     <div class="hero-knoppen" style="margin-top: 48px;">
         <a class="knop" href="{{ route('contact') }}">Catering aanvragen</a>
         <a class="knop knop-licht" href="{{ route('pakketten.index') }}">Bekijk de pakketten</a>

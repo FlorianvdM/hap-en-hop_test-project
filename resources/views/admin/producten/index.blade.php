@@ -3,7 +3,7 @@
 @section('title', 'Producten | Hap & Hop')
 @section('paginatitel', 'Producten')
 @section('subtitel')
-    Zichtbare producten staan op de pagina Producten en onder "Onze favorieten" op de homepage. Bestelbare producten hebben een vaste prijs en een knop "In winkelwagen"; de andere tonen geen prijs, alleen "Neem contact op".
+    Bestelbare producten staan op de pagina Broodjes en onder "Onze favorieten" op de homepage, met een vaste prijs en een knop "In winkelwagen". Producten die niet bestelbaar zijn staan op de pagina Catering, zonder prijs en met "Neem contact op".
 @endsection
 
 @section('acties')

@@ -13,15 +13,11 @@ class ProductSeeder extends Seeder
             'naam' => 'Luxe broodjes',
             'beschrijving' => 'Diverse soorten, vers belegd',
             'prijs' => 3.50,
+            'bestelbaar' => true,
         ]);
 
         Product::create([
-            'naam' => 'Lunchpakketten',
-            'beschrijving' => 'Compleet en smakelijk',
-            'prijs' => 8.50,
-        ]);
-
-        Product::create([
+            // Niet bestelbaar: staat op de Catering-pagina met "Neem contact op"
             'naam' => 'Catering op maat',
             'beschrijving' => 'Voor bedrijven en evenementen',
             'prijs' => 12.50,

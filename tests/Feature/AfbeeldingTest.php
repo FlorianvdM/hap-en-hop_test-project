@@ -66,7 +66,7 @@ class AfbeeldingTest extends TestCase
     public function test_product_afbeelding_wordt_getoond_en_opgeruimd(): void
     {
         $this->actingAs($this->admin())->post(route('admin.producten.store'), [
-            'naam' => 'Fotoproduct', 'prijs' => 4, 'actief' => 1, 'afbeelding' => $this->foto(),
+            'naam' => 'Fotoproduct', 'prijs' => 4, 'actief' => 1, 'bestelbaar' => 1, 'afbeelding' => $this->foto(),
         ])->assertRedirect(route('admin.producten.index'));
 
         $product = Product::where('naam', 'Fotoproduct')->firstOrFail();

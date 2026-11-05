@@ -14,7 +14,8 @@ class PageController extends Controller
         return view('home', [
             // De drie goedkoopste actieve pakketten voor op de homepage
             'pakketten' => Pakket::where('actief', true)->orderBy('prijs')->take(3)->get(),
-            'producten' => Product::where('actief', true)->orderBy('prijs')->get(),
+            // Onder "Onze favorieten" alleen broodjes die je echt kunt bestellen
+            'producten' => Product::where('actief', true)->where('bestelbaar', true)->orderBy('prijs')->get(),
             'reviews' => Review::where('actief', true)->latest()->take(6)->get(),
         ]);
     }
@@ -26,13 +27,16 @@ class PageController extends Controller
 
     public function catering()
     {
-        return view('catering');
+        // Producten die niet bestelbaar zijn, zijn catering op aanvraag
+        return view('catering', [
+            'producten' => Product::where('actief', true)->where('bestelbaar', false)->orderBy('naam')->get(),
+        ]);
     }
 
     public function producten()
     {
         return view('producten', [
-            'producten' => Product::where('actief', true)->orderBy('prijs')->get(),
+            'producten' => Product::where('actief', true)->where('bestelbaar', true)->orderBy('prijs')->get(),
         ]);
     }
 

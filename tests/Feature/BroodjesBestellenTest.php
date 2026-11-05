@@ -61,7 +61,8 @@ class BroodjesBestellenTest extends TestCase
     {
         $this->broodje(null, false);
 
-        $this->get(route('producten'))
+        // Een product dat niet bestelbaar is, staat op de Catering-pagina
+        $this->get(route('catering'))
             ->assertSee('Broodje Testbal')
             ->assertDontSee('In winkelwagen');
     }
