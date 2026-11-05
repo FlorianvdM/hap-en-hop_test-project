@@ -128,4 +128,29 @@ class BeheerLijstenTest extends TestCase
             ->assertSee('Afdrukken')
             ->assertDontSee('Andere dag');
     }
+
+    public function test_qr_code_staat_bij_instellingen_en_is_te_downloaden(): void
+    {
+        $this->actingAs($this->admin())->get(route('admin.instellingen'))
+            ->assertOk()
+            ->assertSee('<svg', false)
+            ->assertSee(route('pakketten.index'))
+            ->assertSee('wijst nog naar je eigen computer');
+
+        $this->actingAs($this->admin())->get(route('admin.qr'))
+            ->assertOk()
+            ->assertHeader('Content-Type', 'image/svg+xml')
+            ->assertDownload('hapenhop-qr-code.svg');
+
+        // Met het echte adres verdwijnt de waarschuwing
+        config(['hapenhop.qr_url' => 'https://haphop.com/pakketten']);
+        $this->actingAs($this->admin())->get(route('admin.instellingen'))
+            ->assertSee('https://haphop.com/pakketten')
+            ->assertDontSee('wijst nog naar je eigen computer');
+    }
+
+    public function test_qr_code_alleen_voor_beheerders(): void
+    {
+        $this->get(route('admin.qr'))->assertRedirect(route('login'));
+    }
 }

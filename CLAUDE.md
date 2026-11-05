@@ -56,5 +56,8 @@ Herinner Flo hier actief aan zodra het over hosting of livegang gaat:
   echte `APP_URL` en een echt afzenderadres.
 - `HAPHOP_MAIL_PAUZE` weghalen en de wachtrij (`queue:work`) op de server regelen.
 - Het standaard beheerwachtwoord (`admin@hapenhop.nl`) wijzigen.
+- QR-code: `HAPHOP_QR_URL=https://<domein>/pakketten` in `.env` (of de echte `APP_URL`), daarna bij Instellingen
+  controleren dat de gele waarschuwing weg is en de QR-code opnieuw downloaden.
+- Het standaardadres `info@haphop.nl` in `config/hapenhop.php` aanpassen aan het gekozen domein (haphop.nl is bezet).
 - `.env` staat nooit op GitHub. De onderhoudsmodus staat uit.
 - Privacyverklaring nalopen (o.a. dieetwensen zoals halal, en Mollie).

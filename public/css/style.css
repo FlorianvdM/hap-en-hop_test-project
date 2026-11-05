@@ -2019,6 +2019,24 @@ td .klein {
     pointer-events: none;
 }
 
+.melding.waarschuwing {
+    background: #fde9a2;
+    color: #5c3d00;
+}
+/* QR-code bij Instellingen */
+.qr-code {
+    width: 200px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid var(--lijn);
+    border-radius: 12px;
+}
+.qr-code svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 /* Onzichtbaar spamveld (honeypot) */
 .honingpot {
     position: absolute;

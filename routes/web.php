@@ -104,6 +104,7 @@ Route::middleware(['auth', IsAdmin::class])
 
         Route::get('/instellingen', [AdminController::class, 'instellingen'])->name('instellingen');
         Route::post('/instellingen/onderhoud', [AdminController::class, 'onderhoudWisselen'])->name('onderhoud');
+        Route::get('/instellingen/qr-code', [AdminController::class, 'qrCode'])->name('qr');
 
         Route::resource('pakketten', AdminPakketController::class)
             ->except('show')

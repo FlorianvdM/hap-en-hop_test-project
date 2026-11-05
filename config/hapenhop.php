@@ -8,6 +8,10 @@ return [
     'adres' => 'Sleepboot 2, 3991 CN Houten',
     // Gewone link naar Google Maps (geen ingebouwde kaart, dus geen cookies van Google)
     'route' => 'https://www.google.com/maps/search/?api=1&query=' . urlencode('Sleepboot 2, 3991 CN Houten'),
+    // Adres in de QR-code (Instellingen in het beheer). Leeg = de pakketpagina op APP_URL.
+    // Zet bij de livegang HAPHOP_QR_URL=https://<jouw-domein>/pakketten in .env.
+    'qr_url' => env('HAPHOP_QR_URL'),
+
     'tiktok' => 'https://www.tiktok.com/@haphopcatering',
     'instagram' => 'https://www.instagram.com/haphopcatering',
     'facebook' => 'https://www.facebook.com/profile.php?id=61595299014970',

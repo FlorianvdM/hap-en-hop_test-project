@@ -95,4 +95,28 @@
             </button>
         </form>
     </section>
+
+    <section class="profiel-details" style="max-width: 760px;">
+        <h2>QR-code naar de bestelpagina</h2>
+        <p class="muted" style="margin-bottom: 12px;">
+            Voor op flyers, de toonbank of de bus. Wie hem scant, komt meteen bij de pakketten.
+            Het bestand is een SVG: dat blijft scherp op elk formaat en kun je zo naar een drukker sturen.
+        </p>
+
+        @if ($qrLokaal)
+            <p class="melding waarschuwing" style="margin: 0 0 12px;">
+                Deze QR-code wijst nog naar je eigen computer en werkt dus niet op de telefoon van een klant.
+                Hij klopt pas als de website online staat met het echte adres.
+            </p>
+        @endif
+
+        {{-- De SVG komt uit onze eigen code (alleen het adres zit erin), daarom ongefilterd --}}
+        <div class="qr-code">{!! $qrSvg !!}</div>
+
+        <p style="margin: 12px 0;">Leidt naar: <a href="{{ $qrUrl }}" target="_blank" rel="noopener">{{ $qrUrl }}</a></p>
+
+        <a class="knop" href="{{ route('admin.qr') }}">
+            <x-icon name="download" :size="18" /> QR-code downloaden
+        </a>
+    </section>
 @endsection

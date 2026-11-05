@@ -9,6 +9,7 @@ use App\Models\Pakket;
 use App\Models\Product;
 use App\Models\User;
 use App\Support\Onderhoud;
+use App\Support\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -268,6 +269,18 @@ class AdminController extends Controller
         return view('admin.instellingen', [
             'beheerders' => User::where('is_admin', true)->orderBy('name')->get(),
             'onderhoud' => Onderhoud::aan(),
+            'qrUrl' => QrCode::url(),
+            'qrLokaal' => QrCode::isLokaal(),
+            'qrSvg' => QrCode::svg(),
+        ]);
+    }
+
+    /** De QR-code als SVG-bestand om te downloaden (voor flyers of een sticker op de toonbank). */
+    public function qrCode()
+    {
+        return response(QrCode::svg(), 200, [
+            'Content-Type' => 'image/svg+xml',
+            'Content-Disposition' => 'attachment; filename="hapenhop-qr-code.svg"',
         ]);
     }
 
