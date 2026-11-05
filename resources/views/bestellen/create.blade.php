@@ -42,8 +42,20 @@
 
                 <div class="veld" style="margin-top: 0; max-width: 280px;">
                     <label for="gewenste_datum">Gewenste datum *</label>
-                    <input type="date" id="gewenste_datum" name="gewenste_datum"
-                        min="{{ now()->addDay()->format('Y-m-d') }}" value="{{ old('gewenste_datum') }}" required>
+                    @if ($broodjesDagen)
+                        {{-- Broodjes zijn er alleen op donderdag, daarom een keuzelijst met donderdagen --}}
+                        <select id="gewenste_datum" name="gewenste_datum" required>
+                            @foreach ($broodjesDagen as $dag)
+                                <option value="{{ $dag }}" @selected(old('gewenste_datum') === $dag)>
+                                    {{ \Carbon\Carbon::parse($dag)->locale('nl')->translatedFormat('l j F') }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <small>Broodjes zijn er alleen op donderdag. Bestel voor 10.30 uur, dan kun je ze vanaf 12.00 uur ophalen of laten bezorgen.</small>
+                    @else
+                        <input type="date" id="gewenste_datum" name="gewenste_datum"
+                            min="{{ now()->addDay()->format('Y-m-d') }}" value="{{ old('gewenste_datum') }}" required>
+                    @endif
                     @error('gewenste_datum') <div class="fout">{{ $message }}</div> @enderror
                 </div>
 
@@ -118,6 +130,8 @@
                 </div>
             </section>
 
+            <p class="muted">Door te bestellen ga je akkoord met onze
+                <a href="{{ route('voorwaarden') }}" target="_blank" rel="noopener">algemene voorwaarden</a>.</p>
             <button type="submit" class="knop" style="min-height: 54px; padding: 0 40px; font-size: 17px;">Bestelling plaatsen</button>
         </form>
 

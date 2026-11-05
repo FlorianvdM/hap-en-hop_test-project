@@ -47,6 +47,11 @@ class PageController extends Controller
         ]);
     }
 
+    public function voorwaarden()
+    {
+        return view('voorwaarden');
+    }
+
     public function privacy()
     {
         return view('privacy');

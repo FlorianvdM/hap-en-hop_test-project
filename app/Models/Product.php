@@ -17,6 +17,7 @@ class Product extends Model
     protected $fillable = [
         'naam',
         'beschrijving',
+        'allergenen',
         'afbeelding',
         'prijs',
         'voorraad',

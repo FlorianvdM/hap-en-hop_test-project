@@ -63,6 +63,7 @@
                     <li><a href="{{ route('info') }}">Info</a></li>
                     <li><a href="{{ route('contact') }}">Contact</a></li>
                     <li><a href="{{ route('privacy') }}">Privacyverklaring</a></li>
+                    <li><a href="{{ route('voorwaarden') }}">Algemene voorwaarden</a></li>
                 </ul>
             </div>
 

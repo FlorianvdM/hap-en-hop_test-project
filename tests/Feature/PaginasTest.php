@@ -69,6 +69,21 @@ class PaginasTest extends TestCase
             ->assertDontSee('Verborgen testproduct');
     }
 
+    public function test_allergenen_uit_het_beheer_staan_bij_het_broodje(): void
+    {
+        $this->actingAs($this->admin())->post(route('admin.producten.store'), [
+            'naam' => 'Broodje Allergie', 'prijs' => 4, 'actief' => 1, 'bestelbaar' => 1, 'allergenen' => 'gluten, sesam',
+        ])->assertRedirect(route('admin.producten.index'));
+
+        $this->get(route('producten'))->assertSee('Allergenen:')->assertSee('gluten, sesam');
+    }
+
+    public function test_voorwaarden_staan_in_de_footer_en_bij_het_bestellen(): void
+    {
+        $this->get(route('voorwaarden'))->assertOk()->assertSee('Algemene voorwaarden');
+        $this->get(route('home'))->assertSee(route('voorwaarden'), false);
+    }
+
     public function test_menu_bevat_producten_en_wie_zijn_wij(): void
     {
         $this->get(route('home'))

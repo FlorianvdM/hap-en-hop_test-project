@@ -21,6 +21,12 @@
         <textarea id="beschrijving" name="beschrijving" rows="6">{{ old('beschrijving', $pakket->beschrijving) }}</textarea>
         @error('beschrijving') <div class="fout">{{ $message }}</div> @enderror
 
+        <label for="allergenen">Allergenen</label>
+        <input type="text" id="allergenen" name="allergenen" maxlength="255" value="{{ old('allergenen', $pakket->allergenen) }}"
+            placeholder="Bijvoorbeeld: gluten, melk, ei, sesam">
+        @error('allergenen') <div class="fout">{{ $message }}</div> @enderror
+        <p class="muted">Staat bij het product op de website. Leeg = er staat niets.</p>
+
         <label for="prijs">Prijs (&euro;) *</label>
         <input type="number" id="prijs" name="prijs" step="0.01" min="0" value="{{ old('prijs', $pakket->prijs) }}" required>
         @error('prijs') <div class="fout">{{ $message }}</div> @enderror

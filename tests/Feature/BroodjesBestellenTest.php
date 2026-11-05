@@ -42,9 +42,43 @@ class BroodjesBestellenTest extends TestCase
         return [
             'naam' => 'Test Klant',
             'email' => 'klant@example.com',
-            'gewenste_datum' => now()->addDays(3)->toDateString(),
+            // Broodjes zijn er alleen op donderdag
+            'gewenste_datum' => now()->next('Thursday')->toDateString(),
             'levering' => 'ophalen',
         ];
+    }
+
+    public function test_broodjes_kun_je_alleen_voor_donderdag_bestellen(): void
+    {
+        $this->travelTo(now()->next('Monday')->setTime(9, 0));
+        $broodje = $this->broodje();
+        $wagen = ['winkelwagen' => ['p' . $broodje->id => 1]];
+
+        $this->withSession($wagen)->post(route('bestellen.store'), ['gewenste_datum' => now()->next('Wednesday')->toDateString()] + $this->bestelgegevens())
+            ->assertSessionHasErrors('gewenste_datum');
+
+        $this->withSession($wagen)->post(route('bestellen.store'), $this->bestelgegevens())
+            ->assertSessionHasNoErrors();
+    }
+
+    public function test_op_donderdag_kan_het_tot_half_elf_voor_dezelfde_dag(): void
+    {
+        $broodje = $this->broodje();
+        $wagen = ['winkelwagen' => ['p' . $broodje->id => 1]];
+        $donderdag = now()->next('Thursday');
+        $vandaag = ['gewenste_datum' => $donderdag->toDateString()] + $this->bestelgegevens();
+
+        $this->travelTo($donderdag->copy()->setTime(10, 29));
+        $this->withSession($wagen)->post(route('bestellen.store'), $vandaag)->assertSessionHasNoErrors();
+
+        $this->travelTo($donderdag->copy()->setTime(10, 30));
+        $this->withSession($wagen)->post(route('bestellen.store'), $vandaag)->assertSessionHasErrors('gewenste_datum');
+
+        // Met een pakket erbij moet het minstens een dag van tevoren
+        $this->travelTo($donderdag->copy()->setTime(9, 0));
+        $pakket = \App\Models\Pakket::firstOrFail();
+        $this->withSession(['winkelwagen' => ['p' . $broodje->id => 1, $pakket->id => 1]])
+            ->post(route('bestellen.store'), $vandaag)->assertSessionHasErrors('gewenste_datum');
     }
 
     public function test_bestelbaar_broodje_heeft_een_bestelknop(): void

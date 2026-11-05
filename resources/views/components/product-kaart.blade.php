@@ -13,6 +13,10 @@
         <h3>{{ $product->naam }}</h3>
         <p class="muted">{{ $product->beschrijving }}</p>
 
+        @if ($product->allergenen)
+            <p class="allergenen"><strong>Allergenen:</strong> {{ $product->allergenen }}</p>
+        @endif
+
         @if ($product->voorraadTekst())
             <p class="voorraad {{ $product->uitverkocht() ? 'voorraad-op' : '' }}">{{ $product->voorraadTekst() }}</p>
         @endif

@@ -25,6 +25,10 @@
             </ul>
         @endif
 
+        @if ($pakket->allergenen)
+            <p class="allergenen"><strong>Allergenen:</strong> {{ $pakket->allergenen }}</p>
+        @endif
+
         @if ($pakket->voorraadTekst())
             <p class="voorraad {{ $pakket->uitverkocht() ? 'voorraad-op' : '' }}">{{ $pakket->voorraadTekst() }}</p>
         @endif

@@ -65,6 +65,7 @@ class AdminProductController extends Controller
         return $request->validate([
             'naam' => ['required', 'string', 'max:100'],
             'beschrijving' => ['nullable', 'string', 'max:255'],
+            'allergenen' => ['nullable', 'string', 'max:255'],
             'prijs' => ['required', 'numeric', 'min:0', 'max:99999'],
             'voorraad' => ['nullable', 'integer', 'min:0', 'max:99999'],
             'bestelbaar' => ['sometimes', 'boolean'],

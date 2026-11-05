@@ -37,6 +37,7 @@ class BestellingController extends Controller
 
         return view('bestellen.create', [
             'regels' => $regels,
+            'broodjesDagen' => self::broodjesDagen($regels),
             'totaal' => Winkelwagen::totaal($regels),
             'dieetwensen' => self::DIEETWENSEN,
         ]);
@@ -56,7 +57,10 @@ class BestellingController extends Controller
             'naam' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:150'],
             'telefoon' => ['nullable', 'string', 'max:30'],
-            'gewenste_datum' => ['required', 'date', 'after:today'],
+            // Met broodjes alleen een donderdag uit de lijst, anders elke dag vanaf morgen
+            'gewenste_datum' => ($dagen = self::broodjesDagen($regels)) === null
+                ? ['required', 'date', 'after:today']
+                : ['required', Rule::in($dagen)],
             'levering' => ['required', Rule::in(['ophalen', 'bezorgen'])],
             'straat' => ['required_if:levering,bezorgen', 'nullable', 'string', 'max:150'],
             'postcode' => ['required_if:levering,bezorgen', 'nullable', 'string', 'max:10'],
@@ -87,6 +91,33 @@ class BestellingController extends Controller
         return redirect()
             ->route('pakketten.index')
             ->with('succes', $melding);
+    }
+
+    /**
+     * Broodjes zijn er alleen op donderdag: bestellen kan tot 10.30 uur op de dag zelf.
+     * Geeft de donderdagen die je kunt kiezen (Y-m-d), of null als er geen broodjes in de winkelwagen zitten.
+     * Een pakket moet minstens een dag van tevoren besteld worden, dus dan valt vandaag af.
+     * shortcut: alleen de komende 8 donderdagen, verder vooruit kan via het contactformulier.
+     */
+    public static function broodjesDagen($regels): ?array
+    {
+        if (! $regels->contains('soort', 'product')) {
+            return null;
+        }
+
+        $nu = now();
+        $vandaagKan = $nu->isThursday()
+            && $nu->format('H:i') < '10:30'
+            && ! $regels->contains('soort', 'pakket');
+
+        $dag = $vandaagKan ? $nu->copy()->startOfDay() : $nu->copy()->next(\Carbon\Carbon::THURSDAY);
+
+        $dagen = [];
+        for ($i = 0; $i < 8; $i++) {
+            $dagen[] = $dag->copy()->addWeeks($i)->format('Y-m-d');
+        }
+
+        return $dagen;
     }
 
     /**

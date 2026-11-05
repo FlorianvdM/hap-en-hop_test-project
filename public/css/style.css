@@ -616,6 +616,10 @@ h3 {
     font-size: 14px;
     color: var(--inkt-zacht);
 }
+.allergenen {
+    font-size: 14px;
+    color: var(--inkt-zacht);
+}
 .voorraad-op {
     color: var(--koraal);
     font-weight: 600;
