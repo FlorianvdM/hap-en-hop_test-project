@@ -75,7 +75,7 @@
                             <td data-label="Bestelling">
                                 <div>
                                     <strong>#{{ $bestelling->id }}</strong>
-                                    <span class="klein">{{ $bestelling->created_at->format('d-m-Y H:i') }}</span>
+                                    <span class="klein" style="white-space: nowrap;">{{ $bestelling->created_at->format('d-m-Y H:i') }}</span>
                                 </div>
                             </td>
 

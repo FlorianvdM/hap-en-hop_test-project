@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="tabel-wrap">
-        <table>
+        <table class="tabel-kaarten">
             <thead>
                 <tr>
                     <th>Naam</th>
@@ -21,20 +21,20 @@
             <tbody>
                 @foreach ($gebruikers as $gebruiker)
                     <tr>
-                        <td>
+                        <td data-label="Naam">
                             {{ $gebruiker->name }}
                             @if ($gebruiker->is(auth()->user()))
                                 <span class="muted">(jij)</span>
                             @endif
                         </td>
-                        <td>{{ $gebruiker->email }}</td>
-                        <td>
+                        <td data-label="E-mailadres">{{ $gebruiker->email }}</td>
+                        <td data-label="Rol">
                             <span class="status {{ $gebruiker->is_admin ? 'rol-beheerder' : 'rol-klant' }}">
                                 {{ $gebruiker->is_admin ? 'Beheerder' : 'Klant' }}
                             </span>
                         </td>
-                        <td>{{ $gebruiker->created_at->format('d-m-Y') }}</td>
-                        <td>
+                        <td data-label="Aangemaakt">{{ $gebruiker->created_at->format('d-m-Y') }}</td>
+                        <td data-label="">
                             <div class="acties">
                                 <a class="knop knop-klein"
                                    href="mailto:{{ $gebruiker->email }}?subject={{ rawurlencode('Bericht van Hap & Hop') }}">Mailen</a>

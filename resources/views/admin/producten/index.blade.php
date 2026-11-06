@@ -3,7 +3,7 @@
 @section('title', 'Producten | Hap & Hop')
 @section('paginatitel', 'Producten')
 @section('subtitel')
-    Bestelbare producten staan op de pagina Broodjes en onder "Onze favorieten" op de homepage, met een vaste prijs en een knop "In winkelwagen". Producten die niet bestelbaar zijn staan niet op de website.
+    Bestelbare producten staan op de pagina Broodjes, met een vaste prijs en een knop "In winkelwagen". Producten die niet bestelbaar zijn staan niet op de website.
 @endsection
 
 @section('acties')
@@ -16,7 +16,7 @@
         <p>Er zijn nog geen producten.</p>
     @else
         <div class="tabel-wrap">
-            <table>
+            <table class="tabel-kaarten">
                 <thead>
                     <tr>
                         <th>Naam</th>
@@ -31,17 +31,17 @@
                 <tbody>
                     @foreach ($producten as $product)
                         <tr>
-                            <td>{{ $product->naam }}</td>
-                            <td>{{ $product->beschrijving }}</td>
-                            <td>&euro; {{ number_format($product->prijs, 2, ',', '.') }}</td>
-                            <td>{{ $product->voorraadBeperkt() ? $product->voorraad : 'Onbeperkt' }}</td>
-                            <td>{{ $product->bestelbaar ? 'Ja' : 'Nee' }}</td>
-                            <td>
+                            <td data-label="Naam"><strong>{{ $product->naam }}</strong></td>
+                            <td data-label="Beschrijving">{{ $product->beschrijving }}</td>
+                            <td data-label="Prijs">&euro; {{ number_format($product->prijs, 2, ',', '.') }}</td>
+                            <td data-label="Voorraad">{{ $product->voorraadBeperkt() ? $product->voorraad : 'Onbeperkt' }}</td>
+                            <td data-label="Bestelbaar">{{ $product->bestelbaar ? 'Ja' : 'Nee' }}</td>
+                            <td data-label="Zichtbaar">
                                 <span class="status {{ $product->actief ? 'status-zichtbaar' : 'status-verborgen' }}">
                                     {{ $product->actief ? 'Zichtbaar' : 'Verborgen' }}
                                 </span>
                             </td>
-                            <td>
+                            <td data-label="">
                                 <div class="acties">
                                     <a class="knop knop-klein knop-licht"
                                         href="{{ route('admin.producten.edit', $product) }}">Wijzigen</a>

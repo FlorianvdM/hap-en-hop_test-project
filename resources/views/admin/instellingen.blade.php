@@ -40,7 +40,7 @@
         </p>
 
         <div class="tabel-wrap" style="margin-bottom: 0;">
-            <table>
+            <table class="tabel-kaarten">
                 <thead>
                     <tr>
                         <th>Naam</th>
@@ -51,14 +51,14 @@
                 <tbody>
                     @foreach ($beheerders as $beheerder)
                         <tr>
-                            <td>
+                            <td data-label="Naam">
                                 {{ $beheerder->name }}
                                 @if ($beheerder->is(auth()->user()))
                                     <span class="muted">(jij)</span>
                                 @endif
                             </td>
-                            <td>{{ $beheerder->email }}</td>
-                            <td>{{ $beheerder->created_at->format('d-m-Y') }}</td>
+                            <td data-label="E-mailadres">{{ $beheerder->email }}</td>
+                            <td data-label="Aangemaakt">{{ $beheerder->created_at->format('d-m-Y') }}</td>
                         </tr>
                     @endforeach
                 </tbody>

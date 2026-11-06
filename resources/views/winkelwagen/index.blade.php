@@ -36,7 +36,7 @@
                                 <div class="afbeelding"><x-icon name="utensils" :size="30" /></div>
                             @endif
 
-                            <div>
+                            <div class="regel-info">
                                 <strong>{{ $regel->item->naam }}</strong>
                                 <span class="muted" style="display: block; font-size: 14px;">
                                     &euro; {{ number_format($regel->item->prijs, 2, ',', '.') }} per
@@ -45,7 +45,7 @@
                             </div>
 
                             {{-- Het aantal wordt automatisch opgeslagen zodra je het verandert --}}
-                            <form method="POST" action="{{ $wijzigUrl }}">
+                            <form method="POST" action="{{ $wijzigUrl }}" class="regel-aantal">
                                 @csrf
                                 @method('PATCH')
                                 <label class="sr-only" for="{{ $veldId }}">Aantal</label>
@@ -56,7 +56,7 @@
 
                             <div class="som">&euro; {{ number_format($regel->totaal, 2, ',', '.') }}</div>
 
-                            <form method="POST" action="{{ $verwijderUrl }}">
+                            <form method="POST" action="{{ $verwijderUrl }}" class="regel-verwijder">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="link-verwijder">Verwijderen</button>
