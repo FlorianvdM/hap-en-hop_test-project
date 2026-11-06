@@ -82,7 +82,8 @@ class WinkelwagenController extends Controller
 
         Winkelwagen::toevoegen($sleutel);
 
-        return back()->with('succes', $item->naam . ' is toegevoegd aan je winkelwagen.');
+        // Geeft een pop-up met de inhoud van de winkelwagen (zie layouts/app)
+        return back()->with('toegevoegd', $item->naam);
     }
 
     /** Past het aantal aan, maar nooit hoger dan de voorraad. */

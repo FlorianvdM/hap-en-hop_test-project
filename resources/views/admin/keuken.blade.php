@@ -2,7 +2,7 @@
 
 @section('title', 'Keuken | Hap & Hop')
 @section('paginatitel', 'Keuken')
-@section('subtitel', 'Openstaande bestellingen (status Nieuw of In behandeling) per gewenste datum, met het totaal per pakket of broodje, de dieetwensen en de bezorglijst.')
+@section('subtitel', 'Openstaande bestellingen per gewenste datum, met het totaal per pakket of broodje, de dieetwensen en de bezorglijst. Zet een bestelling op Klaar als hij opgehaald of bezorgd kan worden.')
 
 @section('acties')
     @if ($datum)
@@ -40,6 +40,7 @@
                             <th>Levering</th>
                             <th>Dieetwensen</th>
                             <th>Opmerking</th>
+                            <th class="geen-print">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,6 +66,21 @@
                                     </div>
                                 </td>
                                 <td data-label="Opmerking">{{ $bestelling->opmerking ?: '-' }}</td>
+                                <td data-label="Status" class="geen-print">
+                                    <form method="POST" action="{{ route('admin.bestellingen.status', $bestelling) }}">
+                                        @csrf
+                                        @method('PATCH')
+                                        <select name="status" aria-label="Status van bestelling #{{ $bestelling->id }}"
+                                                class="status-select status-{{ str_replace(' ', '-', $bestelling->status) }}"
+                                                onchange="this.form.submit()">
+                                            @foreach (\App\Models\Bestelling::KEUKENSTATUSSEN as $status)
+                                                <option value="{{ $status }}" @selected($bestelling->status === $status)>
+                                                    {{ $bestelling->statusNaam($status) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

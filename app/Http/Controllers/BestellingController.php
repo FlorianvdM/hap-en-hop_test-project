@@ -170,6 +170,7 @@ class BestellingController extends Controller
             'straat' => $data['levering'] === 'bezorgen' ? $data['straat'] : null,
             'postcode' => $data['levering'] === 'bezorgen' ? $data['postcode'] : null,
             'plaats' => $data['levering'] === 'bezorgen' ? $data['plaats'] : null,
+            'bezorgkosten' => $data['levering'] === 'bezorgen' ? config('hapenhop.bezorgkosten') : 0,
             'dieetwensen' => $data['dieetwensen'] ?? [],
             'opmerking' => $data['opmerking'] ?? null,
             'status' => 'nieuw',

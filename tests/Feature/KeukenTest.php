@@ -63,6 +63,18 @@ class KeukenTest extends TestCase
             ->assertDontSee('Klaas');
     }
 
+    public function test_keuken_kan_de_status_kiezen_maar_niet_verzonden(): void
+    {
+        $this->bestelling('Anna', 'klaar', 1);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.keuken'))
+            ->assertSee('Anna')
+            ->assertSee('<select name="status"', false)
+            ->assertSee('Klaar voor bezorging')
+            ->assertDontSee('value="verzonden"', false);
+    }
+
     public function test_keuken_is_alleen_voor_admins(): void
     {
         $this->get(route('admin.keuken'))->assertRedirect();
@@ -75,7 +87,7 @@ class KeukenTest extends TestCase
     public function test_klant_krijgt_een_mail_bij_verzonden_maar_niet_bij_herhaling(): void
     {
         Mail::fake();
-        $bestelling = $this->bestelling('Anna', 'in behandeling', 1);
+        $bestelling = $this->bestelling('Anna', 'klaar', 1);
 
         $this->actingAs($this->admin())
             ->patch(route('admin.bestellingen.status', $bestelling), ['status' => 'verzonden']);
@@ -90,7 +102,7 @@ class KeukenTest extends TestCase
 
     public function test_mislukte_verzendmail_geeft_een_melding_in_plaats_van_een_foutpagina(): void
     {
-        $bestelling = $this->bestelling('Anna', 'in behandeling', 1);
+        $bestelling = $this->bestelling('Anna', 'klaar', 1);
         Mail::shouldReceive('to')->andThrow(new \RuntimeException('Mailserver weigert'));
 
         $this->actingAs($this->admin())
@@ -160,6 +172,27 @@ class KeukenTest extends TestCase
 
         $this->assertSame('Kerkstraat 1', Bestelling::where('levering', 'bezorgen')->firstOrFail()->straat);
         $this->assertNull(Bestelling::where('levering', 'ophalen')->firstOrFail()->straat);
+    }
+
+    public function test_bezorgkosten_alleen_bij_bezorgen_en_in_het_totaal(): void
+    {
+        config(['hapenhop.bezorgkosten' => 2.50]);
+        $pakket = Pakket::firstOrFail();
+        $gegevens = ['naam' => 'Test', 'email' => 'test@example.com', 'gewenste_datum' => now()->next('Thursday')->toDateString()];
+
+        // Ook als de klant zelf bezorgkosten meestuurt, telt alleen het bedrag uit de instellingen
+        $this->withSession(['winkelwagen' => [$pakket->id => 1]])->post(route('bestellen.store'), $gegevens + [
+            'levering' => 'bezorgen', 'straat' => 'Kerkstraat 1', 'postcode' => '3511 AB', 'plaats' => 'Utrecht', 'bezorgkosten' => 0,
+        ]);
+        $this->withSession(['winkelwagen' => [$pakket->id => 1]])->post(route('bestellen.store'), $gegevens + ['levering' => 'ophalen', 'bezorgkosten' => 99]);
+
+        $bezorgd = Bestelling::where('levering', 'bezorgen')->firstOrFail();
+        $opgehaald = Bestelling::where('levering', 'ophalen')->firstOrFail();
+
+        $this->assertEquals(2.50, $bezorgd->bezorgkosten);
+        $this->assertEquals($pakket->prijs + 2.50, $bezorgd->totaal);
+        $this->assertEquals(0, $opgehaald->bezorgkosten);
+        $this->assertEquals($pakket->prijs, $opgehaald->totaal);
     }
 
     public function test_adresknop_staat_alleen_bij_bezorgen(): void

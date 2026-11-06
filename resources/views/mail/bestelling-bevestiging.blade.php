@@ -24,6 +24,12 @@
                 </td>
             </tr>
         @endforeach
+        @if ($bestelling->bezorgkosten > 0)
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">Bezorgkosten</td>
+                <td align="right" style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">&euro; {{ number_format($bestelling->bezorgkosten, 2, ',', '.') }}</td>
+            </tr>
+        @endif
         <tr>
             <td style="padding: 10px 0; font-weight: bold;">Totaal</td>
             <td align="right" style="padding: 10px 0; font-weight: bold;">&euro; {{ number_format($bestelling->totaal, 2, ',', '.') }}</td>

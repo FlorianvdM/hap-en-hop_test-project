@@ -116,10 +116,21 @@ class BroodjesBestellenTest extends TestCase
     {
         $broodje = $this->broodje();
 
-        $this->post(route('winkelwagen.product.toevoegen', $broodje))->assertSessionHas('succes');
+        $this->from(route('producten'))
+            ->post(route('winkelwagen.product.toevoegen', $broodje))
+            ->assertSessionHas('toegevoegd', 'Broodje Testbal');
 
         // Een product staat in de sessie onder "p" + het product-id
         $this->assertSame(1, session('winkelwagen')['p' . $broodje->id]);
+
+        // Terug op de pagina staat onder de winkelwagenknop een blokje met de inhoud van de winkelwagen
+        $this->get(route('producten'))
+            ->assertSee('id="wagen-melding"', false)
+            ->assertSee('Broodje Testbal toegevoegd')
+            ->assertSee('1&times; Broodje Testbal', false);
+
+        // Daarna niet nog een keer
+        $this->get(route('producten'))->assertDontSee('id="wagen-melding"', false);
     }
 
     public function test_product_dat_niet_bestelbaar_is_kan_niet_in_de_winkelwagen(): void

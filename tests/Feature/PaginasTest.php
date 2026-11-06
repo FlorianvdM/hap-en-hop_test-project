@@ -27,6 +27,17 @@ class PaginasTest extends TestCase
         return User::where('email', 'admin@hapenhop.nl')->firstOrFail();
     }
 
+    public function test_winkelwagen_staat_naast_de_pakketten_en_broodjes(): void
+    {
+        $this->get(route('pakketten.index'))->assertSee('Je winkelwagen is nog leeg.');
+
+        $pakket = \App\Models\Pakket::firstOrFail();
+        $this->withSession(['winkelwagen' => [$pakket->id => 2]])
+            ->get(route('producten'))
+            ->assertSee('winkelwagen-zijbalk', false)
+            ->assertSee('2&times; ' . e($pakket->naam), false);
+    }
+
     public function test_foutmeldingen_zijn_nederlands_met_locale_nl(): void
     {
         app()->setLocale('nl');

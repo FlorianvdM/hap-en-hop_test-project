@@ -110,7 +110,7 @@
                                 <td data-label="Totaal">&euro; {{ number_format($bestelling->totaal, 2, ',', '.') }}</td>
                                 <td data-label="Status">
                                     <span class="status status-{{ str_replace(' ', '-', $bestelling->status) }}">
-                                        {{ ucfirst($bestelling->status) }}
+                                        {{ $bestelling->statusNaam() }}
                                     </span>
                                 </td>
                             </tr>

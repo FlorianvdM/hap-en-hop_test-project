@@ -20,49 +20,52 @@
             <form class="blok" method="POST" action="{{ route('catering.store') }}">
                 @csrf
 
-                <div class="veld">
-                    <label for="naam">Naam *</label>
-                    <input type="text" id="naam" name="naam" value="{{ old('naam', auth()->user()?->name) }}" required maxlength="100">
-                    @error('naam') <div class="fout">{{ $message }}</div> @enderror
+                <div class="duo">
+                    <div class="veld">
+                        <label for="naam">Naam *</label>
+                        <input type="text" id="naam" name="naam" value="{{ old('naam', auth()->user()?->name) }}" required maxlength="100">
+                        @error('naam') <div class="fout">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="veld">
+                        <label for="email">E-mailadres *</label>
+                        <input type="email" id="email" name="email" value="{{ old('email', auth()->user()?->email) }}" required maxlength="150">
+                        @error('email') <div class="fout">{{ $message }}</div> @enderror
+                    </div>
                 </div>
 
-                <div class="veld">
-                    <label for="email">E-mailadres *</label>
-                    <input type="email" id="email" name="email" value="{{ old('email', auth()->user()?->email) }}" required maxlength="150">
-                    @error('email') <div class="fout">{{ $message }}</div> @enderror
+                <div class="duo" style="margin-top: 20px;">
+                    <div class="veld">
+                        <label for="telefoon">Telefoonnummer (optioneel)</label>
+                        <input type="tel" id="telefoon" name="telefoon" value="{{ old('telefoon') }}" maxlength="30">
+                        @error('telefoon') <div class="fout">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="veld">
+                        <label for="datum">Datum *</label>
+                        <input type="date" id="datum" name="datum" min="{{ now()->addDay()->format('Y-m-d') }}" value="{{ old('datum') }}" required>
+                        @error('datum') <div class="fout">{{ $message }}</div> @enderror
+                    </div>
                 </div>
 
-                <div class="veld">
-                    <label for="telefoon">Telefoonnummer (optioneel)</label>
-                    <input type="tel" id="telefoon" name="telefoon" value="{{ old('telefoon') }}" maxlength="30">
-                    @error('telefoon') <div class="fout">{{ $message }}</div> @enderror
-                </div>
-
-                <div class="veld">
-                    <label for="datum">Datum *</label>
-                    <input type="date" id="datum" name="datum" min="{{ now()->addDay()->format('Y-m-d') }}" value="{{ old('datum') }}" required>
-                    @error('datum') <div class="fout">{{ $message }}</div> @enderror
-                </div>
-
-                <div class="veld">
-                    <label for="personen">Aantal personen *</label>
-                    <input type="number" id="personen" name="personen" min="1" max="1000" value="{{ old('personen') }}" required>
-                    @error('personen') <div class="fout">{{ $message }}</div> @enderror
-                </div>
-
-                <div class="veld">
-                    <label for="gelegenheid">Gelegenheid *</label>
-                    <select id="gelegenheid" name="gelegenheid" required>
-                        @foreach (\App\Http\Controllers\ContactController::GELEGENHEDEN as $sleutel => $label)
-                            <option value="{{ $sleutel }}" @selected(old('gelegenheid') === $sleutel)>{{ $label }}</option>
-                        @endforeach
-                    </select>
-                    @error('gelegenheid') <div class="fout">{{ $message }}</div> @enderror
+                <div class="duo" style="margin-top: 20px;">
+                    <div class="veld">
+                        <label for="personen">Aantal personen *</label>
+                        <input type="number" id="personen" name="personen" min="1" max="1000" value="{{ old('personen') }}" required>
+                        @error('personen') <div class="fout">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="veld">
+                        <label for="gelegenheid">Gelegenheid *</label>
+                        <select id="gelegenheid" name="gelegenheid" required>
+                            @foreach (\App\Http\Controllers\ContactController::GELEGENHEDEN as $sleutel => $label)
+                                <option value="{{ $sleutel }}" @selected(old('gelegenheid') === $sleutel)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                        @error('gelegenheid') <div class="fout">{{ $message }}</div> @enderror
+                    </div>
                 </div>
 
                 <div class="veld">
                     <label for="wensen">Wensen (optioneel)</label>
-                    <textarea id="wensen" name="wensen" rows="5" maxlength="1500"
+                    <textarea id="wensen" name="wensen" rows="3" maxlength="1500"
                         placeholder="Bijvoorbeeld: broodjes en soep, twee personen vegetarisch, bezorgen in Houten">{{ old('wensen') }}</textarea>
                     @error('wensen') <div class="fout">{{ $message }}</div> @enderror
                 </div>

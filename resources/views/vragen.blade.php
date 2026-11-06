@@ -32,7 +32,7 @@
 
         <details>
             <summary>Bezorgen jullie?</summary>
-            <p>Ja, wij bezorgen in Houten en omgeving. Je kunt je bestelling ook zelf ophalen op {{ config('hapenhop.adres') }}.</p>
+            <p>Ja, wij bezorgen in Houten en omgeving voor &euro; {{ number_format(config('hapenhop.bezorgkosten'), 2, ',', '.') }} per bestelling. Je kunt je bestelling ook zelf ophalen op {{ config('hapenhop.adres') }}.</p>
         </details>
 
         <details>

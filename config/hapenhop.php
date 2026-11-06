@@ -38,4 +38,7 @@ return [
     // Mails op de achtergrond versturen (via de wachtrij), zodat de klant na het bestellen niet hoeft te wachten.
     // Zet HAPHOP_MAIL_WACHTRIJ=true in .env en laat 'php artisan queue:work' draaien.
     'mail_wachtrij' => (bool) env('HAPHOP_MAIL_WACHTRIJ', false),
+
+    // Vaste bezorgkosten in euro's. Het echte bedrag is nog niet bekend: pas het hier aan of zet HAPHOP_BEZORGKOSTEN in .env.
+    'bezorgkosten' => (float) env('HAPHOP_BEZORGKOSTEN', 2.50),
 ];

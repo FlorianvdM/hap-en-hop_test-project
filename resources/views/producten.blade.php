@@ -14,10 +14,14 @@
     @if ($producten->isEmpty())
         <p>Er zijn nog geen broodjes.</p>
     @else
-        <div class="kaarten">
-            @foreach ($producten as $product)
-                <x-product-kaart :product="$product" />
-            @endforeach
+        <div class="winkel-raster">
+            <div class="kaarten">
+                @foreach ($producten as $product)
+                    <x-product-kaart :product="$product" />
+                @endforeach
+            </div>
+
+            <x-winkelwagen-zijbalk />
         </div>
     @endif
 

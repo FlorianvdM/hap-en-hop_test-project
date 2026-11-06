@@ -412,6 +412,75 @@ h3 {
 .wagen:hover {
     background: rgba(255, 255, 255, 0.1);
 }
+/* Blokje onder de winkelwagenknop na "In winkelwagen" (fade-in en fade-out via public/js/site.js) */
+.wagen-plek {
+    position: relative;
+}
+.wagen-melding {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: min(340px, calc(100vw - 32px));
+    background: #fff;
+    color: var(--inkt);
+    border-radius: 14px;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+    padding: 18px 20px;
+    white-space: normal;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.wagen-melding.zichtbaar {
+    opacity: 1;
+    transform: none;
+}
+/* Pijltje naar de knop */
+.wagen-melding::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: 26px;
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    transform: rotate(45deg);
+}
+.wagen-melding-kop {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 12px;
+    margin-bottom: 8px;
+    color: var(--bos);
+}
+.wagen-melding-sluit {
+    border: 0;
+    background: none;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--inkt-zacht);
+    cursor: pointer;
+    padding: 0 2px;
+}
+.wagen-melding li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--lijn);
+    font-size: 15px;
+}
+.wagen-melding-totaal {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0 14px;
+}
+.wagen-melding-acties {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
 .teller {
     min-width: 24px;
     height: 24px;
@@ -695,6 +764,21 @@ h3 {
 .pagina-inhoud {
     padding: 56px 0 96px;
 }
+/* Op desktop een lagere paginakop, zodat de inhoud op een Full HD-scherm (100%) zonder scrollen in beeld past */
+@media (min-width: 1001px) {
+    .pagina-kop {
+        padding: 36px 0 28px;
+    }
+    .pagina-kop h1 {
+        font-size: 48px;
+    }
+    .pagina-kop p {
+        margin-top: 8px;
+    }
+    .pagina-inhoud {
+        padding-top: 36px;
+    }
+}
 /* Formulieren */
 .veld {
     display: flex;
@@ -907,6 +991,34 @@ textarea:focus {
     gap: 16px;
     padding: 11px 0;
     border-bottom: 1px solid var(--lijn);
+}
+.winkel-raster {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 32px;
+    align-items: start;
+}
+.winkel-raster .kaarten {
+    gap: 20px;
+}
+.winkelwagen-zijbalk h2 {
+    font-size: 26px;
+}
+.winkelwagen-zijbalk .totaal span:last-child {
+    font-size: 30px;
+}
+.winkelwagen-zijbalk .link {
+    display: inline-block;
+    margin-top: 14px;
+}
+/* Op tablets en telefoons geen zijbalk: daar zit de winkelwagen in de kop */
+@media (max-width: 1000px) {
+    .winkel-raster {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .winkelwagen-zijbalk {
+        display: none;
+    }
 }
 .totaal {
     display: flex;
@@ -1579,6 +1691,15 @@ td .klein {
     }
     .wagen .tekst {
         display: none;
+    }
+    /* Hier staat de winkelwagenknop links, dus het blokje opent naar rechts */
+    .wagen-melding {
+        right: auto;
+        left: 0;
+    }
+    .wagen-melding::before {
+        right: auto;
+        left: 18px;
     }
     .menu-knop-mobiel {
         display: inline-flex;

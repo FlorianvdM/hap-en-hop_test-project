@@ -50,7 +50,7 @@
         <h2>Ophalen en bezorgen</h2>
         <p>
             Ophalen doe je op {{ config('hapenhop.adres') }}. Wij bezorgen in Houten en omgeving op het adres dat je
-            bij de bestelling opgeeft. Zorg dat er op dat moment iemand is om de bestelling aan te nemen.
+            bij de bestelling opgeeft. Bezorgen kost &euro; {{ number_format(config('hapenhop.bezorgkosten'), 2, ',', '.') }} per bestelling. Zorg dat er op dat moment iemand is om de bestelling aan te nemen.
         </p>
 
         <h2>Allergenen en dieetwensen</h2>

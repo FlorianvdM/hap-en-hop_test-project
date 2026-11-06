@@ -63,14 +63,21 @@
                 @endauth
             </div>
 
-            <a href="{{ route('winkelwagen.index') }}" class="wagen"
-                aria-label="Winkelwagen ({{ $winkelwagenAantal }})">
-                <x-icon name="shopping-cart" />
-                <span class="tekst">Winkelwagen</span>
-                @if ($winkelwagenAantal > 0)
-                    <span class="teller">{{ $winkelwagenAantal }}</span>
+            <div class="wagen-plek">
+                <a href="{{ route('winkelwagen.index') }}" class="wagen"
+                    aria-label="Winkelwagen ({{ $winkelwagenAantal }})">
+                    <x-icon name="shopping-cart" />
+                    <span class="tekst">Winkelwagen</span>
+                    @if ($winkelwagenAantal > 0)
+                        <span class="teller">{{ $winkelwagenAantal }}</span>
+                    @endif
+                </a>
+
+                {{-- Na "In winkelwagen": blokje onder de knop dat in- en weer uitfadet (zie public/js/site.js) --}}
+                @if (session('toegevoegd'))
+                    <x-winkelwagen-melding :naam="session('toegevoegd')" />
                 @endif
-            </a>
+            </div>
 
             <button type="button" class="menu-knop-mobiel" aria-controls="hoofdmenu" aria-expanded="false"
                 aria-label="Menu openen">

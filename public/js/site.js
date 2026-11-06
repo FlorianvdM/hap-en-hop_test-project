@@ -52,6 +52,33 @@
         }
     });
 
+    // Blokje onder de winkelwagenknop na "In winkelwagen": fadet in, blijft 5 seconden staan en fadet weer uit.
+    // Met de muis erop of met het toetsenbord erin blijft het staan, zodat je rustig op een knop kunt klikken.
+    var wagenMelding = document.getElementById('wagen-melding');
+
+    if (wagenMelding) {
+        var wagenTimer = null;
+
+        var verberg = function () {
+            wagenMelding.classList.remove('zichtbaar');
+            setTimeout(function () { wagenMelding.remove(); }, 400);
+        };
+        var start = function (ms) {
+            clearTimeout(wagenTimer);
+            wagenTimer = setTimeout(verberg, ms);
+        };
+
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () { wagenMelding.classList.add('zichtbaar'); });
+        });
+        start(5000);
+
+        wagenMelding.addEventListener('mouseenter', function () { clearTimeout(wagenTimer); });
+        wagenMelding.addEventListener('focusin', function () { clearTimeout(wagenTimer); });
+        wagenMelding.addEventListener('mouseleave', function () { start(2000); });
+        wagenMelding.querySelector('.wagen-melding-sluit').addEventListener('click', verberg);
+    }
+
     // 4. Het adresblok bij het bestelformulier staat alleen open als de klant bezorging kiest
     var adresBlok = document.getElementById('bezorgadres');
 
@@ -64,6 +91,15 @@
             adresBlok.querySelectorAll('input').forEach(function (veld) {
                 veld.required = bezorgen;
             });
+
+            // Bezorgkosten in het overzicht tonen en het totaal aanpassen
+            var kostenRegel = document.getElementById('bezorgkosten-regel');
+            var totaal = document.getElementById('besteltotaal');
+
+            if (kostenRegel && totaal) {
+                kostenRegel.hidden = !bezorgen;
+                totaal.textContent = bezorgen ? totaal.dataset.bezorgen : totaal.dataset.ophalen;
+            }
         };
 
         document.querySelectorAll('input[name="levering"]').forEach(function (keuze) {

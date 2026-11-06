@@ -65,7 +65,7 @@ class AdminController extends Controller
         $datum = $request->date('datum');
 
         $bestellingen = Bestelling::with('regels')
-            ->whereIn('status', ['nieuw', 'in behandeling'])
+            ->whereIn('status', Bestelling::KEUKENSTATUSSEN)
             ->when($datum, fn ($query) => $query->whereDate('gewenste_datum', $datum))
             ->orderBy('gewenste_datum')
             ->orderBy('id')
@@ -167,14 +167,19 @@ class AdminController extends Controller
     public function bestellingStatus(Request $request, Bestelling $bestelling)
     {
         $data = $request->validate([
-            'status' => ['required', Rule::in(array_keys($bestelling->mogelijkeStatussen()))],
+            'status' => ['required', Rule::in(array_keys(Bestelling::STATUSSEN))],
         ]);
 
-        // De klant krijgt één mail: bij "klaar" (ophalen) of bij "verzonden".
-        // Kwam de bestelling van "klaar", dan weet de klant het al.
         $oud = $bestelling->status;
+
+        // Verzonden kan alleen als de keuken de bestelling op klaar heeft gezet, en een verzonden bestelling blijft verzonden
+        if (($data['status'] === 'verzonden' && ! in_array($oud, ['klaar', 'verzonden'])) || ($oud === 'verzonden' && $data['status'] !== 'verzonden')) {
+            return back()->with('fout', 'Een bestelling kan pas verzonden worden als de keuken hem op klaar heeft gezet.');
+        }
+
+        // De klant krijgt één mail: bij ophalen als de bestelling klaar is, bij bezorgen als hij verzonden is
         $mailen = $data['status'] !== $oud
-            && ($data['status'] === 'klaar' || ($data['status'] === 'verzonden' && $oud !== 'klaar'));
+            && ($data['status'] === ($bestelling->wordtOpgehaald() ? 'klaar' : 'verzonden'));
 
         $bestelling->update($data);
 

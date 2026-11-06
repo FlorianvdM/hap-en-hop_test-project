@@ -68,7 +68,7 @@
                             <input type="radio" name="levering" value="bezorgen" @checked(old('levering') === 'bezorgen')>
                             <div>
                                 <strong>Bezorgen</strong>
-                                <span>Wij bezorgen in Houten en omgeving.</span>
+                                <span>Wij bezorgen in Houten en omgeving, voor &euro; {{ number_format(config('hapenhop.bezorgkosten'), 2, ',', '.') }}.</span>
                             </div>
                         </label>
                     </div>
@@ -140,11 +140,20 @@
                         <span>&euro; {{ number_format($regel->totaal, 2, ',', '.') }}</span>
                     </li>
                 @endforeach
+                {{-- Zichtbaar zodra de klant bezorgen kiest (zie public/js/site.js) --}}
+                <li id="bezorgkosten-regel" @if (old('levering') !== 'bezorgen') hidden @endif>
+                    <span>Bezorgkosten</span>
+                    <span>&euro; {{ number_format(config('hapenhop.bezorgkosten'), 2, ',', '.') }}</span>
+                </li>
             </ul>
 
             <div class="totaal">
                 <span>Totaal</span>
-                <span>&euro; {{ number_format($totaal, 2, ',', '.') }}</span>
+                <span id="besteltotaal"
+                      data-ophalen="&euro; {{ number_format($totaal, 2, ',', '.') }}"
+                      data-bezorgen="&euro; {{ number_format($totaal + config('hapenhop.bezorgkosten'), 2, ',', '.') }}">
+                    &euro; {{ number_format($totaal + (old('levering') === 'bezorgen' ? config('hapenhop.bezorgkosten') : 0), 2, ',', '.') }}
+                </span>
             </div>
 
             <a class="link" href="{{ route('winkelwagen.index') }}">Winkelwagen aanpassen</a>

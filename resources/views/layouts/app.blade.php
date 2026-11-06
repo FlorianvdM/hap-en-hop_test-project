@@ -50,5 +50,8 @@
     </main>
 
     <x-footer />
+
+    {{-- Foutmeldingen (bijvoorbeeld "uitverkocht") komen in een pop-up --}}
+    <x-melding-dialoog />
 </body>
 </html>

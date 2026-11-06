@@ -23,6 +23,7 @@ class Bestelling extends Model
         'straat',
         'postcode',
         'plaats',
+        'bezorgkosten',
         'dieetwensen',
         'opmerking',
         'status',
@@ -30,26 +31,34 @@ class Bestelling extends Model
 
     protected $casts = [
         'gewenste_datum' => 'date',
+        'bezorgkosten' => 'decimal:2',
         'dieetwensen' => 'array',
     ];
 
     /**
-     * Alle statussen met hun naam in het beheer. "Klaar" is een tussenstap voor bestellingen die worden opgehaald;
-     * alleen "verzonden" telt (na verwijderen) mee in de omzet.
+     * Alle statussen. De keuken zet een bestelling op nieuw, in behandeling of klaar;
+     * "verzonden" kan pas daarna, met de knop bij Bestellingen. Alleen "verzonden" telt (na verwijderen) mee in de omzet.
      */
     public const STATUSSEN = [
         'nieuw' => 'Nieuw',
         'in behandeling' => 'In behandeling',
-        'klaar' => 'Klaar om op te halen',
+        'klaar' => 'Klaar',
         'verzonden' => 'Verzonden',
     ];
 
-    /** De statussen die bij deze bestelling passen: "klaar" alleen als de klant ophaalt. */
-    public function mogelijkeStatussen(): array
+    /** De statussen die de keuken kan kiezen. */
+    public const KEUKENSTATUSSEN = ['nieuw', 'in behandeling', 'klaar'];
+
+    /** De naam van een status voor deze bestelling, met het verschil tussen ophalen en bezorgen. */
+    public function statusNaam(?string $status = null): string
     {
-        return $this->wordtOpgehaald()
-            ? self::STATUSSEN
-            : array_diff_key(self::STATUSSEN, ['klaar' => true]);
+        $status ??= $this->status;
+
+        return match ($status) {
+            'klaar' => $this->wordtOpgehaald() ? 'Klaar om op te halen' : 'Klaar voor bezorging',
+            'verzonden' => $this->wordtOpgehaald() ? 'Opgehaald' : 'Verzonden',
+            default => self::STATUSSEN[$status] ?? ucfirst($status),
+        };
     }
 
     public function wordtOpgehaald(): bool
@@ -81,7 +90,7 @@ class Bestelling extends Model
     protected function totaal(): Attribute
     {
         return Attribute::get(
-            fn () => $this->regels->sum(fn ($regel) => $regel->aantal * $regel->prijs)
+            fn () => $this->regels->sum(fn ($regel) => $regel->aantal * $regel->prijs) + (float) $this->bezorgkosten
         );
     }
 }

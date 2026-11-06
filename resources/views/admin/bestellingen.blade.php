@@ -65,7 +65,7 @@
                         <th>Inhoud en wensen</th>
                         <th>Gewenst en levering</th>
                         <th>Totaal</th>
-                        <th>Status</th>
+                        <th>Verzenden</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -114,20 +114,21 @@
 
                             <td data-label="Totaal">&euro; {{ number_format($bestelling->totaal, 2, ',', '.') }}</td>
 
-                            <td data-label="Status">
-                                <form method="POST" action="{{ route('admin.bestellingen.status', $bestelling) }}">
-                                    @csrf
-                                    @method('PATCH')
-                                    <select name="status" aria-label="Status van bestelling #{{ $bestelling->id }}"
-                                            class="status-select status-{{ str_replace(' ', '-', $bestelling->status) }}"
-                                            onchange="this.form.submit()">
-                                        @foreach ($bestelling->mogelijkeStatussen() as $status => $label)
-                                            <option value="{{ $status }}" @selected($bestelling->status === $status)>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </form>
+                            {{-- De status zet de keuken; hier alleen verzenden, en pas als de keuken klaar is --}}
+                            <td data-label="Verzenden">
+                                <div>
+                                    @if ($bestelling->status === 'verzonden')
+                                        <span class="status status-verzonden">{{ $bestelling->statusNaam() }}</span>
+                                    @else
+                                        <form method="POST" action="{{ route('admin.bestellingen.status', $bestelling) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="hidden" name="status" value="verzonden">
+                                            <button type="submit" class="knop knop-klein" @disabled($bestelling->status !== 'klaar')>Verzonden</button>
+                                        </form>
+                                        <span class="klein">{{ $bestelling->statusNaam() }}</span>
+                                    @endif
+                                </div>
                             </td>
 
                             <td data-label="">

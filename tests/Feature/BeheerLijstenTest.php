@@ -56,14 +56,42 @@ class BeheerLijstenTest extends TestCase
         $this->assertSame('verzonden', $bestelling->fresh()->status);
     }
 
-    public function test_klaar_kan_niet_bij_een_bestelling_die_wordt_bezorgd(): void
+    public function test_bij_bezorgen_mailt_verzonden_en_niet_klaar(): void
     {
         $bestelling = $this->bestelling(['levering' => 'bezorgen', 'straat' => 'Dorpsstraat 1', 'postcode' => '3991 AA', 'plaats' => 'Houten']);
 
         $this->actingAs($this->admin())->patch(route('admin.bestellingen.status', $bestelling), ['status' => 'klaar'])
-            ->assertSessionHasErrors('status');
-        $this->assertSame('nieuw', $bestelling->fresh()->status);
+            ->assertSessionHas('succes');
+        $this->assertSame('Klaar voor bezorging', $bestelling->fresh()->statusNaam());
         Mail::assertNothingSent();
+
+        $this->actingAs($this->admin())->patch(route('admin.bestellingen.status', $bestelling), ['status' => 'verzonden']);
+        Mail::assertSent(BestellingVerzonden::class, 1);
+    }
+
+    public function test_verzonden_kan_pas_als_de_keuken_klaar_is(): void
+    {
+        $bestelling = $this->bestelling(['status' => 'in behandeling']);
+
+        $this->actingAs($this->admin())->patch(route('admin.bestellingen.status', $bestelling), ['status' => 'verzonden'])
+            ->assertSessionHas('fout');
+        $this->assertSame('in behandeling', $bestelling->fresh()->status);
+
+        // Een verzonden bestelling gaat ook niet meer terug
+        $bestelling->update(['status' => 'verzonden']);
+        $this->actingAs($this->admin())->patch(route('admin.bestellingen.status', $bestelling), ['status' => 'klaar'])
+            ->assertSessionHas('fout');
+        $this->assertSame('verzonden', $bestelling->fresh()->status);
+        Mail::assertNothingSent();
+    }
+
+    public function test_verzondenknop_werkt_alleen_bij_klaar(): void
+    {
+        $this->bestelling(['status' => 'in behandeling']);
+
+        $this->actingAs($this->admin())->get(route('admin.bestellingen'))
+            ->assertSee('disabled>Verzonden</button>', false)
+            ->assertDontSee('<select name="status"', false);
     }
 
     public function test_klaar_telt_niet_mee_in_de_omzet_en_wordt_definitief_verwijderd(): void

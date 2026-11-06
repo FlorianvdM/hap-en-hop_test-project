@@ -9,23 +9,13 @@
 @endsection
 
 @section('content')
-    @php
-        $statusNamen = [
-            'nieuw' => 'Ontvangen',
-            'in behandeling' => 'In behandeling',
-            'klaar' => 'Klaar om op te halen',
-            'verzonden' => 'Verzonden',
-        ];
-    @endphp
-
-
     @forelse ($bestellingen as $bestelling)
         <article class="bestelling-kaart">
             <div class="bestelling-kop">
                 <h2>Bestelling #{{ $bestelling->id }}</h2>
                 <span class="status status-{{ str_replace(' ', '-', $bestelling->status) }}">
-                    {{-- Een opgehaalde bestelling is niet "verzonden" --}}
-                    {{ $bestelling->status === 'verzonden' && $bestelling->wordtOpgehaald() ? 'Opgehaald' : ($statusNamen[$bestelling->status] ?? ucfirst($bestelling->status)) }}
+                    {{-- "nieuw" heet voor de klant "Ontvangen" --}}
+                    {{ $bestelling->status === 'nieuw' ? 'Ontvangen' : $bestelling->statusNaam() }}
                 </span>
             </div>
 
@@ -42,6 +32,12 @@
                         <span>&euro; {{ number_format($regel->aantal * $regel->prijs, 2, ',', '.') }}</span>
                     </li>
                 @endforeach
+                @if ($bestelling->bezorgkosten > 0)
+                    <li>
+                        <span>Bezorgkosten</span>
+                        <span>&euro; {{ number_format($bestelling->bezorgkosten, 2, ',', '.') }}</span>
+                    </li>
+                @endif
             </ul>
 
             <div class="bestelling-totaal">
