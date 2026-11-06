@@ -72,7 +72,6 @@ class AfbeeldingTest extends TestCase
         $product = Product::where('naam', 'Fotoproduct')->firstOrFail();
 
         $this->get(route('producten'))->assertSee(e($product->afbeeldingUrl()), false);
-        $this->get(route('home'))->assertSee(e($product->afbeeldingUrl()), false);
 
         $pad = $product->afbeelding;
         $this->actingAs($this->admin())->delete(route('admin.producten.destroy', $product));

@@ -12,10 +12,6 @@ class PageController extends Controller
     public function home()
     {
         return view('home', [
-            // De drie goedkoopste actieve pakketten voor op de homepage
-            'pakketten' => Pakket::where('actief', true)->orderBy('prijs')->take(3)->get(),
-            // Onder "Onze favorieten" alleen broodjes die je echt kunt bestellen
-            'producten' => Product::where('actief', true)->where('bestelbaar', true)->orderBy('prijs')->get(),
             'reviews' => Review::where('actief', true)->latest()->take(6)->get(),
         ]);
     }

@@ -42,20 +42,15 @@
 
                 <div class="veld" style="margin-top: 0; max-width: 280px;">
                     <label for="gewenste_datum">Gewenste datum *</label>
-                    @if ($broodjesDagen)
-                        {{-- Broodjes zijn er alleen op donderdag, daarom een keuzelijst met donderdagen --}}
-                        <select id="gewenste_datum" name="gewenste_datum" required>
-                            @foreach ($broodjesDagen as $dag)
-                                <option value="{{ $dag }}" @selected(old('gewenste_datum') === $dag)>
-                                    {{ \Carbon\Carbon::parse($dag)->locale('nl')->translatedFormat('l j F') }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <small>Broodjes zijn er alleen op donderdag. Bestel voor 10.30 uur, dan kun je ze vanaf 12.00 uur ophalen of laten bezorgen.</small>
-                    @else
-                        <input type="date" id="gewenste_datum" name="gewenste_datum"
-                            min="{{ now()->addDay()->format('Y-m-d') }}" value="{{ old('gewenste_datum') }}" required>
-                    @endif
+                    {{-- Broodjes en pakketten zijn er alleen op donderdag, daarom een keuzelijst met donderdagen --}}
+                    <select id="gewenste_datum" name="gewenste_datum" required>
+                        @foreach ($besteldagen as $dag)
+                            <option value="{{ $dag }}" @selected(old('gewenste_datum') === $dag)>
+                                {{ \Carbon\Carbon::parse($dag)->locale('nl')->translatedFormat('l j F') }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <small>Broodjes en pakketten zijn er alleen op donderdag. Losse broodjes bestel je tot 10.30 uur op de dag zelf, een pakket minstens een dag van tevoren.</small>
                     @error('gewenste_datum') <div class="fout">{{ $message }}</div> @enderror
                 </div>
 

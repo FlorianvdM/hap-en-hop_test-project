@@ -34,7 +34,7 @@ class VoorraadTest extends TestCase
         return [
             'naam' => 'Test Klant',
             'email' => 'klant@example.com',
-            'gewenste_datum' => now()->addDays(3)->toDateString(),
+            'gewenste_datum' => now()->next('Thursday')->toDateString(),
             'levering' => 'ophalen',
         ];
     }

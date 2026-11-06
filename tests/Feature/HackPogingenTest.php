@@ -165,7 +165,7 @@ class HackPogingenTest extends TestCase
         $this->post('/bestellen', [
             'naam' => 'Slimmerik',
             'email' => 'slim@example.com',
-            'gewenste_datum' => now()->addDays(3)->toDateString(),
+            'gewenste_datum' => now()->next('Thursday')->toDateString(),
             'levering' => 'ophalen',
             'prijs' => '0.01',
             'status' => 'verzonden',

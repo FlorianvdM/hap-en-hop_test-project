@@ -46,6 +46,20 @@ Schoolproject van Flo (MBO Utrecht, BE-Backend).
 - Tabellen moeten InnoDB zijn (afgedwongen in `config/database.php`).
 
 ## Nog te doen
+Eerst deze punten (lijst van Flo, 6 november 2026):
+- Alle pagina's passend in één scherm op 100% zoom op Full HD (1920×1080), waar dat kan (lange pagina's mogen scrollen). Als laatste doen.
+- Winkelwagenoverzicht rechts in beeld, alleen op desktop (niet op de telefoon).
+- Pakketten ook alleen voor een donderdag te bestellen, net als losse broodjes (bij ophalen en bezorgen).
+- Vaste bezorgkosten bij bezorgen. Bedrag nog onbekend: voorlopig € 2,50, instelbaar in `config/hapenhop.php`.
+  Ook tonen in winkelwagen, mail, Mijn bestellingen en voorwaarden, en meetellen in het totaal.
+- Bij Mijn bestellingen tonen of de bestelling wordt bezorgd of opgehaald.
+- Cateringpagina: formulier links, de vier blokjes verticaal onder elkaar rechts.
+- Homepage: geen pakketten en favorieten meer. De knop "Bekijk de pakketten" in de banner blijft.
+- Status "klaar" ook bij bezorgen ("klaar voor bezorging", zonder mail; die komt bij "verzonden"). Akkoord van Flo.
+- De statuskeuze (nieuw, in behandeling, klaar) verhuist van Bestellingen naar de keukenpagina.
+  Bij Bestellingen komt in plaats van de statuskolom één knop "Verzonden", alleen bruikbaar als de status "klaar" is.
+
+Daarna:
 - Online betalen met Mollie (iDEAL | Wero): wacht tot Hap & Hop een geregistreerd bedrijf (KvK) is.
   Verzin nooit bedrijfsgegevens.
 - Online zetten (hosting), als allerlaatste stap.

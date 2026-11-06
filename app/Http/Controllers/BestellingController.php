@@ -37,7 +37,7 @@ class BestellingController extends Controller
 
         return view('bestellen.create', [
             'regels' => $regels,
-            'broodjesDagen' => self::broodjesDagen($regels),
+            'besteldagen' => self::besteldagen($regels),
             'totaal' => Winkelwagen::totaal($regels),
             'dieetwensen' => self::DIEETWENSEN,
         ]);
@@ -57,10 +57,8 @@ class BestellingController extends Controller
             'naam' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', 'max:150'],
             'telefoon' => ['nullable', 'string', 'max:30'],
-            // Met broodjes alleen een donderdag uit de lijst, anders elke dag vanaf morgen
-            'gewenste_datum' => ($dagen = self::broodjesDagen($regels)) === null
-                ? ['required', 'date', 'after:today']
-                : ['required', Rule::in($dagen)],
+            // Alleen een donderdag uit de lijst
+            'gewenste_datum' => ['required', Rule::in(self::besteldagen($regels))],
             'levering' => ['required', Rule::in(['ophalen', 'bezorgen'])],
             'straat' => ['required_if:levering,bezorgen', 'nullable', 'string', 'max:150'],
             'postcode' => ['required_if:levering,bezorgen', 'nullable', 'string', 'max:10'],
@@ -94,17 +92,13 @@ class BestellingController extends Controller
     }
 
     /**
-     * Broodjes zijn er alleen op donderdag: bestellen kan tot 10.30 uur op de dag zelf.
-     * Geeft de donderdagen die je kunt kiezen (Y-m-d), of null als er geen broodjes in de winkelwagen zitten.
+     * Broodjes en pakketten zijn er alleen op donderdag. Losse broodjes kun je bestellen tot 10.30 uur op de dag zelf.
+     * Geeft de donderdagen die je kunt kiezen (Y-m-d).
      * Een pakket moet minstens een dag van tevoren besteld worden, dus dan valt vandaag af.
      * shortcut: alleen de komende 8 donderdagen, verder vooruit kan via het contactformulier.
      */
-    public static function broodjesDagen($regels): ?array
+    public static function besteldagen($regels): array
     {
-        if (! $regels->contains('soort', 'product')) {
-            return null;
-        }
-
         $nu = now();
         $vandaagKan = $nu->isThursday()
             && $nu->format('H:i') < '10:30'

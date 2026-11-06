@@ -20,7 +20,8 @@
 
         <details>
             <summary>Kan ik pakketten ook op andere dagen bestellen?</summary>
-            <p>Ja. Een pakket bestel je minstens een dag van tevoren. Zit er ook een broodje in je winkelwagen, dan kies je een donderdag.</p>
+            <p>Nee, pakketten zijn er net als de broodjes alleen op donderdag. Een pakket bestel je minstens een dag van tevoren.
+                Wil je eten op een andere dag? Vraag dan <a href="{{ route('catering') }}">catering</a> aan.</p>
         </details>
 
         <details>

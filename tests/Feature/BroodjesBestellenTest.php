@@ -61,6 +61,18 @@ class BroodjesBestellenTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
+    public function test_pakketten_kun_je_ook_alleen_voor_donderdag_bestellen(): void
+    {
+        $this->travelTo(now()->next('Monday')->setTime(9, 0));
+        $wagen = ['winkelwagen' => [\App\Models\Pakket::firstOrFail()->id => 1]];
+
+        $this->withSession($wagen)->post(route('bestellen.store'), ['gewenste_datum' => now()->next('Wednesday')->toDateString()] + $this->bestelgegevens())
+            ->assertSessionHasErrors('gewenste_datum');
+
+        $this->withSession($wagen)->post(route('bestellen.store'), $this->bestelgegevens())
+            ->assertSessionHasNoErrors();
+    }
+
     public function test_op_donderdag_kan_het_tot_half_elf_voor_dezelfde_dag(): void
     {
         $broodje = $this->broodje();

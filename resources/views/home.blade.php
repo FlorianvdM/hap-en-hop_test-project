@@ -63,46 +63,6 @@
         </div>
     </section>
 
-    @if ($pakketten->isNotEmpty())
-        <section class="sectie sectie-wit">
-            <div class="wrap">
-                <div class="sectie-kop">
-                    <div>
-                        <h2>Onze pakketten</h2>
-                        <p>Compleet samengesteld, vers bereid en met zorg ingepakt.</p>
-                    </div>
-                    <a class="link" href="{{ route('pakketten.index') }}">Alle pakketten bekijken</a>
-                </div>
-
-                <div class="kaarten">
-                    @foreach ($pakketten as $pakket)
-                        <x-pakket-kaart :pakket="$pakket" />
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
-
-    @if ($producten->isNotEmpty())
-        <section class="sectie">
-            <div class="wrap">
-                <div class="sectie-kop">
-                    <div>
-                        <h2>Onze favorieten</h2>
-                        <p>Los te bestellen, ook als aanvulling op een pakket.</p>
-                    </div>
-                    <a class="link" href="{{ route('producten') }}">Alle broodjes bekijken</a>
-                </div>
-
-                <div class="kaarten">
-                    @foreach ($producten as $product)
-                        <x-product-kaart :product="$product" :compact="true" />
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
-
     @if ($reviews->isNotEmpty())
         <section class="sectie sectie-wit">
             <div class="wrap">

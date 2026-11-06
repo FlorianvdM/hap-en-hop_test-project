@@ -117,7 +117,7 @@ class KeukenTest extends TestCase
         $pakket = Pakket::firstOrFail();
         $gegevens = [
             'naam' => 'Test', 'email' => 'test@example.com',
-            'gewenste_datum' => now()->addDays(3)->toDateString(),
+            'gewenste_datum' => now()->next('Thursday')->toDateString(),
         ];
 
         $this->withSession(['winkelwagen' => [$pakket->id => 1]])
@@ -140,7 +140,7 @@ class KeukenTest extends TestCase
         $pakket = Pakket::firstOrFail();
         $gegevens = [
             'naam' => 'Test', 'email' => 'test@example.com',
-            'gewenste_datum' => now()->addDays(3)->toDateString(),
+            'gewenste_datum' => now()->next('Thursday')->toDateString(),
         ];
 
         $this->withSession(['winkelwagen' => [$pakket->id => 1]])

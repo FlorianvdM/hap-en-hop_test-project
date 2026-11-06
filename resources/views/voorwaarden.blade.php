@@ -27,7 +27,7 @@
         <ul>
             <li>Je bestelling is definitief zodra je de bevestiging per e-mail hebt ontvangen.</li>
             <li>Broodjes zijn er alleen op donderdag. Bestel ze voor 10.30 uur, dan kun je ze vanaf 12.00 uur ophalen of laten bezorgen.</li>
-            <li>Pakketten bestel je minstens een dag van tevoren.</li>
+            <li>Pakketten zijn er ook alleen op donderdag. Bestel ze minstens een dag van tevoren.</li>
             <li>Catering spreken we per aanvraag met je af, ook de prijs.</li>
         </ul>
 
