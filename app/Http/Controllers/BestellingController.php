@@ -40,6 +40,7 @@ class BestellingController extends Controller
             'besteldagen' => self::besteldagen($regels),
             'totaal' => Winkelwagen::totaal($regels),
             'dieetwensen' => self::DIEETWENSEN,
+            'tijdsloten' => config('hapenhop.tijdsloten'),
         ]);
     }
 
@@ -59,6 +60,7 @@ class BestellingController extends Controller
             'telefoon' => ['nullable', 'string', 'max:30'],
             // Alleen een donderdag uit de lijst
             'gewenste_datum' => ['required', Rule::in(self::besteldagen($regels))],
+            'tijdslot' => ['required', Rule::in(config('hapenhop.tijdsloten'))],
             'levering' => ['required', Rule::in(['ophalen', 'bezorgen'])],
             'straat' => ['required_if:levering,bezorgen', 'nullable', 'string', 'max:150'],
             'postcode' => ['required_if:levering,bezorgen', 'nullable', 'string', 'max:10'],
@@ -165,6 +167,7 @@ class BestellingController extends Controller
             'email' => $data['email'],
             'telefoon' => $data['telefoon'] ?? null,
             'gewenste_datum' => $data['gewenste_datum'],
+            'tijdslot' => $data['tijdslot'],
             'levering' => $data['levering'],
             // Een adres bewaren we alleen als er echt bezorgd wordt
             'straat' => $data['levering'] === 'bezorgen' ? $data['straat'] : null,

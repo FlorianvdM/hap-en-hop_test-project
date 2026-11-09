@@ -108,6 +108,7 @@
                             <td data-label="Gewenst en levering">
                                 <div>
                                     <strong>{{ $bestelling->gewenste_datum->format('d-m-Y') }}</strong>
+                                    @if ($bestelling->tijdslot)<div class="klein">{{ $bestelling->tijdslot }}</div>@endif
                                     <div class="klein">@include('admin.partials.levering', ['bestelling' => $bestelling])</div>
                                 </div>
                             </td>

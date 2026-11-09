@@ -44,8 +44,24 @@ class BroodjesBestellenTest extends TestCase
             'email' => 'klant@example.com',
             // Broodjes zijn er alleen op donderdag
             'gewenste_datum' => now()->next('Thursday')->toDateString(),
+            'tijdslot' => config('hapenhop.tijdsloten')[0],
             'levering' => 'ophalen',
         ];
+    }
+
+    public function test_tijdslot_is_verplicht_en_moet_uit_de_lijst_komen(): void
+    {
+        $wagen = ['winkelwagen' => [\App\Models\Pakket::firstOrFail()->id => 1]];
+
+        $this->withSession($wagen)->post(route('bestellen.store'), ['tijdslot' => '03.00 - 04.00 uur'] + $this->bestelgegevens())
+            ->assertSessionHasErrors('tijdslot');
+        $this->withSession($wagen)->post(route('bestellen.store'), ['tijdslot' => ''] + $this->bestelgegevens())
+            ->assertSessionHasErrors('tijdslot');
+
+        $slot = config('hapenhop.tijdsloten')[1];
+        $this->withSession($wagen)->post(route('bestellen.store'), ['tijdslot' => $slot] + $this->bestelgegevens())
+            ->assertSessionHasNoErrors();
+        $this->assertSame($slot, \App\Models\Bestelling::latest('id')->first()->tijdslot);
     }
 
     public function test_broodjes_kun_je_alleen_voor_donderdag_bestellen(): void

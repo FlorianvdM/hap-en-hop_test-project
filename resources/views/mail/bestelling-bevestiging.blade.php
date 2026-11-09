@@ -11,7 +11,7 @@
 
     <p style="margin: 0 0 16px;">
         <strong>Bestelnummer:</strong> #{{ $bestelling->id }}<br>
-        <strong>Gewenste datum:</strong> {{ $bestelling->gewenste_datum->format('d-m-Y') }}<br>
+        <strong>Gewenste datum:</strong> {{ $bestelling->gewenste_datum->format('d-m-Y') }}{{ $bestelling->tijdslot ? ', ' . $bestelling->tijdslot : '' }}<br>
         <strong>Levering:</strong> {{ $bestelling->leveringTekst() }}
     </p>
 

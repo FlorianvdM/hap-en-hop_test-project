@@ -35,6 +35,7 @@ class VoorraadTest extends TestCase
             'naam' => 'Test Klant',
             'email' => 'klant@example.com',
             'gewenste_datum' => now()->next('Thursday')->toDateString(),
+            'tijdslot' => config('hapenhop.tijdsloten')[0],
             'levering' => 'ophalen',
         ];
     }

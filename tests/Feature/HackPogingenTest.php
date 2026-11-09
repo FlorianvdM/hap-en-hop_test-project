@@ -167,6 +167,7 @@ class HackPogingenTest extends TestCase
             'email' => 'slim@example.com',
             'gewenste_datum' => now()->next('Thursday')->toDateString(),
             'levering' => 'ophalen',
+            'tijdslot' => config('hapenhop.tijdsloten')[0],
             'prijs' => '0.01',
             'status' => 'verzonden',
         ]);

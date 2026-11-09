@@ -39,6 +39,10 @@ return [
     // Zet HAPHOP_MAIL_WACHTRIJ=true in .env en laat 'php artisan queue:work' draaien.
     'mail_wachtrij' => (bool) env('HAPHOP_MAIL_WACHTRIJ', false),
 
+    // Tijdvakken op donderdag waaruit de klant kiest bij ophalen of bezorgen (vanaf 12.00 uur).
+    // De eindtijd is nog niet bekend bij Hap & Hop: pas de lijst aan zodra dat wel zo is.
+    'tijdsloten' => ['12.00 - 13.00 uur', '13.00 - 14.00 uur', '14.00 - 15.00 uur', '15.00 - 16.00 uur'],
+
     // Vaste bezorgkosten in euro's. Het echte bedrag is nog niet bekend: pas het hier aan of zet HAPHOP_BEZORGKOSTEN in .env.
     'bezorgkosten' => (float) env('HAPHOP_BEZORGKOSTEN', 2.50),
 ];

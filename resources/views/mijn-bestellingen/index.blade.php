@@ -21,7 +21,7 @@
 
             <p class="bestelling-meta">
                 Besteld op {{ $bestelling->created_at->format('d-m-Y') }}
-                &middot; Gewenste datum {{ $bestelling->gewenste_datum->format('d-m-Y') }}
+                &middot; Gewenste datum {{ $bestelling->gewenste_datum->format('d-m-Y') }}{{ $bestelling->tijdslot ? ', ' . $bestelling->tijdslot : '' }}
                 &middot; {{ $bestelling->wordtOpgehaald() ? 'Ophalen' : 'Bezorgen' . ($bestelling->straat ? ' op ' . $bestelling->straat . ', ' . $bestelling->plaats : '') }}
             </p>
 

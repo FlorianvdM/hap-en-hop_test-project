@@ -11,7 +11,7 @@
         @if ($bestelling->telefoon)
             <strong>Telefoon:</strong> {{ $bestelling->telefoon }}<br>
         @endif
-        <strong>Gewenste datum:</strong> {{ $bestelling->gewenste_datum->format('d-m-Y') }}<br>
+        <strong>Gewenste datum:</strong> {{ $bestelling->gewenste_datum->format('d-m-Y') }}{{ $bestelling->tijdslot ? ', ' . $bestelling->tijdslot : '' }}<br>
         <strong>Levering:</strong> {{ $bestelling->leveringTekst() }}
         @if ($bestelling->bezorgadres())
             <br><strong>Adres:</strong> {!! nl2br(e($bestelling->bezorgadres())) !!}

@@ -130,6 +130,7 @@ class KeukenTest extends TestCase
         $gegevens = [
             'naam' => 'Test', 'email' => 'test@example.com',
             'gewenste_datum' => now()->next('Thursday')->toDateString(),
+            'tijdslot' => config('hapenhop.tijdsloten')[0],
         ];
 
         $this->withSession(['winkelwagen' => [$pakket->id => 1]])
@@ -153,6 +154,7 @@ class KeukenTest extends TestCase
         $gegevens = [
             'naam' => 'Test', 'email' => 'test@example.com',
             'gewenste_datum' => now()->next('Thursday')->toDateString(),
+            'tijdslot' => config('hapenhop.tijdsloten')[0],
         ];
 
         $this->withSession(['winkelwagen' => [$pakket->id => 1]])
@@ -178,7 +180,7 @@ class KeukenTest extends TestCase
     {
         config(['hapenhop.bezorgkosten' => 2.50]);
         $pakket = Pakket::firstOrFail();
-        $gegevens = ['naam' => 'Test', 'email' => 'test@example.com', 'gewenste_datum' => now()->next('Thursday')->toDateString()];
+        $gegevens = ['naam' => 'Test', 'email' => 'test@example.com', 'gewenste_datum' => now()->next('Thursday')->toDateString(), 'tijdslot' => config('hapenhop.tijdsloten')[0]];
 
         // Ook als de klant zelf bezorgkosten meestuurt, telt alleen het bedrag uit de instellingen
         $this->withSession(['winkelwagen' => [$pakket->id => 1]])->post(route('bestellen.store'), $gegevens + [

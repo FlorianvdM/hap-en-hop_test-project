@@ -19,6 +19,7 @@ class Bestelling extends Model
         'email',
         'telefoon',
         'gewenste_datum',
+        'tijdslot',
         'levering',
         'straat',
         'postcode',

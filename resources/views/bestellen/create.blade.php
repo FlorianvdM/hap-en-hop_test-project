@@ -54,6 +54,17 @@
                     @error('gewenste_datum') <div class="fout">{{ $message }}</div> @enderror
                 </div>
 
+                <div class="veld" style="max-width: 280px;">
+                    <label for="tijdslot">Tijdvak *</label>
+                    <select id="tijdslot" name="tijdslot" required>
+                        @foreach ($tijdsloten as $slot)
+                            <option value="{{ $slot }}" @selected(old('tijdslot') === $slot)>{{ $slot }}</option>
+                        @endforeach
+                    </select>
+                    <small>Wanneer je de bestelling ophaalt of wanneer we hem bezorgen.</small>
+                    @error('tijdslot') <div class="fout">{{ $message }}</div> @enderror
+                </div>
+
                 <div class="veld">
                     <span class="label">Ophalen of bezorgen *</span>
                     <div class="keuze">

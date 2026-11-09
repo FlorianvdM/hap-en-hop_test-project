@@ -120,6 +120,7 @@ class AdminController extends Controller
                 'E-mailadres',
                 'Telefoon',
                 'Gewenste datum',
+                'Tijdvak',
                 'Bestelling',
                 'Aantal stuks',
                 'Totaal (EUR)',
@@ -143,6 +144,7 @@ class AdminController extends Controller
                         $this->veilig($bestelling->email),
                         $this->veilig($bestelling->telefoon),
                         $bestelling->gewenste_datum->format('d-m-Y'),
+                        $bestelling->tijdslot ?? '',
                         $this->veilig(
                             $bestelling->regels
                                 ->map(fn ($regel) => $regel->aantal . '× ' . $regel->pakket_naam)
