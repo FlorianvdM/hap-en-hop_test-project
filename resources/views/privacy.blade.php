@@ -5,7 +5,7 @@
 
 @section('kop')
     <x-pagina-kop titel="Privacyverklaring">
-        Hier lees je hoe Hap &amp; Hop omgaat met jouw gegevens. Laatst bijgewerkt: 5 november 2026.
+        Hier lees je hoe Hap &amp; Hop omgaat met jouw gegevens. Laatst bijgewerkt: 19 november 2026.
     </x-pagina-kop>
 @endsection
 
@@ -49,6 +49,10 @@
         <p>
             Wij verkopen jouw gegevens nooit. We delen alleen gegevens met partijen die we nodig hebben voor onze
             dienstverlening, zoals onze hostingprovider, onze e-mailprovider en, bij online betalen, onze betaalprovider.
+        </p>
+        <p>
+            Laat je bezorgen, dan sturen we je bezorgadres (zonder je naam) naar PDOK van het Kadaster en naar
+            openrouteservice. Die rekenen de afstand uit, zodat we de bezorgkosten kunnen bepalen.
         </p>
 
         <h2>Cookies</h2>

@@ -5,7 +5,7 @@
 
 @section('kop')
     <x-pagina-kop titel="Algemene voorwaarden">
-        Deze voorwaarden gelden voor elke bestelling bij Hap &amp; Hop. Laatst bijgewerkt: 5 november 2026.
+        Deze voorwaarden gelden voor elke bestelling bij Hap &amp; Hop. Laatst bijgewerkt: 19 november 2026.
     </x-pagina-kop>
 @endsection
 
@@ -50,7 +50,7 @@
         <h2>Ophalen en bezorgen</h2>
         <p>
             Ophalen doe je op {{ config('hapenhop.adres') }}. Wij bezorgen in Houten en omgeving op het adres dat je
-            bij de bestelling opgeeft. Bezorgen kost &euro; {{ number_format(config('hapenhop.bezorgkosten'), 2, ',', '.') }} per bestelling. Zorg dat er op dat moment iemand is om de bestelling aan te nemen.
+            bij de bestelling opgeeft. Bezorgen kost {{ \App\Support\Bezorging::uitleg() }}, gerekend vanaf ons adres. Je ziet het bedrag voordat je bestelt. Zorg dat er op dat moment iemand is om de bestelling aan te nemen.
         </p>
 
         <h2>Allergenen en dieetwensen</h2>

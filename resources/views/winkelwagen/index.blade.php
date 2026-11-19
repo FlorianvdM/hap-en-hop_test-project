@@ -88,7 +88,7 @@
                 </div>
 
                 <a class="knop knop-vol" href="{{ route('bestellen.create') }}">Bestellen</a>
-                <p class="notitie">Laat je bezorgen, dan komt er &euro; {{ number_format(config('hapenhop.bezorgkosten'), 2, ',', '.') }} bezorgkosten bij.
+                <p class="notitie">Laat je bezorgen, dan komen er bezorgkosten bij: {{ \App\Support\Bezorging::uitleg() }}.
                     Je betaalt bij ophalen of bezorgen: pin, contant of op factuur.</p>
             </aside>
         </div>
