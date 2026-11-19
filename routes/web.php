@@ -47,6 +47,10 @@ Route::get('/bestellen', [BestellingController::class, 'create'])->name('bestell
 Route::post('/bestellen', [BestellingController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('bestellen.store');
+// Bezorgkosten uitrekenen tijdens het invullen (maximaal 30 keer per minuut, om misbruik te voorkomen)
+Route::get('/bezorgkosten', [BestellingController::class, 'bezorgkosten'])
+    ->middleware('throttle:30,1')
+    ->name('bezorgkosten');
 
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])

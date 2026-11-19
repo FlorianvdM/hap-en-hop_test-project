@@ -7,7 +7,9 @@ use App\Mail\NieuweBestelling;
 use App\Models\Bestelling;
 use App\Models\Pakket;
 use App\Models\Product;
+use App\Support\Bezorging;
 use App\Support\Winkelwagen;
+use DomainException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -70,6 +72,17 @@ class BestellingController extends Controller
             'opmerking' => ['nullable', 'string', 'max:1000'],
         ]);
 
+        // Bij bezorgen rekenen we de kosten uit op basis van de afstand (nooit een bedrag uit het formulier gebruiken)
+        $data['bezorgkosten'] = 0;
+
+        if ($data['levering'] === 'bezorgen') {
+            try {
+                $data['bezorgkosten'] = Bezorging::bereken($data['straat'], $data['postcode'], $data['plaats'])['kosten'];
+            } catch (DomainException $e) {
+                return back()->withErrors(['straat' => $e->getMessage()])->withInput();
+            }
+        }
+
         try {
             $bestelling = DB::transaction(function () use ($data, $regels, $request) {
                 $this->boekVoorraadAf($regels);
@@ -91,6 +104,29 @@ class BestellingController extends Controller
         return redirect()
             ->route('pakketten.index')
             ->with('succes', $melding);
+    }
+
+    /**
+     * Rekent de bezorgkosten uit terwijl de klant het formulier invult (wordt aangeroepen door public/js/site.js).
+     * Geeft bijvoorbeeld {"km": 4, "kosten": 4.5, "tekst": "€ 4,50"} terug, of {"fout": "..."} met status 422.
+     */
+    public function bezorgkosten(Request $request)
+    {
+        $data = $request->validate([
+            'straat' => ['required', 'string', 'max:150'],
+            'postcode' => ['required', 'string', 'max:10'],
+            'plaats' => ['required', 'string', 'max:100'],
+        ]);
+
+        try {
+            $bezorging = Bezorging::bereken($data['straat'], $data['postcode'], $data['plaats']);
+        } catch (DomainException $e) {
+            return response()->json(['fout' => $e->getMessage()], 422);
+        }
+
+        return response()->json($bezorging + [
+            'tekst' => '€ ' . number_format($bezorging['kosten'], 2, ',', '.'),
+        ]);
     }
 
     /**
@@ -173,7 +209,7 @@ class BestellingController extends Controller
             'straat' => $data['levering'] === 'bezorgen' ? $data['straat'] : null,
             'postcode' => $data['levering'] === 'bezorgen' ? $data['postcode'] : null,
             'plaats' => $data['levering'] === 'bezorgen' ? $data['plaats'] : null,
-            'bezorgkosten' => $data['levering'] === 'bezorgen' ? config('hapenhop.bezorgkosten') : 0,
+            'bezorgkosten' => $data['bezorgkosten'],
             'dieetwensen' => $data['dieetwensen'] ?? [],
             'opmerking' => $data['opmerking'] ?? null,
             'status' => 'nieuw',
