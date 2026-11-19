@@ -89,7 +89,7 @@ class BestellingController extends Controller
 
                 return $this->maakBestelling($data, $regels, $request);
             });
-        } catch (\DomainException $e) {
+        } catch (DomainException $e) {
             return redirect()->route('winkelwagen.index')->with('fout', $e->getMessage());
         }
 
@@ -142,7 +142,7 @@ class BestellingController extends Controller
             && $nu->format('H:i') < '10:30'
             && ! $regels->contains('soort', 'pakket');
 
-        $dag = $vandaagKan ? $nu->copy()->startOfDay() : $nu->copy()->next(\Carbon\Carbon::THURSDAY);
+        $dag = $vandaagKan ? $nu->copy()->startOfDay() : $nu->copy()->next('Thursday');
 
         $dagen = [];
         for ($i = 0; $i < 8; $i++) {
@@ -171,7 +171,7 @@ class BestellingController extends Controller
             $item = $this->actueel($regel, $pakketten, $producten);
 
             if ($item->voorraadBeperkt() && $item->voorraad < $regel->aantal) {
-                throw new \DomainException($item->voorraad <= 0
+                throw new DomainException($item->voorraad <= 0
                     ? "{$item->naam} is helaas uitverkocht. Verwijder het uit je winkelwagen om verder te gaan."
                     : "Er zijn nog maar {$item->voorraad} van {$item->naam} beschikbaar. Pas het aantal aan om verder te gaan.");
             }
