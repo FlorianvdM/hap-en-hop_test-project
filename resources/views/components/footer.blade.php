@@ -14,6 +14,8 @@
         <div class="footer-raster">
             <div>
                 <img src="{{ asset('images/logo-volledig.png') }}" alt="Hap &amp; Hop">
+                {{-- Het motto, kleiner dan op de homepage --}}
+                <p class="motto motto-klein">Jouw smaakvolle tussenstop</p>
                 <p>Verse broodjes, pakketten en catering in Houten en omgeving.</p>
 
                 {{-- Sociale iconen: alleen de links die zijn ingesteld --}}

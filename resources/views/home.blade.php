@@ -7,6 +7,8 @@
     <section class="hero">
         <div class="wrap hero-inner">
             <div>
+                {{-- Het motto van Hap & Hop (uit hun eerste TikTok-post) --}}
+                <p class="motto">Jouw smaakvolle tussenstop</p>
                 <h1>Verse broodjes en heerlijke catering in Houten</h1>
                 <p class="lead">
                     Elke donderdag verse broodjes: bestel voor 10.30 uur en haal ze vanaf 12.00 uur op, of laat ze bezorgen.
