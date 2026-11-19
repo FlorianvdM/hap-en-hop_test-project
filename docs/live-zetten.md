@@ -55,7 +55,8 @@ Vul in `.env` alles in wat tussen `[haken]` staat. Let op:
 - eigen databasegebruiker met sterk wachtwoord
 - echt afzenderadres bij `MAIL_FROM_ADDRESS` en de SMTP-gegevens van de host
 - `HAPHOP_MAIL_PAUZE` staat er niet in (goed zo)
-- `HAPHOP_KVK` leeg laten zolang er geen KvK-nummer is
+- `HAPHOP_KVK` en `HAPHOP_BTW` leeg laten zolang er geen KvK- of btw-nummer is
+- `HAPHOP_ROUTE_SLEUTEL`: de sleutel van openrouteservice (mag leeg, dan rekent de site hemelsbreed x 1,3)
 
 ## 4. Database en beheerder
 ```bash
@@ -99,6 +100,8 @@ Doe **niet** `php artisan route:cache`: de 404-route in `routes/web.php` is een 
 - [ ] Testbestelling plaatsen: de bevestigingsmail en de melding voor Hap & Hop komen aan (kijk ook in de spam)
 - [ ] De testbestelling in het beheerpaneel verwijderen (voorraad komt terug)
 - [ ] Telefoonnummer, e-mailadres en sociale iconen kloppen en de links openen de juiste pagina's
+- [ ] KvK-nummer en btw-id staan onderaan de site (zodra Hap & Hop ze heeft)
+- [ ] Bezorgkosten kloppen voor een adres in Houten en een adres net buiten de 10 km wordt geweigerd
 - [ ] Alles ook bekeken op een telefoon
 - [ ] Onderhoudsmodus staat uit
 - [ ] Back-ups staan aan in het controlepaneel
@@ -128,6 +131,28 @@ php artisan view:cache
 | Wijziging in `.env` werkt niet | Draai `php artisan config:cache` opnieuw. |
 | Foto's verschijnen niet | Controleer `php artisan storage:link` en de rechten van `storage`. |
 | Database-fout | Controleer de databasegegevens in `.env` en draai `php artisan config:cache` opnieuw. |
+
+## Bij mijn.host (DirectAdmin) in plaats van TransIP
+De stappen hierboven blijven hetzelfde. Alleen deze dingen gaan anders:
+
+| Stap | Bij mijn.host |
+| --- | --- |
+| 0. PHP-versie | In DirectAdmin: **Select PHP Version** en kies 8.4. Controleer daarna via SSH met `php -v`. |
+| 0. SSH aanzetten | SSH staat standaard **uit**. Zet het aan in het controlepaneel van mijn.host: klik op je hostingpakket, dan **Geavanceerd** en **SSH toegang**. |
+| 1. Inloggen | De poort is **26**, niet 22: `ssh -p 26 gebruikersnaam@jouwdomein.nl`. Gebruikersnaam en wachtwoord van DirectAdmin staan in de welkomstmail. |
+| 1. Codemap | Zet de code naast de webmap: `cd ~/domains/jouwdomein.nl` en daar `git clone ... hap-en-hop`. |
+| 2. Webmap | DirectAdmin gebruikt de map `public_html` als webmap. Vervang die door een link naar de map `public` van het project (zie hieronder). |
+| 3. Composer | Composer staat er al op. Geeft `composer install` een fout over `proc_open`? Zet `proc_open` en `proc_close` aan bij **Select PHP Version** > Opties. |
+
+De webmap (stap 2) regel je zo, in `~/domains/jouwdomein.nl`:
+
+```bash
+mv public_html public_html_oud
+ln -s hap-en-hop/public public_html
+```
+
+Opent de site daarna niet? Vraag de support van mijn.host hoe je de webmap op `hap-en-hop/public` zet. Zet nooit
+de hele projectmap in `public_html`, want dan staat `.env` publiek op internet.
 
 ## 10. Later
 - Online betalen (Mollie, iDEAL | Wero) kan pas als Hap & Hop in het KvK-handelsregister staat.
