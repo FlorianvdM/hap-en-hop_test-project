@@ -1,2 +1,7 @@
+# Zoekmachines mogen de hele site bekijken, behalve de pagina's hieronder.
+# Die zijn alleen voor beheerders of ingelogde klanten en horen niet in Google.
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /winkelwagen
+Disallow: /mijn-bestellingen
+Disallow: /account-verwijderen
