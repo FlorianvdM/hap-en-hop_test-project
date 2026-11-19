@@ -11,6 +11,7 @@
 @endsection
 
 @section('content')
+    {{-- Alle broodjes als kaarten; de winkelwagen en pakketten staan al in het menu bovenaan --}}
     @if ($producten->isEmpty())
         <p>Er zijn nog geen broodjes.</p>
     @else
@@ -20,9 +21,4 @@
             @endforeach
         </div>
     @endif
-
-    <div class="hero-knoppen" style="margin-top: 48px;">
-        <a class="knop" href="{{ route('pakketten.index') }}">Bekijk de pakketten</a>
-        <a class="knop knop-licht" href="{{ route('winkelwagen.index') }}">Naar de winkelwagen</a>
-    </div>
 @endsection
