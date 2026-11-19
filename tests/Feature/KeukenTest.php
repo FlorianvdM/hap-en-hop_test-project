@@ -178,11 +178,13 @@ class KeukenTest extends TestCase
 
     public function test_bezorgkosten_alleen_bij_bezorgen_en_in_het_totaal(): void
     {
-        config(['hapenhop.bezorgkosten' => 2.50]);
+        // Nep-adres ligt ongeveer 3,3 km hemelsbreed weg, x 1,3 = 4,3 km, naar boven afgerond 5 km.
+        // 1,50 + 5 x 0,75 = 5,25
+        config(['hapenhop.bezorging.starttarief' => 1.50, 'hapenhop.bezorging.per_km' => 0.75]);
         $pakket = Pakket::firstOrFail();
         $gegevens = ['naam' => 'Test', 'email' => 'test@example.com', 'gewenste_datum' => now()->next('Thursday')->toDateString(), 'tijdslot' => config('hapenhop.tijdsloten')[0]];
 
-        // Ook als de klant zelf bezorgkosten meestuurt, telt alleen het bedrag uit de instellingen
+        // Ook als de klant zelf bezorgkosten meestuurt, telt alleen het bedrag dat de website uitrekent
         $this->withSession(['winkelwagen' => [$pakket->id => 1]])->post(route('bestellen.store'), $gegevens + [
             'levering' => 'bezorgen', 'straat' => 'Kerkstraat 1', 'postcode' => '3511 AB', 'plaats' => 'Utrecht', 'bezorgkosten' => 0,
         ]);
@@ -191,8 +193,8 @@ class KeukenTest extends TestCase
         $bezorgd = Bestelling::where('levering', 'bezorgen')->firstOrFail();
         $opgehaald = Bestelling::where('levering', 'ophalen')->firstOrFail();
 
-        $this->assertEquals(2.50, $bezorgd->bezorgkosten);
-        $this->assertEquals($pakket->prijs + 2.50, $bezorgd->totaal);
+        $this->assertEquals(5.25, $bezorgd->bezorgkosten);
+        $this->assertEquals($pakket->prijs + 5.25, $bezorgd->totaal);
         $this->assertEquals(0, $opgehaald->bezorgkosten);
         $this->assertEquals($pakket->prijs, $opgehaald->totaal);
     }
