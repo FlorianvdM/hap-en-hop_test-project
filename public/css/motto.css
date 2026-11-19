@@ -1,0 +1,40 @@
+/* Motto en welkomsttekst (TikTok-tekst van Hap & Hop) */
+
+/* Motto boven de grote kop op de homepage */
+.motto {
+    font-family: var(--kop);
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 1.2;
+    color: var(--goud);
+    margin-bottom: 12px;
+}
+
+/* Kleinere versie van het motto in de footer */
+.motto-klein {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+/* Welkomsttekst bovenaan de pagina "Wie zijn wij" */
+.welkom {
+    max-width: 720px;
+    margin-bottom: 48px;
+}
+.welkom p {
+    font-size: 18px;
+    line-height: 1.7;
+}
+.welkom p + p {
+    margin-top: 16px;
+}
+
+/* Op een telefoon iets kleiner */
+@media (max-width: 600px) {
+    .motto {
+        font-size: 24px;
+    }
+    .welkom p {
+        font-size: 16px;
+    }
+}
