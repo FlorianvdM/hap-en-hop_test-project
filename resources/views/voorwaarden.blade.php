@@ -21,6 +21,9 @@
             @if (config('hapenhop.kvk'))
                 KvK-nummer: {{ config('hapenhop.kvk') }}.
             @endif
+            @if (config('hapenhop.btw'))
+                Btw-id: {{ config('hapenhop.btw') }}.
+            @endif
         </p>
 
         <h2>Bestellen</h2>
@@ -33,7 +36,8 @@
 
         <h2>Prijzen en betalen</h2>
         <p>
-            Je betaalt de prijs die op de website stond op het moment van bestellen. Betalen kan met pin, contant of
+            Alle prijzen op de website zijn inclusief btw. Je betaalt de prijs die op de website stond op het moment
+            van bestellen. Betalen kan met pin, contant of
             op factuur (voor zakelijke klanten).
         </p>
 

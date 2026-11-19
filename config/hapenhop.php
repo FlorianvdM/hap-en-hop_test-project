@@ -23,6 +23,10 @@ return [
     // Zodra het bestaat zet je HAPHOP_KVK=12345678 in .env op de server.
     'kvk' => env('HAPHOP_KVK'),
 
+    // Btw-identificatienummer (bijvoorbeeld NL123456789B01). Verplicht op de site zodra Hap & Hop het heeft.
+    // Leeg laten zolang er geen is; dan toont de site niets. Zet het in .env met HAPHOP_BTW.
+    'btw' => env('HAPHOP_BTW'),
+
     // Naar dit adres gaat de melding bij een nieuwe bestelling.
     // Staat HAPHOP_BESTELMELDING_NAAR niet in .env, dan gebruiken we het contactadres hierboven.
     'bestelmelding_naar' => env('HAPHOP_BESTELMELDING_NAAR', env('HAPHOP_EMAIL', 'Haphopcatering@outlook.com')),

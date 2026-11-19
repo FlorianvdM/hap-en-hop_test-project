@@ -89,7 +89,7 @@
 
                 <a class="knop knop-vol" href="{{ route('bestellen.create') }}">Bestellen</a>
                 <p class="notitie">Laat je bezorgen, dan komen er bezorgkosten bij: {{ \App\Support\Bezorging::uitleg() }}.
-                    Je betaalt bij ophalen of bezorgen: pin, contant of op factuur.</p>
+                    Je betaalt bij ophalen of bezorgen: pin, contant of op factuur. Alle prijzen zijn inclusief btw.</p>
             </aside>
         </div>
     @endif

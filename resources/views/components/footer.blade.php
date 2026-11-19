@@ -7,6 +7,7 @@
     $telefoon = config('hapenhop.telefoon');
     $telefoonLink = $telefoon ? preg_replace('/[^+\d]/', '', $telefoon) : null;
     $kvk = config('hapenhop.kvk');
+    $btw = config('hapenhop.btw');
 @endphp
 
 <footer class="site-footer">
@@ -85,9 +86,13 @@
 
         <div class="footer-onder">
             <span>&copy; {{ date('Y') }} Hap &amp; Hop</span>
-            {{-- Het KvK-nummer verschijnt pas als het is ingevuld --}}
+            {{-- Het KvK-nummer verschijnt pas als het is ingevuld (in .env) --}}
             @if ($kvk)
                 <span>KvK {{ $kvk }}</span>
+            @endif
+            {{-- Het btw-nummer verschijnt ook pas als het is ingevuld --}}
+            @if ($btw)
+                <span>Btw-id {{ $btw }}</span>
             @endif
         </div>
     </div>
