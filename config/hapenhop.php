@@ -43,6 +43,16 @@ return [
     // De eindtijd is nog niet bekend bij Hap & Hop: pas de lijst aan zodra dat wel zo is.
     'tijdsloten' => ['12.00 - 13.00 uur', '13.00 - 14.00 uur', '14.00 - 15.00 uur', '15.00 - 16.00 uur'],
 
-    // Vaste bezorgkosten in euro's. Het echte bedrag is nog niet bekend: pas het hier aan of zet HAPHOP_BEZORGKOSTEN in .env.
-    'bezorgkosten' => (float) env('HAPHOP_BEZORGKOSTEN', 2.50),
+    // Bezorgkosten op basis van de afstand vanaf het adres hierboven (zie app/Support/Bezorging.php).
+    // Kosten = starttarief + aantal km x prijs per km. De km worden naar boven afgerond.
+    'bezorging' => [
+        'starttarief' => (float) env('HAPHOP_BEZORG_START', 1.50),
+        'per_km' => (float) env('HAPHOP_BEZORG_PER_KM', 0.75),
+        // Verder dan dit aantal km bezorgen we niet
+        'max_km' => (int) env('HAPHOP_BEZORG_MAX_KM', 10),
+        // Gratis sleutel van openrouteservice.org voor de echte afstand over de weg.
+        // Zonder sleutel rekenen we hemelsbreed x de omrijfactor (een weg is nooit precies recht).
+        'route_sleutel' => env('HAPHOP_ROUTE_SLEUTEL'),
+        'omrijfactor' => 1.3,
+    ],
 ];
