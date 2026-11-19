@@ -79,34 +79,103 @@
         wagenMelding.querySelector('.wagen-melding-sluit').addEventListener('click', verberg);
     }
 
-    // 4. Het adresblok bij het bestelformulier staat alleen open als de klant bezorging kiest
+    // 4. Het adresblok bij het bestelformulier staat alleen open als de klant bezorging kiest.
+    //    Zodra het adres is ingevuld, vragen we de bezorgkosten op en passen we het totaal aan.
     var adresBlok = document.getElementById('bezorgadres');
 
     if (adresBlok) {
-        var toonAdres = function () {
+        var info = document.getElementById('bezorg-info');
+        var kostenRegel = document.getElementById('bezorgkosten-regel');
+        var kostenBedrag = document.getElementById('bezorgkosten-bedrag');
+        var totaal = document.getElementById('besteltotaal');
+        var subtotaal = parseFloat(totaal.dataset.subtotaal);
+        var bezorgkosten = null; // null = nog niet bekend
+
+        // 12.5 wordt "€ 12,50"
+        var euro = function (bedrag) {
+            return '€ ' + bedrag.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        };
+
+        var gekozenBezorgen = function () {
             var gekozen = document.querySelector('input[name="levering"]:checked');
-            var bezorgen = gekozen && gekozen.value === 'bezorgen';
+            return gekozen && gekozen.value === 'bezorgen';
+        };
+
+        // Bezorgregel en totaal in het overzicht bijwerken
+        var werkOverzichtBij = function () {
+            var bezorgen = gekozenBezorgen();
+
+            kostenRegel.hidden = !bezorgen;
+            kostenBedrag.textContent = bezorgkosten === null ? 'nog niet bekend' : euro(bezorgkosten);
+            totaal.textContent = euro(subtotaal + (bezorgen && bezorgkosten !== null ? bezorgkosten : 0));
+        };
+
+        var meldingTonen = function (tekst, isFout) {
+            info.textContent = tekst;
+            info.className = isFout ? 'fout' : 'notitie'; // rood bij een fout, anders grijs
+        };
+
+        // Vraagt de bezorgkosten op bij de website (route /bezorgkosten)
+        var berekenKosten = function () {
+            var adres = {
+                straat: document.getElementById('straat').value.trim(),
+                postcode: document.getElementById('postcode').value.trim(),
+                plaats: document.getElementById('plaats').value.trim()
+            };
+
+            bezorgkosten = null;
+
+            if (!adres.straat || !adres.postcode || !adres.plaats) {
+                meldingTonen('Vul je adres in, dan zie je meteen de bezorgkosten.', false);
+                werkOverzichtBij();
+                return;
+            }
+
+            meldingTonen('Bezorgkosten berekenen...', false);
+
+            fetch(adresBlok.dataset.url + '?' + new URLSearchParams(adres), { headers: { Accept: 'application/json' } })
+                .then(function (antwoord) {
+                    return antwoord.json().then(function (data) {
+                        if (antwoord.ok) {
+                            bezorgkosten = data.kosten;
+                            meldingTonen('Afstand ongeveer ' + data.km + ' km. Bezorgkosten: ' + data.tekst + '.', false);
+                        } else {
+                            meldingTonen(data.fout || 'Controleer je adres.', true);
+                        }
+                    });
+                })
+                .catch(function () {
+                    meldingTonen('De bezorgkosten konden niet worden berekend. Je ziet ze na het bestellen in de bevestiging.', true);
+                })
+                .finally(werkOverzichtBij);
+        };
+
+        var toonAdres = function () {
+            var bezorgen = gekozenBezorgen();
 
             adresBlok.hidden = !bezorgen;
             adresBlok.querySelectorAll('input').forEach(function (veld) {
                 veld.required = bezorgen;
             });
 
-            // Bezorgkosten in het overzicht tonen en het totaal aanpassen
-            var kostenRegel = document.getElementById('bezorgkosten-regel');
-            var totaal = document.getElementById('besteltotaal');
-
-            if (kostenRegel && totaal) {
-                kostenRegel.hidden = !bezorgen;
-                totaal.textContent = bezorgen ? totaal.dataset.bezorgen : totaal.dataset.ophalen;
-            }
+            werkOverzichtBij();
         };
 
         document.querySelectorAll('input[name="levering"]').forEach(function (keuze) {
             keuze.addEventListener('change', toonAdres);
         });
 
+        // "change" gaat af als de klant een veld verlaat, dus niet bij elke letter
+        ['straat', 'postcode', 'plaats'].forEach(function (id) {
+            document.getElementById(id).addEventListener('change', berekenKosten);
+        });
+
         toonAdres();
+
+        // Komt de klant terug na een foutmelding en staat het adres er nog, dan meteen opnieuw berekenen
+        if (gekozenBezorgen()) {
+            berekenKosten();
+        }
     }
 
     // Komt de bezoeker met de terugknop terug op de pagina, dan werkt de knop weer

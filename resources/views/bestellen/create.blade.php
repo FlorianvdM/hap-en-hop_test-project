@@ -79,7 +79,7 @@
                             <input type="radio" name="levering" value="bezorgen" @checked(old('levering') === 'bezorgen')>
                             <div>
                                 <strong>Bezorgen</strong>
-                                <span>Wij bezorgen in Houten en omgeving, voor &euro; {{ number_format(config('hapenhop.bezorgkosten'), 2, ',', '.') }}.</span>
+                                <span>Wij bezorgen vanaf Houten voor {{ \App\Support\Bezorging::uitleg() }}.</span>
                             </div>
                         </label>
                     </div>
@@ -87,7 +87,8 @@
                 </div>
 
                 {{-- Dit blok klapt open als de klant bezorgen kiest (zie public/js/site.js) --}}
-                <div class="adres" id="bezorgadres" @if (old('levering') !== 'bezorgen') hidden @endif>
+                {{-- data-url: hier vraagt public/js/site.js de bezorgkosten op zodra het adres is ingevuld --}}
+                <div class="adres" id="bezorgadres" data-url="{{ route('bezorgkosten') }}" @if (old('levering') !== 'bezorgen') hidden @endif>
                     <div class="duo">
                         <div class="veld">
                             <label for="straat">Straat en huisnummer *</label>
@@ -107,6 +108,9 @@
                         <input type="text" id="plaats" name="plaats" value="{{ old('plaats') }}" autocomplete="address-level2">
                         @error('plaats') <div class="fout">{{ $message }}</div> @enderror
                     </div>
+
+                    {{-- Hier verschijnen de afstand en de bezorgkosten (of een melding als het adres niet klopt) --}}
+                    <p class="notitie" id="bezorg-info" aria-live="polite">Vul je adres in, dan zie je meteen de bezorgkosten.</p>
                 </div>
             </section>
 
@@ -151,20 +155,17 @@
                         <span>&euro; {{ number_format($regel->totaal, 2, ',', '.') }}</span>
                     </li>
                 @endforeach
-                {{-- Zichtbaar zodra de klant bezorgen kiest (zie public/js/site.js) --}}
+                {{-- Zichtbaar zodra de klant bezorgen kiest; het bedrag vult public/js/site.js in --}}
                 <li id="bezorgkosten-regel" @if (old('levering') !== 'bezorgen') hidden @endif>
                     <span>Bezorgkosten</span>
-                    <span>&euro; {{ number_format(config('hapenhop.bezorgkosten'), 2, ',', '.') }}</span>
+                    <span id="bezorgkosten-bedrag">nog niet bekend</span>
                 </li>
             </ul>
 
             <div class="totaal">
                 <span>Totaal</span>
-                <span id="besteltotaal"
-                      data-ophalen="&euro; {{ number_format($totaal, 2, ',', '.') }}"
-                      data-bezorgen="&euro; {{ number_format($totaal + config('hapenhop.bezorgkosten'), 2, ',', '.') }}">
-                    &euro; {{ number_format($totaal + (old('levering') === 'bezorgen' ? config('hapenhop.bezorgkosten') : 0), 2, ',', '.') }}
-                </span>
+                {{-- data-subtotaal: het bedrag zonder bezorgkosten, zodat het script het totaal kan uitrekenen --}}
+                <span id="besteltotaal" data-subtotaal="{{ $totaal }}">&euro; {{ number_format($totaal, 2, ',', '.') }}</span>
             </div>
 
             <a class="link" href="{{ route('winkelwagen.index') }}">Winkelwagen aanpassen</a>
