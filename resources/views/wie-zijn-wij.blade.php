@@ -10,6 +10,19 @@
 @endsection
 
 @section('content')
+    {{-- Welkomsttekst, gebaseerd op de eerste TikTok-post van Hap & Hop --}}
+    <div class="welkom">
+        <p>
+            Welkom bij Hap &amp; Hop! Wij zijn zes jonge ondernemers met ons eigen bedrijf in Houten.
+            Bij Hap &amp; Hop draait alles om lekker eten en verse ingrediënten.
+        </p>
+        <p>
+            Zin in een heerlijk belegd broodje, een smakelijke lunch of catering voor een speciale gelegenheid?
+            Wij staan voor je klaar. Met passie, aandacht en natuurlijk heel veel smaak maken wij van ieder eetmoment
+            iets bijzonders.
+        </p>
+    </div>
+
     @if ($teamleden->isEmpty())
         <p>We stellen ons binnenkort aan je voor.</p>
     @else
